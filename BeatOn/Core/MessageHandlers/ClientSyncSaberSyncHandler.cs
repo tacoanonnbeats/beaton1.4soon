@@ -48,6 +48,15 @@ namespace BeatOn.Core.MessageHandlers
             });
             _getSyncManager().SyncStatusUpdate += handler;
             feedStatus = _getSyncManager().Sync(msg.SyncOnlyID);
+            if (feedStatus == null || feedStatus.Count < 1)
+            {
+                var ar = new ActionResponse();
+                ar.ResponseToMessageID = msg.MessageID;
+                //well, maybe not success
+                ar.Success = true;
+                sendHostMessage(ar);
+                _getSyncManager().SyncStatusUpdate -= handler;
+            }
         }
     }
 }

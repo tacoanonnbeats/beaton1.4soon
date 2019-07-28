@@ -97,4 +97,7 @@ export class BeatOnApiService {
     quitBeatOn() {
         return this.http.post(this.hostname + '/host/mod/exit', {});
     }
+    getStartupStatus() {
+        return this.http.get(this.hostname + '/host/mod/startupstatus');
+    }
 }

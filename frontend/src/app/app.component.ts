@@ -15,6 +15,8 @@ import { ToolbarEventsService } from './services/toolbar-events.service';
 import { AppIntegrationService } from './services/app-integration.service';
 import { QuestomConfig } from './models/QuestomConfig';
 import { HostDownloadStatus, HostDownloadStatusType } from './models/HostDownloadStatus';
+import { StartupStatus } from './models/StartupStatus';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'app-root',
@@ -100,7 +102,7 @@ export class AppComponent implements OnInit {
     showBrowser: boolean = false;
     resultJson = '';
     modStatus = { CurrentStatus: '' };
-    config: BeatOnConfig = { IsCommitted: true, Config: null, SyncConfig: null };
+    config: BeatOnConfig = { IsCommitted: true, Config: null, SyncConfig: null, BeatSaberVersion: '' };
     ngOnInit() {
         this.checkModStatus();
     }
@@ -182,7 +184,7 @@ export class AppComponent implements OnInit {
     reconnect() {
         this.msgSvc.reconnect();
     }
-
+    shownRestoreDialog: boolean = false;
     checkModStatus(): void {
         this.beatOnApi.getModStatus().subscribe((data: any) => {
             this.modStatusLoaded = true;
@@ -205,6 +207,27 @@ export class AppComponent implements OnInit {
                         if (this.appIntegration.isAppLoaded()) this.router.navigateByUrl('/main/browser');
                         else this.router.navigateByUrl('/main/upload');
                     }
+                    this.beatOnApi.getStartupStatus().subscribe((msg: StartupStatus) => {
+                        if (!this.shownRestoreDialog && msg && msg.UpgradeRestoreAvailable) {
+                            this.shownRestoreDialog = true;
+                            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                                width: '470px',
+                                height: '200px',
+                                disableClose: true,
+                                data: {
+                                    title: 'Restore After Upgrade?',
+                                    subTitle:
+                                        'It looks like you may have just upgraded Beat Saber.  Do you want to restore your playlists?',
+                                    button1Text: 'Restore',
+                                },
+                            });
+                            dialogRef.afterClosed().subscribe(res => {
+                                if (res == 1) {
+                                    this.beatOnApi.restoreCommittedConfig().subscribe(msg => {});
+                                }
+                            });
+                        }
+                    });
                 });
             }
         });

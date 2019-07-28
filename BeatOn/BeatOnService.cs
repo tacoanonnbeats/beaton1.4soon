@@ -21,7 +21,7 @@ namespace BeatOn
     public class BeatOnService : Service
     {
         private const int BROADCAST_STATUS_INTERVAL_MS = 5000;
-
+        
         private Timer _broadcastStatusTimer;
         private BeatOnServiceTransceiver _transciever;
         private bool _isBrowserOpen = false;
@@ -40,16 +40,7 @@ namespace BeatOn
                         _core = new BeatOnCore(this, _transciever.SendPackageInstall, _transciever.SendPackageUninstall, (x) => { _transciever.SendIntentAction(new IntentAction() { PackageName = x, Type = IntentActionType.Exit }); });
                         _core.HardQuitTriggered += (s, e) =>
                          {
-                             _transciever.SendHardQuit();
-                             System.Threading.Timer tmr = null;
-                             tmr = new Timer((z) =>
-                             {
-                                 Log.LogMsg("App didn't kill the service after a miliseconds, service killing itself");
-                                 Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-                                 Java.Lang.JavaSystem.Exit(0);
-                                 Log.LogMsg("Should be dead");
-                                 tmr.Dispose();
-                             }, null, 300, Timeout.Infinite);
+                             DoHardQuit();
                          };
                         _core.Start();
                     }
@@ -101,6 +92,19 @@ namespace BeatOn
         }
         public IBinder Binder { get; private set; }
 
+        private void DoHardQuit()
+        {
+            _transciever.SendHardQuit();
+            System.Threading.Timer tmr = null;
+            tmr = new Timer((z) =>
+            {
+                Log.LogMsg("App didn't kill the service after a miliseconds, service killing itself");
+                Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+                Java.Lang.JavaSystem.Exit(0);
+                Log.LogMsg("Should be dead");
+                tmr.Dispose();
+            }, null, 300, Timeout.Infinite);
+        }
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
@@ -173,12 +177,71 @@ namespace BeatOn
                         _core.DownloadUrl(a.Url, a.MimeType);
                     }
                 };
-            //TODO: import config file
+            RegisterUninstallReceiver();
             
 
             StartStatusTimer();
         }
 
+        private void RegisterUninstallReceiver()
+        {
+            if (uninstallReceiver != null)
+            {
+                UnregisterUninstallReceiver();
+            }
+            uninstallReceiver = new UninstallBroadcastReceiver();
+            uninstallReceiver.BeatSaberUninstalled += UninstallReceiver_BeatSaberUninstalled;
+            IntentFilter filter = new IntentFilter();
+            filter.AddAction(Intent.ActionPackageRemoved);
+            filter.AddDataScheme("package");
+            
+            RegisterReceiver(uninstallReceiver, filter);
+        }
+
+        private void UnregisterUninstallReceiver()
+        {
+            if (uninstallReceiver != null)
+                return;
+
+            UnregisterReceiver(uninstallReceiver);
+            uninstallReceiver.BeatSaberUninstalled -= UninstallReceiver_BeatSaberUninstalled;
+            uninstallReceiver.Dispose();
+            uninstallReceiver = null;
+        }
+
+        private void UninstallReceiver_BeatSaberUninstalled(object sender, EventArgs e)
+        {
+            _core?.BackupPlayerData();
+            Log.LogMsg("BeatSaber appears to have been uninstalling...");
+            if (_core == null || !_core.ModWasInstalled)
+            {
+                Log.LogMsg("Beat saber wasn't modded, probably this is during setup.  Not killing Beat On");
+                return;
+            }
+            Log.LogMsg("Beat On will be killed.");
+            DoHardQuit();
+        }
+
+        private UninstallBroadcastReceiver uninstallReceiver;
+        [BroadcastReceiver(Enabled = true, Exported = false)]
+        private class UninstallBroadcastReceiver : BroadcastReceiver
+        {
+            
+            public event EventHandler BeatSaberUninstalled;
+            public override void OnReceive(Context context, Intent intent)
+            {
+                Log.LogMsg($"Uninstall received with package: {intent.Package}");
+                if (intent.Action == "android.intent.action.PACKAGE_REMOVED" && (intent.DataString?.StartsWith("package:") ?? false))
+                {
+                    string pkgName = intent.DataString.Substring(8);
+                    if (pkgName.ToLower() == "com.beatgames.beatsaber")
+                    {
+                        //if it's beat saber that got uninstalled, trigger the event
+                        BeatSaberUninstalled?.Invoke(this, new EventArgs());
+                    }
+                }
+            }
+        }
 
         public override IBinder OnBind(Intent intent)
         {
@@ -197,6 +260,7 @@ namespace BeatOn
 
         public override void OnDestroy()
         {
+            UnregisterUninstallReceiver();
             Log.LogMsg("BeatOnService OnDestroy called");
             StopStatusTimer();
             _transciever.UnregisterIntents();

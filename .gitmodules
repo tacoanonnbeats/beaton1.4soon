@@ -7,3 +7,6 @@
 [submodule "SyncSaberService"]
 	path = SyncSaberService
 	url = https://github.com/Zingabopp/SyncSaberService/
+[submodule "androidxmldotnet"]
+	path = androidxmldotnet
+	url = https://github.com/quamotion/androidxmldotnet

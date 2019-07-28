@@ -22,12 +22,14 @@ namespace BeatOn.Core.RequestHandlers
         private Func<QaeConfig> _getQaeConfig;
         private Action _triggerConfigChanged;
         private GetBeatOnConfigDelegate _getConfig;
-        public PostConfigRestore(GetQaeDelegate getQae, Func<QaeConfig> getQaeConfig, GetBeatOnConfigDelegate getConfig, Action triggerConfigChanged)
+        private BeatSaberModder _mod;
+        public PostConfigRestore(GetQaeDelegate getQae, Func<QaeConfig> getQaeConfig, GetBeatOnConfigDelegate getConfig, Action triggerConfigChanged, BeatSaberModder mod)
         {
             _getQae = getQae;
             _getQaeConfig = getQaeConfig;
             _getConfig = getConfig;
             _triggerConfigChanged = triggerConfigChanged;
+            _mod = mod;
         }
 
         public void HandleRequest(HttpListenerContext context)
@@ -73,8 +75,11 @@ namespace BeatOn.Core.RequestHandlers
                     resp.BadRequest("config type should be 'committed' or 'temp'");
                     return;
                 }
+                var curConfig = _getConfig().Config;
+                var qc = _getQaeConfig();
+                List<string> existingSongIDs = curConfig.Playlists.SelectMany(x => x.SongList).Select(x => x.SongID).ToList();
                 var configFile = committed ? Constants.LAST_COMMITTED_CONFIG : Constants.LAST_TEMP_CONFIG;
-                if (!_getQaeConfig().RootFileProvider.FileExists(configFile))
+                if (!qc.RootFileProvider.FileExists(configFile))
                 {
                     Log.LogErr($"Tried to restore config, but {configFile} did not exist.");
                     resp.BadRequest("Config file did not exist.");
@@ -84,6 +89,19 @@ namespace BeatOn.Core.RequestHandlers
                 try
                 {
                     cfg = JsonConvert.DeserializeObject<QuestomAssets.Models.BeatSaberQuestomConfig>(_getQaeConfig().RootFileProvider.ReadToString(configFile));
+                    foreach (var pl in cfg.Playlists)
+                    {
+                        foreach (var s in pl.SongList)
+                        {
+                            if (!existingSongIDs.Contains(s.SongID))
+                            {
+                                if (string.IsNullOrWhiteSpace(s.CustomSongPath) && qc.RootFileProvider.FileExists(Constants.CUSTOM_SONGS_FOLDER_NAME.CombineFwdSlash(s.SongID)))
+                                {
+                                    s.CustomSongPath = Constants.CUSTOM_SONGS_FOLDER_NAME.CombineFwdSlash(s.SongID);
+                                }
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -91,7 +109,6 @@ namespace BeatOn.Core.RequestHandlers
                     resp.Error("Config file failed to deserialize.");
                     return;
                 }
-                var qc = _getQaeConfig();
                 foreach (var pl in cfg.Playlists)
                 {
                     try
@@ -122,6 +139,8 @@ namespace BeatOn.Core.RequestHandlers
                 Log.LogMsg("Reload song folders sending change message");
                 _getConfig().Config = _getQae().GetCurrentConfig();
                 _triggerConfigChanged();
+                Log.LogMsg("Restoring backed up PlayerData.dat");
+                _mod.RestorePlayerData(true);
                 Log.LogMsg("Reload song folders responding OK");
             }
             catch (Exception ex)

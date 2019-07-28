@@ -150,6 +150,7 @@
     <Compile Include="ClientModels\NetInfo.cs" />
     <Compile Include="ClientModels\SetupEventType.cs" />
     <Compile Include="ClientModels\ModStatus.cs" />
+    <Compile Include="ClientModels\StartupStatus.cs" />
     <Compile Include="ClientModels\ToastType.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Core\BeatOnCore.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Core\MessageHandlers\MessageHandlerAttribute.cs" />
     <Compile Include="Core\RequestHandlers\GetConfig.cs" />
     <Compile Include="Core\RequestHandlers\GetModCover.cs" />
+    <Compile Include="Core\RequestHandlers\GetStartupStatus.cs" />
     <Compile Include="Core\RequestHandlers\PostSyncSync.cs" />
     <Compile Include="Core\RequestHandlers\GetSyncConfig.cs" />
     <Compile Include="Core\RequestHandlers\PostExit.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Core\RequestHandlers\DeletePendingConfig.cs" />
     <Compile Include="Core\RequestHandlers\PostUploadLogs.cs" />
     <Compile Include="Core\ResponseExtensions.cs" />
+    <Compile Include="Core\SyncInfo.cs" />
     <Compile Include="Debouncey.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="DownloadType.cs" />
@@ -398,6 +401,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\www\upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidJavaLibrary Include="axml-2.0.0.jar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -28,12 +28,13 @@ namespace BeatOn.Core
         private Context _context;
         public ImportManager ImportManager { get; private set; }
         public SyncManager SyncManager { get; private set; }
-
+        public bool ModWasInstalled { get; private set; }
         public BeatOnCore(Context context, Action<string> triggerPackageInstall, Action<string> triggerPackageUninstall, Action<string> triggerStopPackage)
         {
             _context = context;
             _mod = new BeatSaberModder(_context, triggerPackageInstall, triggerPackageUninstall);
             _mod.StatusUpdated += _mod_StatusUpdated;
+            
             ImportManager = new ImportManager(_qaeConfig, () => CurrentConfig, () => Engine, ShowToast, () => _SongDownloadManager, SendConfigChangeMessage);
             _SongDownloadManager = new DownloadManager(ImportManager);
             _SongDownloadManager.StatusChanged += _SongDownloadManager_StatusChanged;
@@ -41,9 +42,40 @@ namespace BeatOn.Core
             ImageUtils.Instance = new ImageUtilsDroid();
             SyncManager = new SyncManager(_qaeConfig, _SongDownloadManager, () => CurrentConfig, () => Engine, ShowToast);
             KillBeatSaber();
+            if (_mod.IsBeatSaberInstalled && _mod.IsInstalledBeatSaberModded)
+                ModWasInstalled = true;
         }
 
         Action<string> _triggerStopPackage;
+
+        private SyncInfo GetSyncInfo()
+        {
+            try
+            {
+                if (!_qaeConfig.RootFileProvider.FileExists(Constants.SYNC_INFO))
+                    return null;
+                return JsonConvert.DeserializeObject<SyncInfo>(_qaeConfig.RootFileProvider.ReadToString(Constants.SYNC_INFO));
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception trying to load sync info.", ex);
+                return null;
+            }
+        }
+
+        private bool CheckReimportSongs()
+        {
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception trying to check whether songs should be reimported", ex);
+                throw;
+            }
+            return false;
+        }
 
         private void KillBeatSaber()
         {
@@ -111,9 +143,18 @@ namespace BeatOn.Core
                     }
                     _qae = new QuestomAssetsEngine(_qaeConfig);
                     _qae.OpManager.OpStatusChanged += OpManager_OpStatusChanged;
+                    //not the ideal place for this, but if we get an engine, files and things exist, and it's created infrequently enough this should work
+                    _mod.CleanupTempApk();
+                    if (_mod.IsBeatSaberInstalled && _mod.IsInstalledBeatSaberModded)
+                        ModWasInstalled = true;
                 }
                 return _qae;
             }
+        }
+
+        public void BackupPlayerData()
+        {
+            _mod?.BackupPlayerData(true, true);
         }
 
         private void ClearCurrentConfig()
@@ -134,12 +175,37 @@ namespace BeatOn.Core
             }
         }
 
-
+        private void RolloverConfigBackups()
+        {
+            try
+            {
+                for (int x = 3; x >= 0; x--)
+                {
+                    string sourceName = Constants.LAST_COMMITTED_CONFIG;
+                    if (x != 0)
+                    {
+                        sourceName += $".backup.{x - 1}";
+                    }
+                    string targetName = Constants.LAST_COMMITTED_CONFIG + $".backup.{x}";
+                    Log.LogMsg($"Rolling config backup {sourceName} to {targetName}");
+                    if (_qaeConfig.RootFileProvider.FileExists(sourceName))
+                    {
+                        byte[] b = _qaeConfig.RootFileProvider.Read(sourceName);
+                        _qaeConfig.RootFileProvider.Write(targetName, b, true);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception trying to rollover config backups", ex);
+            }
+        }
         /// <summary>
         /// Saves the current committed config to disk.  Returns false if the current config isn't committed
         /// </summary>
         private bool SaveCommittedConfigToDisk()
         {
+            RolloverConfigBackups();
             //todo: this is SO the wrong place for this.  Suppose I'll move it after I put it here for testing.  probably should save instantly on update and not be part of sync
             SyncManager.Save();
 
@@ -148,8 +214,24 @@ namespace BeatOn.Core
                 return false;
             lock (_configFileLock)
             {
+                _mod.BackupPlayerData(onlyIfNewer:true, onlyIfBigger: true);
                 try
                 {
+                    try
+                    {
+                        SyncInfo si = new SyncInfo()
+                        {
+                            LastSyncDateTime = DateTime.Now,
+                            LastSyncedBeatOnVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                            LastSyncedBeatSaberVersion = _mod.GetBeatSaberVersion()
+                        };
+                        var siString = JsonConvert.SerializeObject(si);
+                        _qaeConfig.RootFileProvider.Write(Constants.SYNC_INFO, System.Text.Encoding.UTF8.GetBytes(siString), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.LogErr($"Exception trying to save last sync version info.");
+                    }
                     var configString = JsonConvert.SerializeObject(CurrentConfig.Config);
                     _qaeConfig.RootFileProvider.Write(Constants.LAST_COMMITTED_CONFIG, System.Text.Encoding.UTF8.GetBytes(configString), true);
                     return true;
@@ -241,7 +323,10 @@ namespace BeatOn.Core
                             Config = config,
                             SyncConfig = SyncManager.SyncConfig
                         };
-
+                        if (_mod.IsBeatSaberInstalled && _mod.IsInstalledBeatSaberModded)
+                        {
+                            _currentConfig.BeatSaberVersion = _mod.GetBeatSaberVersion();
+                        }
                         _currentConfig.IsCommitted = !Engine.HasChanges;
                         _currentConfig.PropertyChanged += CurrentConfig_PropertyChanged;
                     }
@@ -505,8 +590,8 @@ namespace BeatOn.Core
             _webServer.Router.AddRoute("POST", "/mod/exit", new PostExit(HardQuit));
             _webServer.Router.AddRoute("POST", "/mod/package", new PostPackageAction(SendPackageLaunch, SendPackageStop));
             _webServer.Router.AddRoute("PUT", "/beatsaber/config", new PutConfig(() => Engine, () => CurrentConfig, SendConfigChangeMessage));
-            _webServer.Router.AddRoute("POST", "/beatsaber/config/restore", new PostConfigRestore(() => Engine, () => _qaeConfig, ()=> CurrentConfig, SendConfigChangeMessage));
-
+            _webServer.Router.AddRoute("POST", "/beatsaber/config/restore", new PostConfigRestore(() => Engine, () => _qaeConfig, ()=> CurrentConfig, SendConfigChangeMessage, _mod));
+            _webServer.Router.AddRoute("GET", "/mod/startupstatus", new GetStartupStatus(() => GetSyncInfo(), () => CurrentConfig, _mod, () => _qaeConfig, () => Engine));
             //TEST ONE
             _webServer.Router.AddRoute("GET", "/beatsaber/sync", new GetSyncConfig(() => SyncManager));
             _webServer.Router.AddRoute("POST", "/beatsaber/sync", new PostSyncSync(() => SyncManager));

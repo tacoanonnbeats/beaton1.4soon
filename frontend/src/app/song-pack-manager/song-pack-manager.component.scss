@@ -349,7 +349,7 @@ button.right {
 }
 
 .pack-container > li.collection-song,
-div.collection-song, div.packOuter {
+div.collection-song, div.packOuter:not(.cdk-drag-preview) {
   transform: none !important;
 }
 

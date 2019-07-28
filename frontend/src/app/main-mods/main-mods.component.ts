@@ -23,6 +23,7 @@ import { ClientChangeColor, ColorType } from '../models/ClientChangeColor';
 })
 export class MainModsComponent implements OnInit, AfterViewInit {
     config: QuestomConfig = <QuestomConfig>{ Mods: [] };
+    beatSaberVersion: string = '';
     modSwitchInProgress: boolean = false;
     modIDBeingSwitched: string = null;
     selectedMod: ModDefinition;
@@ -35,6 +36,7 @@ export class MainModsComponent implements OnInit, AfterViewInit {
     ) {
         this.configSvc.configUpdated.subscribe((cfg: BeatOnConfig) => {
             this.config = cfg.Config;
+            this.beatSaberVersion = cfg.BeatSaberVersion;
         });
     }
 
@@ -104,41 +106,9 @@ export class MainModsComponent implements OnInit, AfterViewInit {
         let isInit = false;
         this.configSvc.getConfig().subscribe((cfg: BeatOnConfig) => {
             this.config = cfg.Config;
-            /*
-            if (!isInit) {
-                isInit = true;
-                this.selectedMod = cfg.Config.Mods[0];
-                const obj: Object = {
-                    Name: this.selectedMod.Name,
-                    Author: this.selectedMod.Author,
-                    Description: this.selectedMod.Description,
-                    InfoUrl: this.selectedMod.InfoUrl,
-                };
-                this.ngxSmartModalService.setModalData(obj, 'myModal');
-            }
-            var saberMod = new ModDefinition();
-            saberMod.TargetBeatSaberVersion = '1.0.0';
-            saberMod.ID = '1';
-            saberMod.Author = 'Yuuki';
-            saberMod.Name = 'Custom Sabers';
-            saberMod.InfoUrl = 'http://www.google.com';
-            saberMod.Description =
-                'Change the color of your sabers! Choose between a wide spectrum of colors and jam with your favorite mix!';
-            saberMod.Category = ModCategory.Saber;
-            this.config.Mods.push(saberMod);
-            var randomSongSelect = new ModDefinition();
-            randomSongSelect.TargetBeatSaberVersion = '1.0.0';
-            randomSongSelect.ID = '2';
-            randomSongSelect.Author = 'Yuuki';
-            randomSongSelect.Name = 'Random Song Selection';
-            randomSongSelect.InfoUrl = 'http://www.google.com';
-            randomSongSelect.Description =
-                "Tired of deciding what song to play? This mod gives you the ability to randomly select a song from your long list of maps you'll probably never get to.";
-            randomSongSelect.Category = ModCategory.Gameplay;
-            this.config.Mods.push(randomSongSelect);*/
+            this.beatSaberVersion = cfg.BeatSaberVersion;
         });
     }
-
     getModBG(mod: ModDefinition) {
         if (!mod.CoverImageFilename) {
             if (mod.Category == ModCategory.Saber) {
@@ -160,24 +130,53 @@ export class MainModsComponent implements OnInit, AfterViewInit {
     }
 
     toggleMod(ev: MatSlideToggleChange, mod: ModDefinition) {
-        this.modIDBeingSwitched = mod.ID;
-        this.modSwitchInProgress = true;
-        let msg = new ClientSetModStatus();
-        msg.ModID = mod.ID;
-        msg.Status = ev.checked ? ModStatusType.Installed : ModStatusType.NotInstalled;
-        let sub;
-        sub = this.msgSvc.actionResponseMessage.subscribe((ev: HostActionResponse) => {
-            if (ev.ResponseToMessageID == msg.MessageID) {
-                this.modIDBeingSwitched = null;
-                this.modSwitchInProgress = false;
-                sub.unsubscribe();
-                if (!ev.Success) {
-                    //todo: show error
-                    console.log('mod id ' + msg.ModID + ' did not switch properly');
+        const switchMod = () => {
+            this.modIDBeingSwitched = mod.ID;
+            this.modSwitchInProgress = true;
+            let msg = new ClientSetModStatus();
+            msg.ModID = mod.ID;
+            msg.Status = ev.checked ? ModStatusType.Installed : ModStatusType.NotInstalled;
+            let sub;
+            sub = this.msgSvc.actionResponseMessage.subscribe((ev: HostActionResponse) => {
+                if (ev.ResponseToMessageID == msg.MessageID) {
+                    this.modIDBeingSwitched = null;
+                    this.modSwitchInProgress = false;
+                    sub.unsubscribe();
+                    if (!ev.Success) {
+                        //todo: show error
+                        console.log('mod id ' + msg.ModID + ' did not switch properly');
+                    }
                 }
-            }
-        });
-        this.msgSvc.sendClientMessage(msg);
+            });
+            this.msgSvc.sendClientMessage(msg);
+        };
+
+        if (ev.checked && mod.TargetBeatSaberVersion != this.beatSaberVersion) {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                width: '470px',
+                height: '240px',
+                disableClose: true,
+                data: {
+                    title: 'Mod Compatibility Warning',
+                    subTitle:
+                        'The mod is for Beat Saber: ' +
+                        mod.TargetBeatSaberVersion +
+                        '\nYou have version:\t\t' +
+                        this.beatSaberVersion +
+                        '\nThis mod may fail to activate, it may cause Beat Saber to crash, or it may work fine.\nAre you sure you want to turn it on?',
+                    button1Text: 'Enable Mod',
+                },
+            });
+            dialogRef.afterClosed().subscribe(res => {
+                if (res == 1) {
+                    switchMod();
+                } else {
+                    ev.source.checked = false;
+                }
+            });
+        } else {
+            switchMod();
+        }
     }
     getModSwitch(mod) {
         if (mod == null) return false;

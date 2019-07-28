@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.1.0.0" package="com.emulamer.beaton" android:installLocation="preferExternal" android:versionCode="100">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.1.1.2" package="com.emulamer.beaton" android:installLocation="preferExternal" android:versionCode="112">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="25" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

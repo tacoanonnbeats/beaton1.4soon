@@ -518,7 +518,18 @@ namespace BeatOn
                     var eng = _getEngine();
                     eng.ModManager.ModAdded(def);
                     _getEngine().ModManager.ResetCache();
-                    QueueModInstall(def);
+                    var bsVer = _getConfig().BeatSaberVersion;
+                    if (_getConfig().BeatSaberVersion != def.TargetBeatSaberVersion)
+                    {
+                        Log.LogErr($"Mod ID {def.ID} was imported but will not be automatically activated because it's target version {def.TargetBeatSaberVersion} doesn't match beat saber's version {bsVer}");
+                        _getConfig().Config = _getEngine().GetCurrentConfig();
+                        _triggerConfigChanged();
+                        _showToast("Mod Not Enabled", "Mod was not enabled because it may not be compatible.", ToastType.Warning, 5);
+                    }
+                    else
+                    {
+                        QueueModInstall(def);
+                    }
 
                 }
                 catch (Exception ex)

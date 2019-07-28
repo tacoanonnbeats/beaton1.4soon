@@ -75,6 +75,22 @@ namespace BeatOn.ClientModels
             }
         }
 
+        private string _beatSaberVersion;
+        public string BeatSaberVersion
+        {
+            get
+            {
+                return _beatSaberVersion;
+            }
+            set
+            {
+                bool changed = _beatSaberVersion != value;
+                _beatSaberVersion = value;
+                if (changed)
+                    PropChanged(nameof(BeatSaberVersion));
+            }
+        }
+
         private void Config_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropChanged(nameof(Config));
