@@ -13,6 +13,7 @@ using Android.Widget;
 using QuestomAssets;
 using QuestomAssets.Utils;
 using Android.Support.V4.Content;
+using Pxb.Android.Axml;
 
 namespace BeatOn
 {
@@ -159,12 +160,7 @@ namespace BeatOn
                 File.Copy(bsApkPath, TempApk, true);
                 UpdateStatus("APK copied successfully!");
 
-                if (File.Exists(BS_PLAYER_DATA_FILE))
-                {
-                    UpdateStatus("Backing up PlayerData");
-                    MakeFullPath(Constants.BACKUP_FULL_PATH);
-                    File.Copy(BS_PLAYER_DATA_FILE, Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat"), true);
-                }
+                BackupPlayerData();
                 BackupOriginalApk();
 
                 if (triggerUninstall)
@@ -186,11 +182,57 @@ namespace BeatOn
             }
         }
 
-        private void ReplacePlayerData()
+        public void BackupPlayerData(bool onlyIfNewer = false, bool onlyIfBigger = false)
+        {
+            try
+            {
+                if (File.Exists(BS_PLAYER_DATA_FILE))
+                {
+                    if (File.Exists(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat")))
+                    {
+                        if (onlyIfNewer && File.GetLastWriteTimeUtc(BS_PLAYER_DATA_FILE) < File.GetLastWriteTimeUtc(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat")))
+                        {
+                            Log.LogMsg("Backup PlayerData.dat is newer than the real one, not backing it up.");
+                            return;
+                        }
+                        if (onlyIfBigger && new FileInfo(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat")).Length > new FileInfo(BS_PLAYER_DATA_FILE).Length)
+                        {
+                            Log.LogMsg("Backup PlayerData.dat is bigger than the real one, not backing it up");
+                            return;
+                        }
+                    }
+                    try
+                    {
+                        if (File.Exists(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat")))
+                        {
+                            File.Copy(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat"), Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData2.dat"), true);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.LogErr("Exception trying to make second backup of playerdata.dat");
+                    }
+                    Log.LogMsg("Backing up PlayerData.dat");
+                    MakeFullPath(Constants.BACKUP_FULL_PATH);
+                    File.Copy(BS_PLAYER_DATA_FILE, Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat"), true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception backing up player data", ex);
+            }
+        }
+
+        public void RestorePlayerData(bool onlyIfBigger = false)
         {
             if (File.Exists(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat")))
             {
-                UpdateStatus("Replacing Player Data file");
+                if (onlyIfBigger && File.Exists(BS_PLAYER_DATA_FILE) && new FileInfo(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat")).Length < new FileInfo(BS_PLAYER_DATA_FILE).Length)
+                {
+                    Log.LogMsg("Backup PlayerData.dat is smaller than the real one, not restoring it.");
+                    return;
+                }
+                Log.LogMsg("Restoring PlayerData.dat");
                 MakeFullPath(Path.GetDirectoryName(BS_PLAYER_DATA_FILE));
                 File.Copy(Constants.BACKUP_FULL_PATH.CombineFwdSlash("PlayerData.dat"), BS_PLAYER_DATA_FILE, true);
             }
@@ -373,7 +415,7 @@ namespace BeatOn
                 SignApk(TempApk);
 
                 UpdateStatus("Restoring PlayerData.dat, hopefully this is a good time to do it.");
-                ReplacePlayerData();                
+                RestorePlayerData();                
             }
             catch (Exception ex)
             {
@@ -680,10 +722,66 @@ namespace BeatOn
             }
         }
 
+        public string GetBeatSaberVersion()
+        {
+            if (!IsBeatSaberInstalled)
+                return null;
+
+            try
+            {
+                Android.Content.PM.PackageInfo pInfo = _context.PackageManager.GetPackageInfo("com.beatgames.beatsaber", 0);
+                return pInfo.VersionName;
+            }
+            catch (PackageManager.NameNotFoundException e)
+            {
+                Log.LogErr("The Beat Saber package could not be found!");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception trying to determine Beat Saber version", ex);
+                throw;
+            }
+        }
+
+        public string GetAssetsVersion()
+        {
+            if (!Directory.Exists(Constants.ASSETS_RELOC_PATH))
+                return null;           
+            try
+            {
+                string verFileName = Constants.ASSETS_RELOC_PATH.CombineFwdSlash("assets.version");
+                if (!File.Exists(verFileName))
+                {
+                    //if the assets.version file doesn't exist but globalgamemanagers does, probably it's an upgrade from 0.1.0.0 or earlier that didn't write this file
+                    //  create one assuming that it is BS version 1.1.0
+                    if (File.Exists(Constants.ASSETS_RELOC_PATH.CombineFwdSlash("globalgamemanagers")))
+                    {
+                        File.WriteAllText(verFileName, "1.1.0");
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                string ver = File.ReadAllText(verFileName);
+                if (string.IsNullOrWhiteSpace(ver))
+                    return null;
+
+                return ver.Trim();
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception trying to get extracted assets files version", ex);
+                return null;
+            }
+        }
+
         private void ExtractAssetsFromApkToExternalStorage(string apkFilename, List<string> excludePaths = null, bool renameAssets = true)
         {
             UpdateStatus("Extracting assets files from the APK to external storage...");
-            using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, renameAssets, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+            using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, !renameAssets, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
             {
                 foreach (var assetFilename in apk.FindFiles(APK_ASSETS_PATH + "*"))
                 {
@@ -736,7 +834,101 @@ namespace BeatOn
                     }
                 }
                 if (renameAssets)
+                {
                     apk.Save();
+                    var apkVer = GetAPKVersion(apkFilename);
+                    var verPath = Constants.ASSETS_RELOC_PATH.CombineFwdSlash("assets.version");
+                    if (File.Exists(verPath))
+                    {
+                        File.Delete(verPath);
+                    }
+                    if (string.IsNullOrWhiteSpace(apkVer))
+                    {
+                        Log.LogErr($"Got an empty version from apk file '{apkFilename}'");
+                        throw new Exception($"Got empty version from apk file '{apkFilename}'");
+                    }
+                    File.WriteAllText(verPath, apkVer);
+                }
+            }
+        }
+
+        private string GetAPKVersion(string fullApkPath)
+        {
+            try
+            {
+                Android.Content.PM.PackageInfo info = _context.PackageManager.GetPackageArchiveInfo(fullApkPath, 0);
+                return info.VersionName;
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr($"Exception trying to get version from APK '{fullApkPath}'", ex);
+                throw;
+            }
+        }
+
+        private List<string> GetMissingPermissions(string apkFilename, List<string> requiredPermissions)
+        {
+            try
+            {
+                var tt = _context.PackageManager.GetPackageArchiveInfo(apkFilename, PackageInfoFlags.Permissions);
+                if (tt.RequestedPermissions == null)
+                    return requiredPermissions.ToList();
+
+                return requiredPermissions.Where(x => !tt.RequestedPermissions.Any(y => y == x)).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr($"Exception trying to check APK '{apkFilename}' for write external storage permission", ex);
+                throw;
+            }
+        }
+
+        private void AddAndroidPermissions(string apkFilename, List<string> permissions)
+        {
+            if (permissions == null || permissions.Count < 1)
+                throw new ArgumentException("At least one permission must be specified to add.");
+            try
+            {
+                using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, false, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+                {
+                    byte[] manifest = apk.Read("AndroidManifest.xml");
+                    AxmlWriter writer = new WritePermissionAxmlWriter(permissions);
+                    AxmlReader reader = new AxmlReader(manifest);
+
+                    reader.Accept(writer);
+                    var outData = writer.ToByteArray();
+                    apk.Write("AndroidManifest.xml", outData, true);
+                    apk.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Exception trying to add permissions to AndroidManifest.xml", ex);
+                throw;
+            }
+        }
+
+        private class WritePermissionAxmlWriter : Pxb.Android.Axml.AxmlWriter
+        {
+            private List<string> _permissionsToAdd;
+            public WritePermissionAxmlWriter(List<string> permissionsToAdd)
+            {
+                _permissionsToAdd = permissionsToAdd;
+            }
+
+            public override NodeVisitor Child(string ns, string name)
+            {
+                if (name == "manifest")
+                {
+                    var baseChild = base.Child(ns, name);
+                    foreach (var permission in _permissionsToAdd)
+                    {
+                        var c = baseChild.Child(ns, "uses-permission");
+                        c.Attr("http://schemas.android.com/apk/res/android", "name", 16842755, 3, new Java.Lang.String(permission));
+                    }
+                    return baseChild;
+                }
+                return base.Child(ns, name);
             }
         }
 
@@ -745,14 +937,17 @@ namespace BeatOn
             UpdateStatus("Modding the manifest in the APK...");
             try
             {
-                using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, false, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+                var permissions = GetMissingPermissions(apkFilename, new List<string>() { "android.permission.WRITE_EXTERNAL_STORAGE",
+                                                                        "android.permission.READ_EXTERNAL_STORAGE",
+                                                                        "android.permission.INTERNET" });
+                if (permissions.Count < 1)
                 {
-                    using (var resStream = _context.Resources.OpenRawResource(Resource.Raw.manifestmod))
-                    {
-                        apk.QueueWriteStream("AndroidManifest.xml", resStream, true, true);
-                        apk.Save();
-                    }
+                    Log.LogMsg($"APK '{apkFilename}' is not missing any required permissions in its manifest.");
+                    return;
                 }
+
+                Log.LogMsg($"APK '{apkFilename}' is missing permissions: {string.Join(", ", permissions)}");
+                AddAndroidPermissions(apkFilename, permissions);
             }
             catch (Exception ex)
             {

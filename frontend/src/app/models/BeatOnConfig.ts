@@ -5,4 +5,5 @@ export interface BeatOnConfig {
     Config: QuestomConfig;
     IsCommitted: boolean;
     SyncConfig: SyncSaberConfig;
+    BeatSaberVersion: string;
 }

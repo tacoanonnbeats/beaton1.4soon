@@ -53,7 +53,7 @@ namespace BeatOn
 
         private int _maxConcurrentDownloads;
         
-        public DownloadManager(ImportManager importManager, int maxConcurrentDownloads = 15)
+        public DownloadManager(ImportManager importManager, int maxConcurrentDownloads = 5)
         {
             _importManager = importManager;
             _maxConcurrentDownloads = maxConcurrentDownloads;

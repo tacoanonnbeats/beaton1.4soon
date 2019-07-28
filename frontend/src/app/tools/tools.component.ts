@@ -81,21 +81,7 @@ export class ToolsComponent implements OnInit {
         this.beatOnApi.resetAssets().subscribe(
             (data: any) => {
                 dialogRef.close();
-                const dialogRef2 = this.dialog.open(ProgressSpinnerDialogComponent, {
-                    width: '450px',
-                    height: '350px',
-                    disableClose: true,
-                    data: { mainText: 'Loading Songs Folder.  Please wait...' },
-                });
-                this.beatOnApi.reloadSongsFromFolders().subscribe(
-                    (data: any) => {
-                        dialogRef2.close();
-                        this.beatOnApi.restoreCommittedConfig().subscribe(ret => {});
-                    },
-                    err => {
-                        dialogRef2.close();
-                    }
-                );
+                this.beatOnApi.restoreCommittedConfig().subscribe(ret => {});
             },
             err => {
                 dialogRef.close();

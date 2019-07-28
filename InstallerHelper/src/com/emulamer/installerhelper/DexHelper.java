@@ -17,6 +17,7 @@ import org.jf.dexlib2.rewriter.RewriterModule;
 import org.jf.dexlib2.rewriter.*;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 
 
@@ -27,6 +28,16 @@ public class DexHelper {
     public boolean checkDexInjection(File classesDexFilename) throws Exception {
         DexBackedDexFile dexFile = DexFileFactory.loadDexFile(classesDexFilename, null);
         return checkDexInjected(dexFile);
+    }
+
+    public boolean checkDexInjectionGeneric(File classesDexFilename, @Nullable String targetClass) throws Exception {
+        DexBackedDexFile dexFile = DexFileFactory.loadDexFile(classesDexFilename, null);
+        if (targetClass == null) {
+            targetClass = findInjectClass(dexFile);
+        }
+        if (targetClass == null)
+            throw new Exception("Could not find target class");
+        return checkDexInjectedGeneric(dexFile, targetClass);
     }
 
     private String opName(Opcode code) {
@@ -136,6 +147,27 @@ public class DexHelper {
         return output;
     }
 
+     boolean checkDexInjectedGeneric(DexBackedDexFile dexFile, String className)
+     {
+         boolean foundStaticInit = false;
+         for (DexBackedClassDef dexClass : dexFile.getClasses()) {
+             String type = dexClass.getType();
+             if (type.equals(className)) {
+                 //unity engine
+                 for (DexBackedMethod m : dexClass.getDirectMethods()) {
+                     String name = m.getName();
+                     if (name.equals("<clinit>")) {
+                         //found a static class initializer, can't add another, means it's probably already injected
+                         //TODO: see if this can be modified to add the additional loadlibrary call
+                         foundStaticInit = true;
+                         break;
+                     }
+                 }
+                 break;
+             }
+         }
+         return foundStaticInit;
+     }
 
      boolean checkDexInjected(DexBackedDexFile dexFile ) throws Exception
     {
@@ -143,10 +175,12 @@ public class DexHelper {
         for (DexBackedClassDef dexClass : dexFile.getClasses()) {
             String type = dexClass.getType();
             if (type.equals("Lcom/unity3d/player/UnityPlayerActivity;")) {
+                //unity engine
                 for (DexBackedMethod m : dexClass.getDirectMethods()) {
                     String name = m.getName();
                     if (name.equals("<clinit>")) {
                         //found a static class initializer, can't add another, means it's probably already injected
+                        //TODO: see if this can be modified to add the additional loadlibrary call
                         foundStaticInit = true;
                         break;
                     }
@@ -155,6 +189,29 @@ public class DexHelper {
             }
         }
         return foundStaticInit;
+    }
+
+//this will have to be somewhere we have android context for the package manager
+/*    String findMainActivityClass(PackageManager pm, String packageName) {
+
+        String packageName = context.getPackageName();
+        Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        String className = launchIntent.getComponent().getClassName();
+    }*/
+
+    public String findInjectClass(DexBackedDexFile dexFile) throws Exception {
+
+        for (DexBackedClassDef dexClass : dexFile.getClasses()) {
+            String type = dexClass.getType();
+            if (type.equals("Lcom/unity3d/player/UnityPlayerActivity;")) {
+                //unity engine
+                return type;
+            } else if (type.equals("Lcom/epicgames/ue4/GameActivity;")) {
+                //unreal engine
+                return type;
+            }
+        }
+        return null;
     }
 
 
@@ -199,6 +256,33 @@ public class DexHelper {
 
         return refDef;
     }
+
+
+    public boolean injectDexGeneric (File classesDexFilename, File moddedOutputFilename, String modLibName, @Nullable String targetClass) throws Exception {
+        DexBackedDexFile dexFile = DexFileFactory.loadDexFile(classesDexFilename, null);
+        if (targetClass == null) {
+            targetClass = findInjectClass(dexFile);
+        }
+        if (targetClass == null)
+            throw new Exception("Could not find target class");
+        if (checkDexInjectedGeneric(dexFile, targetClass)) {
+            return false;
+        }
+        
+        final String target = targetClass;
+        final String mod = modLibName;
+        DexRewriter rewriter = new DexRewriter(new RewriterModule() {
+
+            @Nonnull
+            @Override public Rewriter<ClassDef> getClassDefRewriter(@Nonnull Rewriters rewriters) {
+                return new GenericInjectorRewriter(rewriters, target, mod);
+            }
+        });
+        DexFile rewritten = rewriter.rewriteDexFile(dexFile);
+        DexFileFactory.writeDexFile(moddedOutputFilename.getAbsolutePath(), rewritten);
+        return true;
+    }
+
     public boolean injectDex (File classesDexFilename, File moddedOutputFilename) throws Exception {
         DexBackedDexFile dexFile = DexFileFactory.loadDexFile(classesDexFilename, null);
 

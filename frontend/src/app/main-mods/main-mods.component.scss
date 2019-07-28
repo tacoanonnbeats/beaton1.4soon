@@ -15,7 +15,12 @@
     margin-left: 95px !important;
   }
 }
-
+.incompat {
+  background-color: rgba(100,20,20,.15) !important;
+}
+.builtinMods > * {
+  margin-right: 10px;
+}
 .modCategory {
   position: absolute;
   left: 0px;

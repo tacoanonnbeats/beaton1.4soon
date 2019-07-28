@@ -6,19 +6,16 @@
       </div>
       <mat-card-title>Mod Management</mat-card-title>
       <mat-card-subtitle>Manage all mods available for the quest here. Install, uninstall, and configure mods..</mat-card-subtitle>
-      <div class="builtinMods">
-          <mat-chip-list>
-              <mat-chip [ngStyle]="{'background-color': leftColor}" cpPosition="left" [cpPositionOffset]="-30" [cpCmykEnabled]="false" 
+      <div class="builtinMods">            
+          <button mat-raised-button [ngStyle]="{'background-color': leftColor}" cpPosition="left" [cpPositionOffset]="-30" [cpCmykEnabled]="false" 
               [(colorPicker)]="leftColor" 
               [cpAlphaChannel]="true" cpCloseClickOutside="true" cpOutputFormat="rgba"
-              (colorPickerSelect)="leftColorSelected($event)" [cpOKButton]="true" cpOKButtonText="Save Color" selected><span class="colorName">Left Color</span></mat-chip>
-          </mat-chip-list>
-          <mat-chip-list>
-              <mat-chip [ngStyle]="{'background-color': rightColor}" cpPosition="left" [cpPositionOffset]="-30" [cpCmykEnabled]="false" 
+              (colorPickerSelect)="leftColorSelected($event)" [cpOKButton]="true" cpOKButtonText="Save Color" selected><span class="colorName">Left Color</span></button>
+            
+          <button mat-raised-button [ngStyle]="{'background-color': rightColor}" cpPosition="bottom" [cpPositionOffset]="-30" [cpCmykEnabled]="false" 
               [(colorPicker)]="rightColor" 
               [cpAlphaChannel]="true" cpCloseClickOutside="true" cpOutputFormat="rgba"
-              (colorPickerSelect)="rightColorSelected($event)" [cpOKButton]="true" cpOKButtonText="Save Color" selected><span class="colorName">Right Color</span></mat-chip>
-            </mat-chip-list>
+              (colorPickerSelect)="rightColorSelected($event)" [cpOKButton]="true" cpOKButtonText="Save Color" selected><span class="colorName">Right Color</span></button>
       </div>
     </mat-card-header>
 
@@ -29,7 +26,7 @@
   <div fxFlex="60%">
     <mat-list>
       <!-- [class.selected]="mod === selectedMod" (click)="onSelect(mod); myModal.open()" -->
-        <mat-list-item class="modContainer" *ngFor="let mod of config.Mods" >
+        <mat-list-item class="modContainer" *ngFor="let mod of config.Mods" [ngClass]="{incompat: mod.TargetBeatSaberVersion != beatSaberVersion}" >
           <div [ngStyle]="{'background-image': getModBG(mod)}" class="modCategory"></div>
           <div matTooltip="Delete the mod from Beat On." (click)="clickDeleteMod(mod)" class="deleteMod"><mat-icon>delete_forever</mat-icon></div>
           <h1 matLine> {{ mod.Name }} <span class="version">{{ mod.Version }}</span></h1>
