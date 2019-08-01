@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Webkit;
 using Android.Widget;
 using BeatOn.ClientModels;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BeatOn
 {
@@ -69,13 +69,13 @@ namespace BeatOn
                     .Replace("[%22", "[\"")
                     .Replace("%22]", "\"]");
                     
-                JArray urls = JArray.Parse(json);
+                JArray urls = JArray.Parse(dlurls);
                 
                 if(urls.Count > 0) 
                 {
                     for (int i = 0; i < urls.Count; i++)
                     {
-                        Download?.Invoke(this, urls[i]);
+                        Download?.Invoke(this, (string) urls[i]);
                     }
                     return true;
                 }
