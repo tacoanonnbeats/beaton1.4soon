@@ -68,12 +68,18 @@ namespace BeatOn
                     .Replace("%22,%22", "\",\"")
                     .Replace("[%22", "[\"")
                     .Replace("%22]", "\"]");
+                    
                 JArray urls = JArray.Parse(json);
+                
                 if(urls.Count > 0) 
                 {
-                    Download?.Invoke(this, urls[0]);
+                    for (int i = 0; i < urls.Count; i++)
+                    {
+                        Download?.Invoke(this, urls[i]);
+                    }
                     return true;
                 }
+                
             }
             else if (lowerUrl.StartsWith("beatsaver://"))
             {
