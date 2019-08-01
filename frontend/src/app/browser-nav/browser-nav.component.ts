@@ -14,7 +14,7 @@ export class BrowserNavComponent implements OnInit {
         { title: 'Beat Saver', url: 'https://beatsaver.com' },
         { title: 'SideQuest', url: 'https://sidequestvr.com/#/apps/4' },
         { title: 'Google', url: 'https://google.com' },
-        { title: 'Mods', url: 'https://github.com/RedBrumbler/BeatOnCustomSabers' },
+        // { title: 'Mods', url: 'https://github.com/RedBrumbler/BeatOnCustomSabers' },
     ];
 
     @Output() linkSelected = new EventEmitter<string>();
