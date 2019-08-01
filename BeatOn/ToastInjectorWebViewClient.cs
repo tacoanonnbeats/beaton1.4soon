@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Webkit;
 using Android.Widget;
 using BeatOn.ClientModels;
+using Newtonsoft.Json;
 
 namespace BeatOn
 {
@@ -60,6 +61,19 @@ namespace BeatOn
                 Download?.Invoke(this, dlurl);
 
                 return true;
+            }
+            else if (lowerUrl.StartsWith("sidequest://bsaber-multi/#"))
+            {
+                string dlurls = url.Substring(26)
+                    .Replace("%22,%22", "\",\"")
+                    .Replace("[%22", "[\"")
+                    .Replace("%22]", "\"]");
+                JArray urls = JArray.Parse(json);
+                if(urls.Count > 0) 
+                {
+                    Download?.Invoke(this, urls[0]);
+                    return true;
+                }
             }
             else if (lowerUrl.StartsWith("beatsaver://"))
             {
