@@ -144,7 +144,9 @@ namespace BeatOn
             _browserView= FindViewById<WebView>(Resource.Id.webView2);
             _toastInjector = new ToastInjectorWebViewClient(_browserView);
             _browserView.SetWebViewClient(_toastInjector);
-            _browserView.Settings.UserAgentString += " BeatOn_Quest/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            // _browserView.Settings.UserAgentString += " BeatOn_Quest/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            _browserView.Settings.UserAgentString = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"
+                + " BeatOn_Quest /" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             _browserView.SetWebChromeClient(new WebChromeClient());
             _browserView.Settings.JavaScriptEnabled = true;
             _browserView.Settings.AllowContentAccess = true;
