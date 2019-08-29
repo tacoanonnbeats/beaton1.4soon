@@ -268,7 +268,7 @@ public class DexHelper {
         if (checkDexInjectedGeneric(dexFile, targetClass)) {
             return false;
         }
-        
+
         final String target = targetClass;
         final String mod = modLibName;
         DexRewriter rewriter = new DexRewriter(new RewriterModule() {
