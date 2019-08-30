@@ -19109,7 +19109,7 @@
       let hf;
       try {
         hf = "undefined" != typeof Intl && Intl.v8BreakIterator;
-      } catch (vR) {
+      } catch (xR) {
         hf = !1;
       }
       const gf = (() => {
@@ -23035,7 +23035,7 @@
             const e = (function(t) {
               try {
                 return t.frameElement;
-              } catch (vR) {
+              } catch (xR) {
                 return null;
               }
             })(
@@ -23694,7 +23694,7 @@
       let E_;
       try {
         E_ = "undefined" != typeof Intl;
-      } catch (vR) {
+      } catch (xR) {
         E_ = !1;
       }
       const I_ = (() => {
@@ -28705,7 +28705,7 @@
             Cr(21, 0, null, null, 1, "h4", [], null, null, null, null, null)),
             (t()(),
             Rr(-1, null, [
-              "This version of Beat On is intended for Beat Saber version 1.1.0 and 1.2.0!"
+              "This version of Beat On is intended for Beat Saber version 1.1.0 and 1.2.0 and 1.3.0!"
             ])),
             (t()(),
             Cr(23, 0, null, null, 1, "p", [], null, null, null, null, null)),
@@ -48446,187 +48446,8 @@
           null
         );
       }
-      var $E = Co("app-sync-saber", TE, GE, {}, {}, []);
-      class ZE {}
-      const QE = k_(ZE);
-      class XE {}
-      const JE = k_(XE),
-        tI = (() =>
-          class extends QE {
-            constructor() {
-              super(...arguments), (this._stateChanges = new w());
-            }
-            ngOnChanges() {
-              this._stateChanges.next();
-            }
-            ngOnDestroy() {
-              this._stateChanges.complete();
-            }
-          })(),
-        eI = (() =>
-          class extends QE {
-            constructor(t) {
-              super(),
-                (this._elementRef = t),
-                (this._stateChanges = new w()),
-                "action-list" === this._getListType() &&
-                  t.nativeElement.classList.add("mat-action-list");
-            }
-            _getListType() {
-              const t = this._elementRef.nativeElement.nodeName.toLowerCase();
-              return "mat-list" === t
-                ? "list"
-                : "mat-action-list" === t
-                ? "action-list"
-                : null;
-            }
-            ngOnChanges() {
-              this._stateChanges.next();
-            }
-            ngOnDestroy() {
-              this._stateChanges.complete();
-            }
-          })(),
-        nI = (() =>
-          class extends JE {
-            constructor(t, e, n, a) {
-              super(),
-                (this._element = t),
-                (this._isInteractiveList = !1),
-                (this._destroyed = new w()),
-                (this._isInteractiveList = !!(
-                  n ||
-                  (a && "action-list" === a._getListType())
-                )),
-                (this._list = n || a);
-              const o = this._getHostElement();
-              "button" !== o.nodeName.toLowerCase() ||
-                o.hasAttribute("type") ||
-                o.setAttribute("type", "button"),
-                this._list &&
-                  this._list._stateChanges
-                    .pipe(Zp(this._destroyed))
-                    .subscribe(() => {
-                      e.markForCheck();
-                    });
-            }
-            ngAfterContentInit() {
-              var t, e;
-              (e = this._element),
-                (t = this._lines).changes
-                  .pipe(id(t))
-                  .subscribe(({ length: t }) => {
-                    z_(e, "mat-2-line", !1),
-                      z_(e, "mat-3-line", !1),
-                      z_(e, "mat-multi-line", !1),
-                      2 === t || 3 === t
-                        ? z_(e, `mat-${t}-line`, !0)
-                        : t > 3 && z_(e, "mat-multi-line", !0);
-                  });
-            }
-            ngOnDestroy() {
-              this._destroyed.next(), this._destroyed.complete();
-            }
-            _isRippleDisabled() {
-              return (
-                !this._isInteractiveList ||
-                this.disableRipple ||
-                !(!this._list || !this._list.disableRipple)
-              );
-            }
-            _getHostElement() {
-              return this._element.nativeElement;
-            }
-          })(),
-        aI = (() => class {})(),
-        oI = (() => class {})();
-      var iI = Ia({
-        encapsulation: 2,
-        styles: [
-          ".mat-subheader{display:flex;box-sizing:border-box;padding:16px;align-items:center}.mat-list-base .mat-subheader{margin:0}.mat-list-base{padding-top:8px;display:block;-webkit-tap-highlight-color:transparent}.mat-list-base .mat-subheader{height:48px;line-height:16px}.mat-list-base .mat-subheader:first-child{margin-top:-8px}.mat-list-base .mat-list-item,.mat-list-base .mat-list-option{display:block;height:48px;-webkit-tap-highlight-color:transparent;width:100%;padding:0}.mat-list-base .mat-list-item .mat-list-item-content,.mat-list-base .mat-list-option .mat-list-item-content{display:flex;flex-direction:row;align-items:center;box-sizing:border-box;padding:0 16px;position:relative;height:inherit}.mat-list-base .mat-list-item .mat-list-item-content-reverse,.mat-list-base .mat-list-option .mat-list-item-content-reverse{display:flex;align-items:center;padding:0 16px;flex-direction:row-reverse;justify-content:space-around}.mat-list-base .mat-list-item .mat-list-item-ripple,.mat-list-base .mat-list-option .mat-list-item-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-list-base .mat-list-item.mat-list-item-with-avatar,.mat-list-base .mat-list-option.mat-list-item-with-avatar{height:56px}.mat-list-base .mat-list-item.mat-2-line,.mat-list-base .mat-list-option.mat-2-line{height:72px}.mat-list-base .mat-list-item.mat-3-line,.mat-list-base .mat-list-option.mat-3-line{height:88px}.mat-list-base .mat-list-item.mat-multi-line,.mat-list-base .mat-list-option.mat-multi-line{height:auto}.mat-list-base .mat-list-item.mat-multi-line .mat-list-item-content,.mat-list-base .mat-list-option.mat-multi-line .mat-list-item-content{padding-top:16px;padding-bottom:16px}.mat-list-base .mat-list-item .mat-list-text,.mat-list-base .mat-list-option .mat-list-text{display:flex;flex-direction:column;width:100%;box-sizing:border-box;overflow:hidden;padding:0}.mat-list-base .mat-list-item .mat-list-text>*,.mat-list-base .mat-list-option .mat-list-text>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-list-base .mat-list-item .mat-list-text:empty,.mat-list-base .mat-list-option .mat-list-text:empty{display:none}.mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:0;padding-left:16px}[dir=rtl] .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:16px;padding-left:0}.mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-left:0;padding-right:16px}[dir=rtl] .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:0;padding-left:16px}.mat-list-base .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:16px;padding-left:16px}.mat-list-base .mat-list-item .mat-list-avatar,.mat-list-base .mat-list-option .mat-list-avatar{flex-shrink:0;width:40px;height:40px;border-radius:50%;object-fit:cover}.mat-list-base .mat-list-item .mat-list-avatar~.mat-divider-inset,.mat-list-base .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:72px;width:calc(100% - 72px)}[dir=rtl] .mat-list-base .mat-list-item .mat-list-avatar~.mat-divider-inset,[dir=rtl] .mat-list-base .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:auto;margin-right:72px}.mat-list-base .mat-list-item .mat-list-icon,.mat-list-base .mat-list-option .mat-list-icon{flex-shrink:0;width:24px;height:24px;font-size:24px;box-sizing:content-box;border-radius:50%;padding:4px}.mat-list-base .mat-list-item .mat-list-icon~.mat-divider-inset,.mat-list-base .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:64px;width:calc(100% - 64px)}[dir=rtl] .mat-list-base .mat-list-item .mat-list-icon~.mat-divider-inset,[dir=rtl] .mat-list-base .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:auto;margin-right:64px}.mat-list-base .mat-list-item .mat-divider,.mat-list-base .mat-list-option .mat-divider{position:absolute;bottom:0;left:0;width:100%;margin:0}[dir=rtl] .mat-list-base .mat-list-item .mat-divider,[dir=rtl] .mat-list-base .mat-list-option .mat-divider{margin-left:auto;margin-right:0}.mat-list-base .mat-list-item .mat-divider.mat-divider-inset,.mat-list-base .mat-list-option .mat-divider.mat-divider-inset{position:absolute}.mat-list-base[dense]{padding-top:4px;display:block}.mat-list-base[dense] .mat-subheader{height:40px;line-height:8px}.mat-list-base[dense] .mat-subheader:first-child{margin-top:-4px}.mat-list-base[dense] .mat-list-item,.mat-list-base[dense] .mat-list-option{display:block;height:40px;-webkit-tap-highlight-color:transparent;width:100%;padding:0}.mat-list-base[dense] .mat-list-item .mat-list-item-content,.mat-list-base[dense] .mat-list-option .mat-list-item-content{display:flex;flex-direction:row;align-items:center;box-sizing:border-box;padding:0 16px;position:relative;height:inherit}.mat-list-base[dense] .mat-list-item .mat-list-item-content-reverse,.mat-list-base[dense] .mat-list-option .mat-list-item-content-reverse{display:flex;align-items:center;padding:0 16px;flex-direction:row-reverse;justify-content:space-around}.mat-list-base[dense] .mat-list-item .mat-list-item-ripple,.mat-list-base[dense] .mat-list-option .mat-list-item-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar{height:48px}.mat-list-base[dense] .mat-list-item.mat-2-line,.mat-list-base[dense] .mat-list-option.mat-2-line{height:60px}.mat-list-base[dense] .mat-list-item.mat-3-line,.mat-list-base[dense] .mat-list-option.mat-3-line{height:76px}.mat-list-base[dense] .mat-list-item.mat-multi-line,.mat-list-base[dense] .mat-list-option.mat-multi-line{height:auto}.mat-list-base[dense] .mat-list-item.mat-multi-line .mat-list-item-content,.mat-list-base[dense] .mat-list-option.mat-multi-line .mat-list-item-content{padding-top:16px;padding-bottom:16px}.mat-list-base[dense] .mat-list-item .mat-list-text,.mat-list-base[dense] .mat-list-option .mat-list-text{display:flex;flex-direction:column;width:100%;box-sizing:border-box;overflow:hidden;padding:0}.mat-list-base[dense] .mat-list-item .mat-list-text>*,.mat-list-base[dense] .mat-list-option .mat-list-text>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-list-base[dense] .mat-list-item .mat-list-text:empty,.mat-list-base[dense] .mat-list-option .mat-list-text:empty{display:none}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:0;padding-left:16px}[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:16px;padding-left:0}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-left:0;padding-right:16px}[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:0;padding-left:16px}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:16px;padding-left:16px}.mat-list-base[dense] .mat-list-item .mat-list-avatar,.mat-list-base[dense] .mat-list-option .mat-list-avatar{flex-shrink:0;width:36px;height:36px;border-radius:50%;object-fit:cover}.mat-list-base[dense] .mat-list-item .mat-list-avatar~.mat-divider-inset,.mat-list-base[dense] .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:68px;width:calc(100% - 68px)}[dir=rtl] .mat-list-base[dense] .mat-list-item .mat-list-avatar~.mat-divider-inset,[dir=rtl] .mat-list-base[dense] .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:auto;margin-right:68px}.mat-list-base[dense] .mat-list-item .mat-list-icon,.mat-list-base[dense] .mat-list-option .mat-list-icon{flex-shrink:0;width:20px;height:20px;font-size:20px;box-sizing:content-box;border-radius:50%;padding:4px}.mat-list-base[dense] .mat-list-item .mat-list-icon~.mat-divider-inset,.mat-list-base[dense] .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:60px;width:calc(100% - 60px)}[dir=rtl] .mat-list-base[dense] .mat-list-item .mat-list-icon~.mat-divider-inset,[dir=rtl] .mat-list-base[dense] .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:auto;margin-right:60px}.mat-list-base[dense] .mat-list-item .mat-divider,.mat-list-base[dense] .mat-list-option .mat-divider{position:absolute;bottom:0;left:0;width:100%;margin:0}[dir=rtl] .mat-list-base[dense] .mat-list-item .mat-divider,[dir=rtl] .mat-list-base[dense] .mat-list-option .mat-divider{margin-left:auto;margin-right:0}.mat-list-base[dense] .mat-list-item .mat-divider.mat-divider-inset,.mat-list-base[dense] .mat-list-option .mat-divider.mat-divider-inset{position:absolute}.mat-nav-list a{text-decoration:none;color:inherit}.mat-nav-list .mat-list-item{cursor:pointer;outline:0}mat-action-list button{background:0 0;color:inherit;border:none;font:inherit;outline:inherit;-webkit-tap-highlight-color:transparent;text-align:left}[dir=rtl] mat-action-list button{text-align:right}mat-action-list button::-moz-focus-inner{border:0}mat-action-list .mat-list-item{cursor:pointer;outline:inherit}.mat-list-option:not(.mat-list-item-disabled){cursor:pointer;outline:0}@media (-ms-high-contrast:active){.mat-selection-list:focus{outline-style:dotted}.mat-list-option:focus,.mat-list-option:hover,.mat-nav-list .mat-list-item:focus,.mat-nav-list .mat-list-item:hover,mat-action-list .mat-list-item:focus,mat-action-list .mat-list-item:hover{outline:dotted 1px}}@media (hover:none){.mat-action-list .mat-list-item:not(.mat-list-item-disabled):hover,.mat-list-option:not(.mat-list-item-disabled):hover,.mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{background:0 0}}"
-        ],
-        data: {}
-      });
-      function rI(t) {
-        return zr(2, [Er(null, 0)], null, null);
-      }
-      var lI = Ia({ encapsulation: 2, styles: [], data: {} });
-      function sI(t) {
-        return zr(
-          2,
-          [
-            (t()(),
-            Cr(
-              0,
-              0,
-              null,
-              null,
-              6,
-              "div",
-              [["class", "mat-list-item-content"]],
-              null,
-              null,
-              null,
-              null,
-              null
-            )),
-            (t()(),
-            Cr(
-              1,
-              0,
-              null,
-              null,
-              1,
-              "div",
-              [
-                ["class", "mat-list-item-ripple mat-ripple"],
-                ["mat-ripple", ""]
-              ],
-              [[2, "mat-ripple-unbounded", null]],
-              null,
-              null,
-              null,
-              null
-            )),
-            Uo(
-              2,
-              212992,
-              null,
-              0,
-              K_,
-              [Ln, Di, gf, [2, q_], [2, uM]],
-              { disabled: [0, "disabled"], trigger: [1, "trigger"] },
-              null
-            ),
-            Er(null, 0),
-            (t()(),
-            Cr(
-              4,
-              0,
-              null,
-              null,
-              1,
-              "div",
-              [["class", "mat-list-text"]],
-              null,
-              null,
-              null,
-              null,
-              null
-            )),
-            Er(null, 1),
-            Er(null, 2)
-          ],
-          function(t, e) {
-            var n = e.component;
-            t(e, 2, 0, n._isRippleDisabled(), n._getHostElement());
-          },
-          function(t, e) {
-            t(e, 1, 0, Io(e, 2).unbounded);
-          }
-        );
-      }
-      var cI = (function() {
+      var $E = Co("app-sync-saber", TE, GE, {}, {}, []),
+        ZE = (function() {
           var t = { HEX: 0, RGBA: 1, HSLA: 2, CMYK: 3 };
           return (
             (t[t.HEX] = "HEX"),
@@ -48636,22 +48457,22 @@
             t
           );
         })(),
-        dI = (function() {
+        QE = (function() {
           return function(t, e, n, a) {
             (this.r = t), (this.g = e), (this.b = n), (this.a = a);
           };
         })(),
-        uI = (function() {
+        XE = (function() {
           return function(t, e, n, a) {
             (this.h = t), (this.s = e), (this.v = n), (this.a = a);
           };
         })(),
-        mI = (function() {
+        JE = (function() {
           return function(t, e, n, a) {
             (this.h = t), (this.s = e), (this.l = n), (this.a = a);
           };
         })(),
-        hI = (function() {
+        tI = (function() {
           return function(t, e, n, a, o) {
             void 0 === o && (o = 1),
               (this.c = t),
@@ -48661,7 +48482,7 @@
               (this.a = o);
           };
         })(),
-        gI = (function() {
+        eI = (function() {
           function t() {
             this.newValue = new li();
           }
@@ -48677,7 +48498,7 @@
             t
           );
         })(),
-        pI = (function() {
+        nI = (function() {
           function t(t) {
             var e = this;
             (this.elRef = t),
@@ -48754,17 +48575,17 @@
             t
           );
         })(),
-        fI = (function() {
+        aI = (function() {
           return function(t, e, n, a) {
             (this.h = t), (this.s = e), (this.v = n), (this.a = a);
           };
         })(),
-        bI = (function() {
+        oI = (function() {
           return function(t, e, n, a) {
             (this.h = t), (this.s = e), (this.v = n), (this.a = a);
           };
         })(),
-        _I = (function() {
+        iI = (function() {
           function t() {
             this.active = null;
           }
@@ -48781,19 +48602,19 @@
                 n = t.s,
                 a = t.v,
                 o = t.a;
-              if (0 === a) return new mI(e, 0, 0, o);
-              if (0 === n && 1 === a) return new mI(e, 1, 1, o);
+              if (0 === a) return new JE(e, 0, 0, o);
+              if (0 === n && 1 === a) return new JE(e, 1, 1, o);
               var i = (a * (2 - n)) / 2;
-              return new mI(e, (a * n) / (1 - Math.abs(2 * i - 1)), i, o);
+              return new JE(e, (a * n) / (1 - Math.abs(2 * i - 1)), i, o);
             }),
             (t.prototype.hsla2hsva = function(t) {
               var e = Math.min(t.h, 1),
                 n = Math.min(t.s, 1),
                 a = Math.min(t.l, 1),
                 o = Math.min(t.a, 1);
-              if (0 === a) return new uI(e, 0, 0, o);
+              if (0 === a) return new XE(e, 0, 0, o);
               var i = a + (n * (1 - Math.abs(2 * a - 1))) / 2;
-              return new uI(e, (2 * (i - a)) / i, i, o);
+              return new XE(e, (2 * (i - a)) / i, i, o);
             }),
             (t.prototype.hsvaToRgba = function(t) {
               var e,
@@ -48830,10 +48651,10 @@
                 default:
                   (e = 0), (n = 0), (a = 0);
               }
-              return new dI(e, n, a, l);
+              return new QE(e, n, a, l);
             }),
             (t.prototype.cmykToRgb = function(t) {
-              return new dI(
+              return new QE(
                 (1 - t.c) * (1 - t.k),
                 (1 - t.m) * (1 - t.k),
                 (1 - t.y) * (1 - t.k),
@@ -48843,8 +48664,8 @@
             (t.prototype.rgbaToCmyk = function(t) {
               var e = 1 - Math.max(t.r, t.g, t.b);
               return 1 === e
-                ? new hI(0, 0, 0, 1, t.a)
-                : new hI(
+                ? new tI(0, 0, 0, 1, t.a)
+                : new tI(
                     (1 - t.r - e) / (1 - e),
                     (1 - t.g - e) / (1 - e),
                     (1 - t.b - e) / (1 - e),
@@ -48880,7 +48701,7 @@
                 }
                 e /= 6;
               }
-              return new uI(e, n, c, r);
+              return new XE(e, n, c, r);
             }),
             (t.prototype.rgbaToHex = function(t, e) {
               var n =
@@ -48895,10 +48716,10 @@
               );
             }),
             (t.prototype.normalizeCMYK = function(t) {
-              return new hI(t.c / 100, t.m / 100, t.y / 100, t.k / 100, t.a);
+              return new tI(t.c / 100, t.m / 100, t.y / 100, t.k / 100, t.a);
             }),
             (t.prototype.denormalizeCMYK = function(t) {
-              return new hI(
+              return new tI(
                 Math.floor(100 * t.c),
                 Math.floor(100 * t.m),
                 Math.floor(100 * t.y),
@@ -48907,7 +48728,7 @@
               );
             }),
             (t.prototype.denormalizeRGBA = function(t) {
-              return new dI(
+              return new QE(
                 Math.round(255 * t.r),
                 Math.round(255 * t.g),
                 Math.round(255 * t.b),
@@ -48922,7 +48743,7 @@
                 {
                   re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
                   parse: function(t) {
-                    return new dI(
+                    return new QE(
                       parseInt(t[2], 10) / 255,
                       parseInt(t[3], 10) / 255,
                       parseInt(t[4], 10) / 255,
@@ -48933,7 +48754,7 @@
                 {
                   re: /(hsl)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
                   parse: function(t) {
-                    return new mI(
+                    return new JE(
                       parseInt(t[2], 10) / 360,
                       parseInt(t[3], 10) / 100,
                       parseInt(t[4], 10) / 100,
@@ -48947,7 +48768,7 @@
                   ? {
                       re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$/,
                       parse: function(t) {
-                        return new dI(
+                        return new QE(
                           parseInt(t[1], 16) / 255,
                           parseInt(t[2], 16) / 255,
                           parseInt(t[3], 16) / 255,
@@ -48958,7 +48779,7 @@
                   : {
                       re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
                       parse: function(t) {
-                        return new dI(
+                        return new QE(
                           parseInt(t[1], 16) / 255,
                           parseInt(t[2], 16) / 255,
                           parseInt(t[3], 16) / 255,
@@ -48970,7 +48791,7 @@
               a.push({
                 re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])$/,
                 parse: function(t) {
-                  return new dI(
+                  return new QE(
                     parseInt(t[1] + t[1], 16) / 255,
                     parseInt(t[2] + t[2], 16) / 255,
                     parseInt(t[3] + t[3], 16) / 255,
@@ -48985,9 +48806,9 @@
                     l = r && i.parse(r);
                   if (l)
                     return (
-                      l instanceof dI
+                      l instanceof QE
                         ? (n = this.rgbaToHsva(l))
-                        : l instanceof mI && (n = this.hsla2hsva(l)),
+                        : l instanceof JE && (n = this.hsla2hsva(l)),
                       n
                     );
                 }
@@ -48997,7 +48818,7 @@
               switch (("auto" === e && (e = t.a < 1 ? "rgba" : "hex"), e)) {
                 case "hsla":
                   var a = this.hsva2hsla(t),
-                    o = new mI(
+                    o = new JE(
                       Math.round(360 * a.h),
                       Math.round(100 * a.s),
                       Math.round(100 * a.l),
@@ -49030,7 +48851,7 @@
             t
           );
         })(),
-        CI = (function() {
+        rI = (function() {
           function t(t, e, n) {
             (this.elRef = t),
               (this.cdRef = e),
@@ -49038,7 +48859,7 @@
               (this.isIE10 = !1),
               (this.dialogArrowSize = 10),
               (this.dialogArrowOffset = 15),
-              (this.dialogInputFields = [cI.HEX, cI.RGBA, cI.HSLA, cI.CMYK]),
+              (this.dialogInputFields = [ZE.HEX, ZE.RGBA, ZE.HSLA, ZE.CMYK]),
               (this.useRootViewContainer = !1);
           }
           return (
@@ -49054,20 +48875,20 @@
             }),
             (t.prototype.ngOnInit = function() {
               var t = this;
-              (this.slider = new fI(0, 0, 0, 0)),
-                (this.sliderDimMax = new bI(
+              (this.slider = new aI(0, 0, 0, 0)),
+                (this.sliderDimMax = new oI(
                   this.hueSlider.nativeElement.offsetWidth || 140,
                   this.cpWidth,
                   130,
                   this.alphaSlider.nativeElement.offsetWidth || 140
                 )),
                 (this.format = this.cpCmykEnabled
-                  ? cI.CMYK
+                  ? ZE.CMYK
                   : "rgba" === this.cpOutputFormat
-                  ? cI.RGBA
+                  ? ZE.RGBA
                   : "hsla" === this.cpOutputFormat
-                  ? cI.HSLA
-                  : cI.HEX),
+                  ? ZE.HSLA
+                  : ZE.HEX),
                 (this.listenerMouseDown = function(e) {
                   t.onMouseDown(e);
                 }),
@@ -49081,7 +48902,7 @@
             }),
             (t.prototype.ngAfterViewInit = function() {
               (230 === this.cpWidth && "inline" !== this.cpDialogDisplay) ||
-                ((this.sliderDimMax = new bI(
+                ((this.sliderDimMax = new oI(
                   this.hueSlider.nativeElement.offsetWidth || 140,
                   this.cpWidth,
                   130,
@@ -49613,24 +49434,24 @@
                       )),
                   (a = this.service.denormalizeRGBA(
                     this.service.hsvaToRgba(
-                      new uI(this.sliderH || this.hsva.h, 1, 1, 1)
+                      new XE(this.sliderH || this.hsva.h, 1, 1, 1)
                     )
                   )),
                   e &&
-                    ((this.hslaText = new mI(
+                    ((this.hslaText = new JE(
                       Math.round(360 * o.h),
                       Math.round(100 * o.s),
                       Math.round(100 * o.l),
                       Math.round(100 * o.a) / 100
                     )),
-                    (this.rgbaText = new dI(
+                    (this.rgbaText = new QE(
                       i.r,
                       i.g,
                       i.b,
                       Math.round(100 * i.a) / 100
                     )),
                     this.cpCmykEnabled &&
-                      (this.cmykText = new hI(
+                      (this.cmykText = new tI(
                         this.cmyk.c,
                         this.cmyk.m,
                         this.cmyk.y,
@@ -49643,10 +49464,10 @@
                     )),
                     (this.hexAlpha = this.rgbaText.a)),
                   "auto" === this.cpOutputFormat &&
-                    this.format !== cI.RGBA &&
-                    this.format !== cI.CMYK &&
+                    this.format !== ZE.RGBA &&
+                    this.format !== ZE.CMYK &&
                     this.hsva.a < 1 &&
-                    (this.format = this.hsva.a < 1 ? cI.RGBA : cI.HEX),
+                    (this.format = this.hsva.a < 1 ? ZE.RGBA : ZE.HEX),
                   (this.hueSliderColor =
                     "rgb(" + a.r + "," + a.g + "," + a.b + ")"),
                   (this.alphaSliderColor =
@@ -49661,7 +49482,7 @@
                     "rgba",
                     null
                   )),
-                  this.format !== cI.CMYK)
+                  this.format !== ZE.CMYK)
                 )
                   this.cmykColor = "";
                 else if (
@@ -49693,7 +49514,7 @@
                     "," +
                     this.cmyk.k +
                     ")";
-                (this.slider = new fI(
+                (this.slider = new aI(
                   (this.sliderH || this.hsva.h) * this.sliderDimMax.h - 8,
                   this.hsva.s * this.sliderDimMax.s - 8,
                   (1 - this.hsva.v) * this.sliderDimMax.v - 8,
@@ -49795,7 +49616,7 @@
             t
           );
         })(),
-        PI = (function() {
+        lI = (function() {
           function t(t, e, n, a, o, i) {
             (this.injector = t),
               (this.cfr = e),
@@ -49906,7 +49727,7 @@
                       "You are using cpUseRootViewContainer, but the root component is not exposing viewContainerRef!Please expose it by adding 'public vcRef: ViewContainerRef' to the constructor."
                     );
                 }
-                var n = this.cfr.resolveComponentFactory(CI),
+                var n = this.cfr.resolveComponentFactory(rI),
                   a = Ee.fromResolvedProviders([], t.parentInjector);
                 (this.cmpRef = t.createComponent(n, 0, a, [])),
                   this.cmpRef.instance.setupDialog(
@@ -50012,9 +49833,188 @@
             t
           );
         })(),
-        OI = (function() {
+        sI = (function() {
           return function() {};
         })();
+      class cI {}
+      const dI = k_(cI);
+      class uI {}
+      const mI = k_(uI),
+        hI = (() =>
+          class extends dI {
+            constructor() {
+              super(...arguments), (this._stateChanges = new w());
+            }
+            ngOnChanges() {
+              this._stateChanges.next();
+            }
+            ngOnDestroy() {
+              this._stateChanges.complete();
+            }
+          })(),
+        gI = (() =>
+          class extends dI {
+            constructor(t) {
+              super(),
+                (this._elementRef = t),
+                (this._stateChanges = new w()),
+                "action-list" === this._getListType() &&
+                  t.nativeElement.classList.add("mat-action-list");
+            }
+            _getListType() {
+              const t = this._elementRef.nativeElement.nodeName.toLowerCase();
+              return "mat-list" === t
+                ? "list"
+                : "mat-action-list" === t
+                ? "action-list"
+                : null;
+            }
+            ngOnChanges() {
+              this._stateChanges.next();
+            }
+            ngOnDestroy() {
+              this._stateChanges.complete();
+            }
+          })(),
+        pI = (() =>
+          class extends mI {
+            constructor(t, e, n, a) {
+              super(),
+                (this._element = t),
+                (this._isInteractiveList = !1),
+                (this._destroyed = new w()),
+                (this._isInteractiveList = !!(
+                  n ||
+                  (a && "action-list" === a._getListType())
+                )),
+                (this._list = n || a);
+              const o = this._getHostElement();
+              "button" !== o.nodeName.toLowerCase() ||
+                o.hasAttribute("type") ||
+                o.setAttribute("type", "button"),
+                this._list &&
+                  this._list._stateChanges
+                    .pipe(Zp(this._destroyed))
+                    .subscribe(() => {
+                      e.markForCheck();
+                    });
+            }
+            ngAfterContentInit() {
+              var t, e;
+              (e = this._element),
+                (t = this._lines).changes
+                  .pipe(id(t))
+                  .subscribe(({ length: t }) => {
+                    z_(e, "mat-2-line", !1),
+                      z_(e, "mat-3-line", !1),
+                      z_(e, "mat-multi-line", !1),
+                      2 === t || 3 === t
+                        ? z_(e, `mat-${t}-line`, !0)
+                        : t > 3 && z_(e, "mat-multi-line", !0);
+                  });
+            }
+            ngOnDestroy() {
+              this._destroyed.next(), this._destroyed.complete();
+            }
+            _isRippleDisabled() {
+              return (
+                !this._isInteractiveList ||
+                this.disableRipple ||
+                !(!this._list || !this._list.disableRipple)
+              );
+            }
+            _getHostElement() {
+              return this._element.nativeElement;
+            }
+          })(),
+        fI = (() => class {})(),
+        bI = (() => class {})();
+      var _I = Ia({
+        encapsulation: 2,
+        styles: [
+          ".mat-subheader{display:flex;box-sizing:border-box;padding:16px;align-items:center}.mat-list-base .mat-subheader{margin:0}.mat-list-base{padding-top:8px;display:block;-webkit-tap-highlight-color:transparent}.mat-list-base .mat-subheader{height:48px;line-height:16px}.mat-list-base .mat-subheader:first-child{margin-top:-8px}.mat-list-base .mat-list-item,.mat-list-base .mat-list-option{display:block;height:48px;-webkit-tap-highlight-color:transparent;width:100%;padding:0}.mat-list-base .mat-list-item .mat-list-item-content,.mat-list-base .mat-list-option .mat-list-item-content{display:flex;flex-direction:row;align-items:center;box-sizing:border-box;padding:0 16px;position:relative;height:inherit}.mat-list-base .mat-list-item .mat-list-item-content-reverse,.mat-list-base .mat-list-option .mat-list-item-content-reverse{display:flex;align-items:center;padding:0 16px;flex-direction:row-reverse;justify-content:space-around}.mat-list-base .mat-list-item .mat-list-item-ripple,.mat-list-base .mat-list-option .mat-list-item-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-list-base .mat-list-item.mat-list-item-with-avatar,.mat-list-base .mat-list-option.mat-list-item-with-avatar{height:56px}.mat-list-base .mat-list-item.mat-2-line,.mat-list-base .mat-list-option.mat-2-line{height:72px}.mat-list-base .mat-list-item.mat-3-line,.mat-list-base .mat-list-option.mat-3-line{height:88px}.mat-list-base .mat-list-item.mat-multi-line,.mat-list-base .mat-list-option.mat-multi-line{height:auto}.mat-list-base .mat-list-item.mat-multi-line .mat-list-item-content,.mat-list-base .mat-list-option.mat-multi-line .mat-list-item-content{padding-top:16px;padding-bottom:16px}.mat-list-base .mat-list-item .mat-list-text,.mat-list-base .mat-list-option .mat-list-text{display:flex;flex-direction:column;width:100%;box-sizing:border-box;overflow:hidden;padding:0}.mat-list-base .mat-list-item .mat-list-text>*,.mat-list-base .mat-list-option .mat-list-text>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-list-base .mat-list-item .mat-list-text:empty,.mat-list-base .mat-list-option .mat-list-text:empty{display:none}.mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:0;padding-left:16px}[dir=rtl] .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:16px;padding-left:0}.mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-left:0;padding-right:16px}[dir=rtl] .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:0;padding-left:16px}.mat-list-base .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:16px;padding-left:16px}.mat-list-base .mat-list-item .mat-list-avatar,.mat-list-base .mat-list-option .mat-list-avatar{flex-shrink:0;width:40px;height:40px;border-radius:50%;object-fit:cover}.mat-list-base .mat-list-item .mat-list-avatar~.mat-divider-inset,.mat-list-base .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:72px;width:calc(100% - 72px)}[dir=rtl] .mat-list-base .mat-list-item .mat-list-avatar~.mat-divider-inset,[dir=rtl] .mat-list-base .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:auto;margin-right:72px}.mat-list-base .mat-list-item .mat-list-icon,.mat-list-base .mat-list-option .mat-list-icon{flex-shrink:0;width:24px;height:24px;font-size:24px;box-sizing:content-box;border-radius:50%;padding:4px}.mat-list-base .mat-list-item .mat-list-icon~.mat-divider-inset,.mat-list-base .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:64px;width:calc(100% - 64px)}[dir=rtl] .mat-list-base .mat-list-item .mat-list-icon~.mat-divider-inset,[dir=rtl] .mat-list-base .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:auto;margin-right:64px}.mat-list-base .mat-list-item .mat-divider,.mat-list-base .mat-list-option .mat-divider{position:absolute;bottom:0;left:0;width:100%;margin:0}[dir=rtl] .mat-list-base .mat-list-item .mat-divider,[dir=rtl] .mat-list-base .mat-list-option .mat-divider{margin-left:auto;margin-right:0}.mat-list-base .mat-list-item .mat-divider.mat-divider-inset,.mat-list-base .mat-list-option .mat-divider.mat-divider-inset{position:absolute}.mat-list-base[dense]{padding-top:4px;display:block}.mat-list-base[dense] .mat-subheader{height:40px;line-height:8px}.mat-list-base[dense] .mat-subheader:first-child{margin-top:-4px}.mat-list-base[dense] .mat-list-item,.mat-list-base[dense] .mat-list-option{display:block;height:40px;-webkit-tap-highlight-color:transparent;width:100%;padding:0}.mat-list-base[dense] .mat-list-item .mat-list-item-content,.mat-list-base[dense] .mat-list-option .mat-list-item-content{display:flex;flex-direction:row;align-items:center;box-sizing:border-box;padding:0 16px;position:relative;height:inherit}.mat-list-base[dense] .mat-list-item .mat-list-item-content-reverse,.mat-list-base[dense] .mat-list-option .mat-list-item-content-reverse{display:flex;align-items:center;padding:0 16px;flex-direction:row-reverse;justify-content:space-around}.mat-list-base[dense] .mat-list-item .mat-list-item-ripple,.mat-list-base[dense] .mat-list-option .mat-list-item-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar{height:48px}.mat-list-base[dense] .mat-list-item.mat-2-line,.mat-list-base[dense] .mat-list-option.mat-2-line{height:60px}.mat-list-base[dense] .mat-list-item.mat-3-line,.mat-list-base[dense] .mat-list-option.mat-3-line{height:76px}.mat-list-base[dense] .mat-list-item.mat-multi-line,.mat-list-base[dense] .mat-list-option.mat-multi-line{height:auto}.mat-list-base[dense] .mat-list-item.mat-multi-line .mat-list-item-content,.mat-list-base[dense] .mat-list-option.mat-multi-line .mat-list-item-content{padding-top:16px;padding-bottom:16px}.mat-list-base[dense] .mat-list-item .mat-list-text,.mat-list-base[dense] .mat-list-option .mat-list-text{display:flex;flex-direction:column;width:100%;box-sizing:border-box;overflow:hidden;padding:0}.mat-list-base[dense] .mat-list-item .mat-list-text>*,.mat-list-base[dense] .mat-list-option .mat-list-text>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-list-base[dense] .mat-list-item .mat-list-text:empty,.mat-list-base[dense] .mat-list-option .mat-list-text:empty{display:none}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:0;padding-left:16px}[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text{padding-right:16px;padding-left:0}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-left:0;padding-right:16px}[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,[dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:0;padding-left:16px}.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,.mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text{padding-right:16px;padding-left:16px}.mat-list-base[dense] .mat-list-item .mat-list-avatar,.mat-list-base[dense] .mat-list-option .mat-list-avatar{flex-shrink:0;width:36px;height:36px;border-radius:50%;object-fit:cover}.mat-list-base[dense] .mat-list-item .mat-list-avatar~.mat-divider-inset,.mat-list-base[dense] .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:68px;width:calc(100% - 68px)}[dir=rtl] .mat-list-base[dense] .mat-list-item .mat-list-avatar~.mat-divider-inset,[dir=rtl] .mat-list-base[dense] .mat-list-option .mat-list-avatar~.mat-divider-inset{margin-left:auto;margin-right:68px}.mat-list-base[dense] .mat-list-item .mat-list-icon,.mat-list-base[dense] .mat-list-option .mat-list-icon{flex-shrink:0;width:20px;height:20px;font-size:20px;box-sizing:content-box;border-radius:50%;padding:4px}.mat-list-base[dense] .mat-list-item .mat-list-icon~.mat-divider-inset,.mat-list-base[dense] .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:60px;width:calc(100% - 60px)}[dir=rtl] .mat-list-base[dense] .mat-list-item .mat-list-icon~.mat-divider-inset,[dir=rtl] .mat-list-base[dense] .mat-list-option .mat-list-icon~.mat-divider-inset{margin-left:auto;margin-right:60px}.mat-list-base[dense] .mat-list-item .mat-divider,.mat-list-base[dense] .mat-list-option .mat-divider{position:absolute;bottom:0;left:0;width:100%;margin:0}[dir=rtl] .mat-list-base[dense] .mat-list-item .mat-divider,[dir=rtl] .mat-list-base[dense] .mat-list-option .mat-divider{margin-left:auto;margin-right:0}.mat-list-base[dense] .mat-list-item .mat-divider.mat-divider-inset,.mat-list-base[dense] .mat-list-option .mat-divider.mat-divider-inset{position:absolute}.mat-nav-list a{text-decoration:none;color:inherit}.mat-nav-list .mat-list-item{cursor:pointer;outline:0}mat-action-list button{background:0 0;color:inherit;border:none;font:inherit;outline:inherit;-webkit-tap-highlight-color:transparent;text-align:left}[dir=rtl] mat-action-list button{text-align:right}mat-action-list button::-moz-focus-inner{border:0}mat-action-list .mat-list-item{cursor:pointer;outline:inherit}.mat-list-option:not(.mat-list-item-disabled){cursor:pointer;outline:0}@media (-ms-high-contrast:active){.mat-selection-list:focus{outline-style:dotted}.mat-list-option:focus,.mat-list-option:hover,.mat-nav-list .mat-list-item:focus,.mat-nav-list .mat-list-item:hover,mat-action-list .mat-list-item:focus,mat-action-list .mat-list-item:hover{outline:dotted 1px}}@media (hover:none){.mat-action-list .mat-list-item:not(.mat-list-item-disabled):hover,.mat-list-option:not(.mat-list-item-disabled):hover,.mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{background:0 0}}"
+        ],
+        data: {}
+      });
+      function CI(t) {
+        return zr(2, [Er(null, 0)], null, null);
+      }
+      var PI = Ia({ encapsulation: 2, styles: [], data: {} });
+      function OI(t) {
+        return zr(
+          2,
+          [
+            (t()(),
+            Cr(
+              0,
+              0,
+              null,
+              null,
+              6,
+              "div",
+              [["class", "mat-list-item-content"]],
+              null,
+              null,
+              null,
+              null,
+              null
+            )),
+            (t()(),
+            Cr(
+              1,
+              0,
+              null,
+              null,
+              1,
+              "div",
+              [
+                ["class", "mat-list-item-ripple mat-ripple"],
+                ["mat-ripple", ""]
+              ],
+              [[2, "mat-ripple-unbounded", null]],
+              null,
+              null,
+              null,
+              null
+            )),
+            Uo(
+              2,
+              212992,
+              null,
+              0,
+              K_,
+              [Ln, Di, gf, [2, q_], [2, uM]],
+              { disabled: [0, "disabled"], trigger: [1, "trigger"] },
+              null
+            ),
+            Er(null, 0),
+            (t()(),
+            Cr(
+              4,
+              0,
+              null,
+              null,
+              1,
+              "div",
+              [["class", "mat-list-text"]],
+              null,
+              null,
+              null,
+              null,
+              null
+            )),
+            Er(null, 1),
+            Er(null, 2)
+          ],
+          function(t, e) {
+            var n = e.component;
+            t(e, 2, 0, n._isRippleDisabled(), n._getHostElement());
+          },
+          function(t, e) {
+            t(e, 1, 0, Io(e, 2).unbounded);
+          }
+        );
+      }
       const MI = (() =>
           class {
             constructor() {
@@ -50514,13 +50514,30 @@
             (this.ngxSmartModalService = a),
             (this.dialog = o),
             (this.config = { Mods: [] }),
+            (this.showColorMods = !1),
             (this.beatSaberVersion = ""),
             (this.modSwitchInProgress = !1),
             (this.modIDBeingSwitched = null),
             this.configSvc.configUpdated.subscribe(t => {
               (this.config = t.Config),
+                this.checkColorMod(t),
                 (this.beatSaberVersion = t.BeatSaberVersion);
             });
+        }
+        isNumeric(t) {
+          return !isNaN(parseFloat(t)) && isFinite(t);
+        }
+        checkColorMod(t) {
+          if (t.BeatSaberVersion) {
+            var e = t.BeatSaberVersion.split(".");
+            e.length >= 2 &&
+              this.isNumeric(e[0]) &&
+              this.isNumeric(e[1]) &&
+              parseInt(e[0]) >= 1 &&
+              parseInt(e[1]) <= 2 &&
+              ((this.showColorMods = !0),
+              console.log("color mods enabled for older version than 1.3"));
+          }
         }
         get leftColor() {
           return this.config && this.config.LeftColor
@@ -50579,6 +50596,7 @@
         ngOnInit() {
           this.configSvc.getConfig().subscribe(t => {
             (this.config = t.Config),
+              this.checkColorMod(t),
               (this.beatSaberVersion = t.BeatSaberVersion);
           });
         }
@@ -50711,6 +50729,282 @@
           0,
           [
             (t()(),
+            Cr(
+              0,
+              0,
+              null,
+              null,
+              20,
+              "div",
+              [["class", "builtinMods"]],
+              null,
+              null,
+              null,
+              null,
+              null
+            )),
+            (t()(),
+            Cr(
+              1,
+              16777216,
+              null,
+              null,
+              9,
+              "button",
+              [
+                ["cpCloseClickOutside", "true"],
+                ["cpOKButtonText", "Save Color"],
+                ["cpOutputFormat", "rgba"],
+                ["cpPosition", "left"],
+                ["mat-raised-button", ""],
+                ["selected", ""]
+              ],
+              [[1, "disabled", 0], [2, "_mat-animation-noopable", null]],
+              [
+                [null, "colorPickerChange"],
+                [null, "colorPickerSelect"],
+                [null, "click"],
+                [null, "focus"],
+                [null, "input"]
+              ],
+              function(t, e, n) {
+                var a = !0,
+                  o = t.component;
+                return (
+                  "click" === e && (a = !1 !== Io(t, 8).handleClick() && a),
+                  "focus" === e && (a = !1 !== Io(t, 8).handleFocus() && a),
+                  "input" === e && (a = !1 !== Io(t, 8).handleInput(n) && a),
+                  "colorPickerChange" === e &&
+                    (a = !1 !== (o.leftColor = n) && a),
+                  "colorPickerSelect" === e &&
+                    (a = !1 !== o.leftColorSelected(n) && a),
+                  a
+                );
+              },
+              gM,
+              hM
+            )),
+            Ko(512, null, Es, Is, [Ln, aa, jn]),
+            Uo(3, 278528, null, 0, Ts, [Es], { ngStyle: [0, "ngStyle"] }, null),
+            Ar(4, { "background-color": 0 }),
+            Uo(5, 180224, null, 0, OC, [Ln, C_, [2, uM]], null, null),
+            Uo(
+              6,
+              933888,
+              null,
+              0,
+              Fx,
+              [Ln, vy, Sy, aa, jn, mu, [6, Ts], [2, ZM], fi],
+              { ngStyle: [0, "ngStyle"] },
+              null
+            ),
+            Ar(7, { "background-color": 0 }),
+            Uo(
+              8,
+              671744,
+              null,
+              0,
+              lI,
+              [Wt, An, Ji, ua, Ln, iI],
+              {
+                colorPicker: [0, "colorPicker"],
+                cpCmykEnabled: [1, "cpCmykEnabled"],
+                cpOutputFormat: [2, "cpOutputFormat"],
+                cpAlphaChannel: [3, "cpAlphaChannel"],
+                cpCloseClickOutside: [4, "cpCloseClickOutside"],
+                cpPosition: [5, "cpPosition"],
+                cpPositionOffset: [6, "cpPositionOffset"],
+                cpOKButton: [7, "cpOKButton"],
+                cpOKButtonText: [8, "cpOKButtonText"]
+              },
+              {
+                colorPickerSelect: "colorPickerSelect",
+                colorPickerChange: "colorPickerChange"
+              }
+            ),
+            (t()(),
+            Cr(
+              9,
+              0,
+              null,
+              0,
+              1,
+              "span",
+              [["class", "colorName"]],
+              null,
+              null,
+              null,
+              null,
+              null
+            )),
+            (t()(), Rr(-1, null, ["Left Color"])),
+            (t()(),
+            Cr(
+              11,
+              16777216,
+              null,
+              null,
+              9,
+              "button",
+              [
+                ["cpCloseClickOutside", "true"],
+                ["cpOKButtonText", "Save Color"],
+                ["cpOutputFormat", "rgba"],
+                ["cpPosition", "bottom"],
+                ["mat-raised-button", ""],
+                ["selected", ""]
+              ],
+              [[1, "disabled", 0], [2, "_mat-animation-noopable", null]],
+              [
+                [null, "colorPickerChange"],
+                [null, "colorPickerSelect"],
+                [null, "click"],
+                [null, "focus"],
+                [null, "input"]
+              ],
+              function(t, e, n) {
+                var a = !0,
+                  o = t.component;
+                return (
+                  "click" === e && (a = !1 !== Io(t, 18).handleClick() && a),
+                  "focus" === e && (a = !1 !== Io(t, 18).handleFocus() && a),
+                  "input" === e && (a = !1 !== Io(t, 18).handleInput(n) && a),
+                  "colorPickerChange" === e &&
+                    (a = !1 !== (o.rightColor = n) && a),
+                  "colorPickerSelect" === e &&
+                    (a = !1 !== o.rightColorSelected(n) && a),
+                  a
+                );
+              },
+              gM,
+              hM
+            )),
+            Ko(512, null, Es, Is, [Ln, aa, jn]),
+            Uo(
+              13,
+              278528,
+              null,
+              0,
+              Ts,
+              [Es],
+              { ngStyle: [0, "ngStyle"] },
+              null
+            ),
+            Ar(14, { "background-color": 0 }),
+            Uo(15, 180224, null, 0, OC, [Ln, C_, [2, uM]], null, null),
+            Uo(
+              16,
+              933888,
+              null,
+              0,
+              Fx,
+              [Ln, vy, Sy, aa, jn, mu, [6, Ts], [2, ZM], fi],
+              { ngStyle: [0, "ngStyle"] },
+              null
+            ),
+            Ar(17, { "background-color": 0 }),
+            Uo(
+              18,
+              671744,
+              null,
+              0,
+              lI,
+              [Wt, An, Ji, ua, Ln, iI],
+              {
+                colorPicker: [0, "colorPicker"],
+                cpCmykEnabled: [1, "cpCmykEnabled"],
+                cpOutputFormat: [2, "cpOutputFormat"],
+                cpAlphaChannel: [3, "cpAlphaChannel"],
+                cpCloseClickOutside: [4, "cpCloseClickOutside"],
+                cpPosition: [5, "cpPosition"],
+                cpPositionOffset: [6, "cpPositionOffset"],
+                cpOKButton: [7, "cpOKButton"],
+                cpOKButtonText: [8, "cpOKButtonText"]
+              },
+              {
+                colorPickerSelect: "colorPickerSelect",
+                colorPickerChange: "colorPickerChange"
+              }
+            ),
+            (t()(),
+            Cr(
+              19,
+              0,
+              null,
+              0,
+              1,
+              "span",
+              [["class", "colorName"]],
+              null,
+              null,
+              null,
+              null,
+              null
+            )),
+            (t()(), Rr(-1, null, ["Right Color"]))
+          ],
+          function(t, e) {
+            var n = e.component,
+              a = t(e, 4, 0, n.leftColor);
+            t(e, 3, 0, a);
+            var o = t(e, 7, 0, n.leftColor);
+            t(e, 6, 0, o),
+              t(
+                e,
+                8,
+                0,
+                n.leftColor,
+                !1,
+                "rgba",
+                !0,
+                "true",
+                "left",
+                -30,
+                !0,
+                "Save Color"
+              );
+            var i = t(e, 14, 0, n.rightColor);
+            t(e, 13, 0, i);
+            var r = t(e, 17, 0, n.rightColor);
+            t(e, 16, 0, r),
+              t(
+                e,
+                18,
+                0,
+                n.rightColor,
+                !1,
+                "rgba",
+                !0,
+                "true",
+                "bottom",
+                -30,
+                !0,
+                "Save Color"
+              );
+          },
+          function(t, e) {
+            t(
+              e,
+              1,
+              0,
+              Io(e, 5).disabled || null,
+              "NoopAnimations" === Io(e, 5)._animationMode
+            ),
+              t(
+                e,
+                11,
+                0,
+                Io(e, 15).disabled || null,
+                "NoopAnimations" === Io(e, 15)._animationMode
+              );
+          }
+        );
+      }
+      function FI(t) {
+        return zr(
+          0,
+          [
+            (t()(),
             Cr(0, 0, null, null, 1, "div", [], null, null, null, null, null)),
             (t()(), Rr(-1, null, ["No Mods!"]))
           ],
@@ -50718,7 +51012,7 @@
           null
         );
       }
-      function FI(t) {
+      function BI(t) {
         return zr(
           0,
           [
@@ -50732,7 +51026,7 @@
           }
         );
       }
-      function BI(t) {
+      function VI(t) {
         return zr(
           0,
           [
@@ -50774,7 +51068,7 @@
           }
         );
       }
-      function VI(t) {
+      function HI(t) {
         return zr(
           0,
           [
@@ -50798,7 +51092,7 @@
           null
         );
       }
-      function HI(t) {
+      function jI(t) {
         return zr(
           0,
           [
@@ -50860,7 +51154,7 @@
           }
         );
       }
-      function jI(t) {
+      function UI(t) {
         return zr(
           0,
           [
@@ -50879,8 +51173,8 @@
               ],
               null,
               null,
-              sI,
-              lI
+              OI,
+              PI
             )),
             Ko(512, null, fs, bs, [na, aa, Ln, jn]),
             Uo(
@@ -50905,7 +51199,7 @@
               null
             ),
             Ar(5, { incompat: 0 }),
-            Uo(6, 1228800, null, 3, nI, [Ln, oa, [2, tI], [2, eI]], null, null),
+            Uo(6, 1228800, null, 3, pI, [Ln, oa, [2, hI], [2, gI]], null, null),
             vr(603979776, 1, { _lines: 1 }),
             vr(603979776, 2, { _avatar: 0 }),
             vr(603979776, 3, { _icon: 0 }),
@@ -51069,7 +51363,7 @@
             )),
             Uo(27, 16384, [[1, 4]], 0, N_, [], null, null),
             (t()(), Rr(28, null, [" by ", ""])),
-            (t()(), _r(16777216, null, null, 1, null, FI)),
+            (t()(), _r(16777216, null, null, 1, null, BI)),
             Uo(30, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -51104,7 +51398,7 @@
               null
             )),
             Uo(35, 16384, [[1, 4]], 0, N_, [], null, null),
-            (t()(), _r(16777216, null, null, 1, null, BI)),
+            (t()(), _r(16777216, null, null, 1, null, VI)),
             Uo(37, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -51121,9 +51415,9 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, VI)),
-            Uo(40, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, HI)),
+            Uo(40, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, jI)),
             Uo(42, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -51309,7 +51603,7 @@
           }
         );
       }
-      function UI(t) {
+      function qI(t) {
         return zr(
           0,
           [
@@ -51336,7 +51630,7 @@
           }
         );
       }
-      function qI(t) {
+      function KI(t) {
         return zr(
           0,
           [
@@ -51363,7 +51657,7 @@
           }
         );
       }
-      function KI(t) {
+      function YI(t) {
         return zr(
           0,
           [
@@ -51377,7 +51671,7 @@
           }
         );
       }
-      function YI(t) {
+      function WI(t) {
         return zr(
           0,
           [
@@ -51404,7 +51698,7 @@
           }
         );
       }
-      function WI(t) {
+      function GI(t) {
         return zr(
           0,
           [
@@ -51439,7 +51733,7 @@
               function(t, e, n) {
                 var a = !0;
                 return (
-                  "click" === e && (a = !1 !== Io(t.parent, 47).close() && a), a
+                  "click" === e && (a = !1 !== Io(t.parent, 28).close() && a), a
                 );
               },
               null,
@@ -51461,7 +51755,7 @@
               null
             )),
             (t()(), Rr(-1, null, ["\xd7"])),
-            (t()(), _r(16777216, null, null, 1, null, UI)),
+            (t()(), _r(16777216, null, null, 1, null, qI)),
             Uo(6, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -51493,9 +51787,9 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, qI)),
-            Uo(10, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, KI)),
+            Uo(10, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, YI)),
             Uo(12, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -51514,7 +51808,7 @@
             )),
             Uo(14, 180224, null, 0, OC, [Ln, C_, [2, uM]], null, null),
             (t()(), Rr(-1, 0, ["Install"])),
-            (t()(), _r(16777216, null, null, 1, null, YI)),
+            (t()(), _r(16777216, null, null, 1, null, WI)),
             Uo(17, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -51535,7 +51829,7 @@
           }
         );
       }
-      function GI(t) {
+      function $I(t) {
         return zr(
           0,
           [
@@ -51545,7 +51839,7 @@
               0,
               null,
               null,
-              36,
+              17,
               "section",
               [],
               null,
@@ -51560,7 +51854,7 @@
               0,
               null,
               null,
-              35,
+              16,
               "mat-card",
               [["class", "setup-card mat-card"]],
               null,
@@ -51576,7 +51870,7 @@
               0,
               null,
               0,
-              33,
+              14,
               "mat-card-header",
               [["class", "mat-card-header"]],
               null,
@@ -51667,234 +51961,13 @@
             Uo(14, 16384, null, 0, Kb, [], null, null),
             (t()(),
             Rr(-1, null, [
-              "Manage all mods available for the quest here. Install, uninstall, and configure mods.."
+              "Manage all mods available for the quest here. Install, uninstall, and configure mods."
             ])),
+            (t()(), _r(16777216, null, 2, 1, null, LI)),
+            Uo(17, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
-              16,
-              0,
-              null,
-              2,
-              20,
-              "div",
-              [["class", "builtinMods"]],
-              null,
-              null,
-              null,
-              null,
-              null
-            )),
-            (t()(),
-            Cr(
-              17,
-              16777216,
-              null,
-              null,
-              9,
-              "button",
-              [
-                ["cpCloseClickOutside", "true"],
-                ["cpOKButtonText", "Save Color"],
-                ["cpOutputFormat", "rgba"],
-                ["cpPosition", "left"],
-                ["mat-raised-button", ""],
-                ["selected", ""]
-              ],
-              [[1, "disabled", 0], [2, "_mat-animation-noopable", null]],
-              [
-                [null, "colorPickerChange"],
-                [null, "colorPickerSelect"],
-                [null, "click"],
-                [null, "focus"],
-                [null, "input"]
-              ],
-              function(t, e, n) {
-                var a = !0,
-                  o = t.component;
-                return (
-                  "click" === e && (a = !1 !== Io(t, 24).handleClick() && a),
-                  "focus" === e && (a = !1 !== Io(t, 24).handleFocus() && a),
-                  "input" === e && (a = !1 !== Io(t, 24).handleInput(n) && a),
-                  "colorPickerChange" === e &&
-                    (a = !1 !== (o.leftColor = n) && a),
-                  "colorPickerSelect" === e &&
-                    (a = !1 !== o.leftColorSelected(n) && a),
-                  a
-                );
-              },
-              gM,
-              hM
-            )),
-            Ko(512, null, Es, Is, [Ln, aa, jn]),
-            Uo(
-              19,
-              278528,
-              null,
-              0,
-              Ts,
-              [Es],
-              { ngStyle: [0, "ngStyle"] },
-              null
-            ),
-            Ar(20, { "background-color": 0 }),
-            Uo(21, 180224, null, 0, OC, [Ln, C_, [2, uM]], null, null),
-            Uo(
-              22,
-              933888,
-              null,
-              0,
-              Fx,
-              [Ln, vy, Sy, aa, jn, mu, [6, Ts], [2, ZM], fi],
-              { ngStyle: [0, "ngStyle"] },
-              null
-            ),
-            Ar(23, { "background-color": 0 }),
-            Uo(
-              24,
-              671744,
-              null,
-              0,
-              PI,
-              [Wt, An, Ji, ua, Ln, _I],
-              {
-                colorPicker: [0, "colorPicker"],
-                cpCmykEnabled: [1, "cpCmykEnabled"],
-                cpOutputFormat: [2, "cpOutputFormat"],
-                cpAlphaChannel: [3, "cpAlphaChannel"],
-                cpCloseClickOutside: [4, "cpCloseClickOutside"],
-                cpPosition: [5, "cpPosition"],
-                cpPositionOffset: [6, "cpPositionOffset"],
-                cpOKButton: [7, "cpOKButton"],
-                cpOKButtonText: [8, "cpOKButtonText"]
-              },
-              {
-                colorPickerSelect: "colorPickerSelect",
-                colorPickerChange: "colorPickerChange"
-              }
-            ),
-            (t()(),
-            Cr(
-              25,
-              0,
-              null,
-              0,
-              1,
-              "span",
-              [["class", "colorName"]],
-              null,
-              null,
-              null,
-              null,
-              null
-            )),
-            (t()(), Rr(-1, null, ["Left Color"])),
-            (t()(),
-            Cr(
-              27,
-              16777216,
-              null,
-              null,
-              9,
-              "button",
-              [
-                ["cpCloseClickOutside", "true"],
-                ["cpOKButtonText", "Save Color"],
-                ["cpOutputFormat", "rgba"],
-                ["cpPosition", "bottom"],
-                ["mat-raised-button", ""],
-                ["selected", ""]
-              ],
-              [[1, "disabled", 0], [2, "_mat-animation-noopable", null]],
-              [
-                [null, "colorPickerChange"],
-                [null, "colorPickerSelect"],
-                [null, "click"],
-                [null, "focus"],
-                [null, "input"]
-              ],
-              function(t, e, n) {
-                var a = !0,
-                  o = t.component;
-                return (
-                  "click" === e && (a = !1 !== Io(t, 34).handleClick() && a),
-                  "focus" === e && (a = !1 !== Io(t, 34).handleFocus() && a),
-                  "input" === e && (a = !1 !== Io(t, 34).handleInput(n) && a),
-                  "colorPickerChange" === e &&
-                    (a = !1 !== (o.rightColor = n) && a),
-                  "colorPickerSelect" === e &&
-                    (a = !1 !== o.rightColorSelected(n) && a),
-                  a
-                );
-              },
-              gM,
-              hM
-            )),
-            Ko(512, null, Es, Is, [Ln, aa, jn]),
-            Uo(
-              29,
-              278528,
-              null,
-              0,
-              Ts,
-              [Es],
-              { ngStyle: [0, "ngStyle"] },
-              null
-            ),
-            Ar(30, { "background-color": 0 }),
-            Uo(31, 180224, null, 0, OC, [Ln, C_, [2, uM]], null, null),
-            Uo(
-              32,
-              933888,
-              null,
-              0,
-              Fx,
-              [Ln, vy, Sy, aa, jn, mu, [6, Ts], [2, ZM], fi],
-              { ngStyle: [0, "ngStyle"] },
-              null
-            ),
-            Ar(33, { "background-color": 0 }),
-            Uo(
-              34,
-              671744,
-              null,
-              0,
-              PI,
-              [Wt, An, Ji, ua, Ln, _I],
-              {
-                colorPicker: [0, "colorPicker"],
-                cpCmykEnabled: [1, "cpCmykEnabled"],
-                cpOutputFormat: [2, "cpOutputFormat"],
-                cpAlphaChannel: [3, "cpAlphaChannel"],
-                cpCloseClickOutside: [4, "cpCloseClickOutside"],
-                cpPosition: [5, "cpPosition"],
-                cpPositionOffset: [6, "cpPositionOffset"],
-                cpOKButton: [7, "cpOKButton"],
-                cpOKButtonText: [8, "cpOKButtonText"]
-              },
-              {
-                colorPickerSelect: "colorPickerSelect",
-                colorPickerChange: "colorPickerChange"
-              }
-            ),
-            (t()(),
-            Cr(
-              35,
-              0,
-              null,
-              0,
-              1,
-              "span",
-              [["class", "colorName"]],
-              null,
-              null,
-              null,
-              null,
-              null
-            )),
-            (t()(), Rr(-1, null, ["Right Color"])),
-            (t()(),
-            Cr(
-              37,
+              18,
               0,
               null,
               null,
@@ -51907,11 +51980,11 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, LI)),
-            Uo(39, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, FI)),
+            Uo(20, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
-              40,
+              21,
               0,
               null,
               null,
@@ -51925,7 +51998,7 @@
               null
             )),
             Uo(
-              41,
+              22,
               671744,
               null,
               0,
@@ -51936,7 +52009,7 @@
             ),
             (t()(),
             Cr(
-              42,
+              23,
               0,
               null,
               null,
@@ -51946,13 +52019,13 @@
               null,
               null,
               null,
-              rI,
-              iI
+              CI,
+              _I
             )),
-            Uo(43, 704512, null, 0, eI, [Ln], null, null),
-            (t()(), _r(16777216, null, 0, 1, null, jI)),
+            Uo(24, 704512, null, 0, gI, [Ln], null, null),
+            (t()(), _r(16777216, null, 0, 1, null, UI)),
             Uo(
-              45,
+              26,
               278528,
               null,
               0,
@@ -51963,7 +52036,7 @@
             ),
             (t()(),
             Cr(
-              46,
+              27,
               0,
               null,
               null,
@@ -51976,7 +52049,7 @@
                 var a = !0;
                 return (
                   "window:resize" === e &&
-                    (a = !1 !== Io(t, 47).targetPlacement() && a),
+                    (a = !1 !== Io(t, 28).targetPlacement() && a),
                   a
                 );
               },
@@ -51984,7 +52057,7 @@
               wI
             )),
             Uo(
-              47,
+              28,
               245760,
               [["myModal", 4]],
               0,
@@ -51993,53 +52066,18 @@
               { identifier: [0, "identifier"] },
               null
             ),
-            (t()(), _r(16777216, null, 0, 1, null, WI)),
-            Uo(49, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
+            (t()(), _r(16777216, null, 0, 1, null, GI)),
+            Uo(30, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
             var n = e.component;
-            t(e, 8, 0);
-            var a = t(e, 20, 0, n.leftColor);
-            t(e, 19, 0, a);
-            var o = t(e, 23, 0, n.leftColor);
-            t(e, 22, 0, o),
-              t(
-                e,
-                24,
-                0,
-                n.leftColor,
-                !1,
-                "rgba",
-                !0,
-                "true",
-                "left",
-                -30,
-                !0,
-                "Save Color"
-              );
-            var i = t(e, 30, 0, n.rightColor);
-            t(e, 29, 0, i);
-            var r = t(e, 33, 0, n.rightColor);
-            t(e, 32, 0, r),
-              t(
-                e,
-                34,
-                0,
-                n.rightColor,
-                !1,
-                "rgba",
-                !0,
-                "true",
-                "bottom",
-                -30,
-                !0,
-                "Save Color"
-              ),
-              t(e, 39, 0, !n.config),
-              t(e, 41, 0, "60%"),
-              t(e, 45, 0, n.config.Mods),
-              t(e, 47, 0, "myModal"),
-              t(e, 49, 0, Io(e, 47).hasData());
+            t(e, 8, 0),
+              t(e, 17, 0, n.showColorMods),
+              t(e, 20, 0, !n.config),
+              t(e, 22, 0, "60%"),
+              t(e, 26, 0, n.config.Mods),
+              t(e, 28, 0, "myModal"),
+              t(e, 30, 0, Io(e, 28).hasData());
           },
           function(t, e) {
             t(
@@ -52050,25 +52088,11 @@
               "primary" !== Io(e, 8).color &&
                 "accent" !== Io(e, 8).color &&
                 "warn" !== Io(e, 8).color
-            ),
-              t(
-                e,
-                17,
-                0,
-                Io(e, 21).disabled || null,
-                "NoopAnimations" === Io(e, 21)._animationMode
-              ),
-              t(
-                e,
-                27,
-                0,
-                Io(e, 31).disabled || null,
-                "NoopAnimations" === Io(e, 31)._animationMode
-              );
+            );
           }
         );
       }
-      function $I(t) {
+      function ZI(t) {
         return zr(
           0,
           [
@@ -52084,7 +52108,7 @@
               null,
               null,
               null,
-              GI,
+              $I,
               zI
             )),
             Uo(1, 4308992, null, 0, NI, [Lg, vc, bg, MI, xb], null, null)
@@ -52095,8 +52119,8 @@
           null
         );
       }
-      var ZI = Co("app-main-mods", NI, $I, {}, {}, []),
-        QI = Ia({
+      var QI = Co("app-main-mods", NI, ZI, {}, {}, []),
+        XI = Ia({
           encapsulation: 2,
           styles: [
             ".mat-dialog-container{display:block;padding:24px;border-radius:4px;box-sizing:border-box;overflow:auto;outline:0;width:100%;height:100%;min-height:inherit;max-height:inherit}@media (-ms-high-contrast:active){.mat-dialog-container{outline:solid 1px}}.mat-dialog-content{display:block;margin:0 -24px;padding:0 24px;max-height:65vh;overflow:auto;-webkit-overflow-scrolling:touch}.mat-dialog-title{margin:0 0 20px;display:block}.mat-dialog-actions{padding:8px 0;display:flex;flex-wrap:wrap;min-height:52px;align-items:center;margin-bottom:-24px}.mat-dialog-actions[align=end]{justify-content:flex-end}.mat-dialog-actions[align=center]{justify-content:center}.mat-dialog-actions .mat-button+.mat-button,.mat-dialog-actions .mat-button+.mat-raised-button,.mat-dialog-actions .mat-raised-button+.mat-button,.mat-dialog-actions .mat-raised-button+.mat-raised-button{margin-left:8px}[dir=rtl] .mat-dialog-actions .mat-button+.mat-button,[dir=rtl] .mat-dialog-actions .mat-button+.mat-raised-button,[dir=rtl] .mat-dialog-actions .mat-raised-button+.mat-button,[dir=rtl] .mat-dialog-actions .mat-raised-button+.mat-raised-button{margin-left:0;margin-right:8px}"
@@ -52157,15 +52181,15 @@
             ]
           }
         });
-      function XI(t) {
+      function JI(t) {
         return zr(0, [(t()(), _r(0, null, null, 0))], null, null);
       }
-      function JI(t) {
+      function tA(t) {
         return zr(
           0,
           [
             vr(402653184, 1, { _portalOutlet: 0 }),
-            (t()(), _r(16777216, null, null, 1, null, XI)),
+            (t()(), _r(16777216, null, null, 1, null, JI)),
             Uo(
               2,
               212992,
@@ -52183,7 +52207,7 @@
           null
         );
       }
-      function tA(t) {
+      function eA(t) {
         return zr(
           0,
           [
@@ -52222,8 +52246,8 @@
                   a
                 );
               },
-              JI,
-              QI
+              tA,
+              XI
             )),
             Uo(1, 49152, null, 0, _b, [Ln, f_, oa, [2, Bs], fb], null, null)
           ],
@@ -52243,8 +52267,8 @@
           }
         );
       }
-      var eA = Co("mat-dialog-container", _b, tA, {}, {}, []),
-        nA = Ia({
+      var nA = Co("mat-dialog-container", _b, eA, {}, {}, []),
+        aA = Ia({
           encapsulation: 2,
           styles: [
             ".mat-tooltip-panel{pointer-events:none!important}.mat-tooltip{color:#fff;border-radius:4px;margin:14px;max-width:250px;padding-left:8px;padding-right:8px;overflow:hidden;text-overflow:ellipsis}@media (-ms-high-contrast:active){.mat-tooltip{outline:solid 1px}}.mat-tooltip-handset{margin:24px;padding-left:16px;padding-right:16px}"
@@ -52332,7 +52356,7 @@
             ]
           }
         });
-      function aA(t) {
+      function oA(t) {
         return zr(
           2,
           [
@@ -52392,7 +52416,7 @@
           }
         );
       }
-      function oA(t) {
+      function iA(t) {
         return zr(
           0,
           [
@@ -52415,8 +52439,8 @@
                   a
                 );
               },
-              aA,
-              nA
+              oA,
+              aA
             )),
             Uo(1, 180224, null, 0, vv, [oa, fv], null, null)
           ],
@@ -52426,15 +52450,15 @@
           }
         );
       }
-      var iA = Co("mat-tooltip-component", vv, oA, {}, {}, []),
-        rA = Ia({
+      var rA = Co("mat-tooltip-component", vv, iA, {}, {}, []),
+        lA = Ia({
           encapsulation: 2,
           styles: [
             ".color-picker {\n  position: absolute;\n  z-index: 100000;\n\n  width: 230px;\n  height: auto;\n  border: #777 solid 1px;\n\n  cursor: default;\n\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n\n  user-select: none;\n  background-color: #fff;\n}\n\n.color-picker * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n\n  box-sizing: border-box;\n  margin: 0;\n\n  font-size: 11px;\n}\n\n.color-picker input {\n  width: 0;\n  height: 26px;\n  min-width: 0;\n\n  font-size: 13px;\n  text-align: center;\n  color: #000;\n}\n\n.color-picker input:invalid,\n.color-picker input:-moz-ui-invalid,\n.color-picker input:-moz-submit-invalid {\n  box-shadow: none;\n}\n\n.color-picker input::-webkit-inner-spin-button,\n.color-picker input::-webkit-outer-spin-button {\n  margin: 0;\n\n  -webkit-appearance: none;\n}\n\n.color-picker .arrow {\n  position: absolute;\n  z-index: 999999;\n\n  width: 0;\n  height: 0;\n  border-style: solid;\n}\n\n.color-picker .arrow.arrow-top {\n  left: 8px;\n\n  border-width: 10px 5px;\n  border-color: #777 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);\n}\n\n.color-picker .arrow.arrow-left {\n  top: 8px;\n  left: 100%;\n\n  border-width: 5px 10px;\n  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #777;\n}\n\n.color-picker .arrow.arrow-right {\n  top: 8px;\n  left: -20px;\n\n  border-width: 5px 10px;\n  border-color: rgba(0, 0, 0, 0) #777 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);\n}\n\n.color-picker .arrow.arrow-bottom {\n  top: -20px;\n  left: 8px;\n\n  border-width: 10px 5px;\n  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #777 rgba(0, 0, 0, 0);\n}\n\n.color-picker .cursor {\n  position: relative;\n\n  width: 16px;\n  height: 16px;\n  border: #222 solid 2px;\n  border-radius: 50%;\n\n  cursor: default;\n}\n\n.color-picker .box {\n  display: flex;\n  padding: 4px 8px;\n}\n\n.color-picker .left {\n  position: relative;\n\n  padding: 16px 8px;\n}\n\n.color-picker .right {\n  -webkit-flex: 1 1 auto;\n  -ms-flex: 1 1 auto;\n\n  flex: 1 1 auto;\n\n  padding: 12px 8px;\n}\n\n.color-picker .button-area {\n  padding: 0 16px 16px;\n\n  text-align: right;\n}\n\n.color-picker .preset-area {\n  padding: 4px 15px;\n}\n\n.color-picker .preset-area .preset-label {\n  overflow: hidden;\n  width: 100%;\n  padding: 4px;\n\n  font-size: 11px;\n  white-space: nowrap;\n  text-align: left;\n  text-overflow: ellipsis;\n  color: #555;\n}\n\n.color-picker .preset-area .preset-color {\n  position: relative;\n\n  display: inline-block;\n  width: 18px;\n  height: 18px;\n  margin: 4px 6px 8px;\n  border: #a9a9a9 solid 1px;\n  border-radius: 25%;\n\n  cursor: pointer;\n}\n\n.color-picker .preset-area .preset-empty-message {\n  min-height: 18px;\n  margin-top: 4px;\n  margin-bottom: 8px;\n\n  font-style: italic;\n  text-align: center;\n}\n\n.color-picker .hex-text {\n  width: 100%;\n  padding: 4px 8px;\n\n  font-size: 11px;\n}\n\n.color-picker .hex-text .box {\n  padding: 0 24px 8px 8px;\n}\n\n.color-picker .hex-text .box div {\n  float: left;\n\n  -webkit-flex: 1 1 auto;\n  -ms-flex: 1 1 auto;\n\n  flex: 1 1 auto;\n\n  text-align: center;\n  color: #555;\n  clear: left;\n}\n\n.color-picker .hex-text .box input {\n  -webkit-flex: 1 1 auto;\n  -ms-flex: 1 1 auto;\n\n  flex: 1 1 auto;\n  padding: 1px;\n  border: #a9a9a9 solid 1px;\n}\n\n.color-picker .hex-alpha .box div:first-child,\n.color-picker .hex-alpha .box input:first-child {\n  flex-grow: 3;\n  margin-right: 8px;\n}\n\n.color-picker .cmyk-text,\n.color-picker .hsla-text,\n.color-picker .rgba-text,\n.color-picker .value-text {\n  width: 100%;\n  padding: 4px 8px;\n\n  font-size: 11px;\n}\n\n.color-picker .cmyk-text .box,\n.color-picker .hsla-text .box,\n.color-picker .rgba-text .box {\n  padding: 0 24px 8px 8px;\n}\n\n.color-picker .value-text .box {\n  padding: 0 8px 8px;\n}\n\n.color-picker .cmyk-text .box div,\n.color-picker .hsla-text .box div,\n.color-picker .rgba-text .box div,\n.color-picker .value-text .box div {\n  -webkit-flex: 1 1 auto;\n  -ms-flex: 1 1 auto;\n\n  flex: 1 1 auto;\n  margin-right: 8px;\n\n  text-align: center;\n  color: #555;\n}\n\n.color-picker .cmyk-text .box div:last-child,\n.color-picker .hsla-text .box div:last-child,\n.color-picker .rgba-text .box div:last-child,\n.color-picker .value-text .box div:last-child {\n  margin-right: 0;\n}\n\n.color-picker .cmyk-text .box input,\n.color-picker .hsla-text .box input,\n.color-picker .rgba-text .box input,\n.color-picker .value-text .box input {\n  float: left;\n\n  -webkit-flex: 1;\n  -ms-flex: 1;\n\n  flex: 1;\n  padding: 1px;\n  margin: 0 8px 0 0;\n  border: #a9a9a9 solid 1px;\n}\n\n.color-picker .cmyk-text .box input:last-child,\n.color-picker .hsla-text .box input:last-child,\n.color-picker .rgba-text .box input:last-child,\n.color-picker .value-text .box input:last-child {\n  margin-right: 0;\n}\n\n.color-picker .hue-alpha {\n  align-items: center;\n  margin-bottom: 3px;\n}\n\n.color-picker .hue {\n  direction: ltr;\n\n  width: 100%;\n  height: 16px;\n  margin-bottom: 16px;\n  border: none;\n\n  cursor: pointer;\n  background-size: 100% 100%;\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAQCAYAAAD06IYnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIWDwkUFWbCCAAAAFxJREFUaN7t0kEKg0AQAME2x83/n2qu5qCgD1iDhCoYdpnbQC9bbY1qVO/jvc6k3ad91s7/7F1/csgPrujuQ17BDYSFsBAWwgJhISyEBcJCWAgLhIWwEBYIi2f7Ar/1TCgFH2X9AAAAAElFTkSuQmCC');\n}\n\n.color-picker .value {\n  direction: rtl;\n\n  width: 100%;\n  height: 16px;\n  margin-bottom: 16px;\n  border: none;\n\n  cursor: pointer;\n  background-size: 100% 100%;\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAQCAYAAAD06IYnAAACTklEQVR42u3SYUcrABhA4U2SkmRJMmWSJklKJiWZZpKUJJskKUmaTFImKZOUzMySpGRmliRNJilJSpKSJEtmSpIpmWmSdO736/6D+x7OP3gUCoWCv1cqlSQlJZGcnExKSgqpqamkpaWRnp5ORkYGmZmZqFQqsrKyyM7OJicnh9zcXNRqNXl5eeTn56PRaCgoKKCwsJCioiK0Wi3FxcWUlJRQWlpKWVkZ5eXlVFRUUFlZiU6no6qqiurqampqaqitraWurg69Xk99fT0GgwGj0UhDQwONjY00NTXR3NxMS0sLra2ttLW10d7ejslkwmw209HRQWdnJ11dXXR3d9PT00Nvby99fX309/czMDDA4OAgFouFoaEhrFYrw8PDjIyMMDo6ytjYGDabjfHxcSYmJpicnGRqagq73c709DQzMzPMzs4yNzfH/Pw8DocDp9OJy+XC7XazsLDA4uIiS0tLLC8vs7KywurqKmtra3g8HrxeLz6fD7/fz/r6OhsbG2xubrK1tcX29jaBQICdnR2CwSC7u7vs7e2xv7/PwcEBh4eHHB0dcXx8zMnJCaenp5ydnXF+fs7FxQWXl5dcXV1xfX3Nzc0Nt7e33N3dEQqFuL+/5+HhgXA4TCQS4fHxkaenJ56fn3l5eeH19ZVoNMrb2xvv7+98fHwQi8WIx+N8fn6SSCT4+vri+/ubn58ffn9/+VcKgSWwBJbAElgCS2AJLIElsASWwBJYAktgCSyBJbAElsASWAJLYAksgSWwBJbAElgCS2AJLIElsP4/WH8AmJ5Z6jHS4h8AAAAASUVORK5CYII=');\n}\n\n.color-picker .alpha {\n  direction: ltr;\n\n  width: 100%;\n  height: 16px;\n  border: none;\n\n  cursor: pointer;\n  background-size: 100% 100%;\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAQCAYAAAD06IYnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIWDwYQlZMa3gAAAWVJREFUaN7tmEGO6jAQRCsOArHgBpyAJYGjcGocxAm4A2IHpmoWE0eBH+ezmFlNvU06shJ3W6VEelWMUQAIIF9f6qZpimsA1LYtS2uF51/u27YVAFZVRUkEoGHdPV/sIcbIEIIkUdI/9Xa7neyv61+SWFUVAVCSct00TWn2fv6u3+Ecfd3tXzy/0+nEUu+SPjo/kqzrmiQpScN6v98XewfA8/lMkiLJ2WxGSUopcT6fM6U0NX9/frfbjev1WtfrlZfLhYfDQQHG/AIOlnGwjINlHCxjHCzjYJm/TJWdCwquJXseFFzGwDNNeiKMOJTO8xQdDQaeB29+K9efeLaBo9J7vdvtJj1RjFFjfiv7qv95tjx/7leSQgh93e1ffMeIp6O+YQjho/N791t1XVOSSI7N//K+4/GoxWLBx+PB5/Op5XLJ+/3OlJJWqxU3m83ovv5iGf8KjYNlHCxjHCzjYBkHy5gf5gusvQU7U37jTAAAAABJRU5ErkJggg==');\n}\n\n.color-picker .type-policy {\n  position: absolute;\n  top: 218px;\n  right: 12px;\n\n  width: 16px;\n  height: 24px;\n\n  background-size: 8px 16px;\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAgCAYAAAAffCjxAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAACewAAAnsB01CO3AAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIASURBVEiJ7ZY9axRRFIafsxMStrLQJpAgpBFhi+C9w1YSo00I6RZ/g9vZpBf/QOr4GyRgkSKNSrAadsZqQGwCkuAWyRZJsySwvhZ7N/vhzrgbLH3Ld8597jlzz50zJokyxXH8DqDVar0qi6v8BbItqSGpEcfxdlmsFWXkvX8AfAVWg3UKPEnT9GKujMzsAFgZsVaCN1VTQd77XUnrgE1kv+6935268WRpzrnHZvYRWC7YvC3pRZZl3wozqtVqiyH9IgjAspkd1Gq1xUJQtVrdB9ZKIAOthdg/Qc65LUk7wNIMoCVJO865rYFhkqjX6/d7vV4GPJwBMqofURS5JEk6FYBer/eeYb/Mo9WwFnPOvQbeAvfuAAK4BN4sAJtAG/gJIElmNuiJyba3EGNmZiPeZuEVmVell/Y/6N+CzDn3AXhEOOo7Hv/3BeAz8IzQkMPnJbuPx1wC+yYJ7/0nYIP5S/0FHKdp+rwCEEXRS/rf5Hl1Gtb2M0iSpCOpCZzPATmX1EySpHMLAsiy7MjMDoHrGSDXZnaYZdnRwBh7J91utwmczAA6CbG3GgPleX4jqUH/a1CktqRGnuc3hSCAMB32gKspkCtgb3KCQMmkjeP4WNJThrNNZval1WptTIsv7JtQ4tmIdRa8qSoEpWl6YWZNoAN0zKxZNPehpLSBZv2t+Q0CJ9lLnARQLAAAAABJRU5ErkJggg==');\n  background-repeat: no-repeat;\n  background-position: center;\n}\n\n.color-picker .type-policy .type-policy-arrow {\n  display: block;\n\n  width: 100%;\n  height: 50%;\n}\n\n.color-picker .selected-color {\n  position: absolute;\n  top: 16px;\n  left: 8px;\n\n  width: 40px;\n  height: 40px;\n  border: 1px solid #a9a9a9;\n  border-radius: 50%;\n}\n\n.color-picker .selected-color-background {\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAh0lEQVRYR+2W0QlAMQgD60zdfwOdqa8TmI/wQMr5K0I5bZLIzLOa2nt37VVVbd+dDx5obgCC3KBLwJ2ff4PnVidkf+ucIhw80HQaCLo3DMH3CRK3iFsmAWVl6hPNDwt8EvNE5q+YuEXcMgkonVM6SdyCoEvAnZ8v1Hjx817MilmxSUB5rdLJDycZgUAZUch/AAAAAElFTkSuQmCC');\n}\n\n.color-picker .saturation-lightness {\n  direction: ltr;\n\n  width: 100%;\n  height: 130px;\n  border: none;\n\n  cursor: pointer;\n  touch-action: manipulation;\n  background-size: 100% 100%;\n  background-image: url('data:image/png;base64,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');\n}\n\n.color-picker .cp-add-color-button-class {\n  position: absolute;\n\n  display: inline;\n  padding: 0;\n  margin: 3px -3px;\n  border: 0;\n\n  cursor: pointer;\n  background: transparent;\n}\n\n.color-picker .cp-add-color-button-class:hover {\n  text-decoration: underline;\n}\n\n.color-picker .cp-add-color-button-class:disabled {\n  cursor: not-allowed;\n  color: #999;\n}\n\n.color-picker .cp-add-color-button-class:disabled:hover {\n  text-decoration: none;\n}\n\n.color-picker .cp-remove-color-button-class {\n  position: absolute;\n  top: -5px;\n  right: -5px;\n\n  display: block;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n\n  cursor: pointer;\n  text-align: center;\n  background: #fff;\n\n  box-shadow: 1px 1px 5px #333;\n}\n\n.color-picker .cp-remove-color-button-class::before {\n  content: 'x';\n\n  position: relative;\n  bottom: 3.5px;\n\n  display: inline-block;\n\n  font-size: 10px;\n}\n"
           ],
           data: {}
         });
-      function lA(t) {
+      function sA(t) {
         return zr(
           0,
           [
@@ -52461,7 +52485,7 @@
           }
         );
       }
-      function sA(t) {
+      function cA(t) {
         return zr(
           0,
           [
@@ -52505,7 +52529,7 @@
               16384,
               null,
               0,
-              pI,
+              nI,
               [Ln],
               { rgX: [0, "rgX"], rgY: [1, "rgY"] },
               {
@@ -52546,7 +52570,7 @@
           }
         );
       }
-      function cA(t) {
+      function dA(t) {
         return zr(
           0,
           [
@@ -52590,7 +52614,7 @@
           }
         );
       }
-      function dA(t) {
+      function uA(t) {
         return zr(
           0,
           [
@@ -52614,7 +52638,7 @@
           null
         );
       }
-      function uA(t) {
+      function mA(t) {
         return zr(
           0,
           [
@@ -52653,7 +52677,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -52668,7 +52692,7 @@
           }
         );
       }
-      function mA(t) {
+      function hA(t) {
         return zr(
           0,
           [
@@ -52680,7 +52704,7 @@
           null
         );
       }
-      function hA(t) {
+      function gA(t) {
         return zr(
           0,
           [
@@ -52748,7 +52772,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -52787,7 +52811,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -52826,7 +52850,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -52865,12 +52889,12 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
             ),
-            (t()(), _r(16777216, null, null, 1, null, uA)),
+            (t()(), _r(16777216, null, null, 1, null, mA)),
             Uo(11, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -52899,7 +52923,7 @@
             (t()(),
             Cr(19, 0, null, null, 1, "div", [], null, null, null, null, null)),
             (t()(), Rr(-1, null, ["K"])),
-            (t()(), _r(16777216, null, null, 1, null, mA)),
+            (t()(), _r(16777216, null, null, 1, null, hA)),
             Uo(22, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -52921,7 +52945,7 @@
           }
         );
       }
-      function gA(t) {
+      function pA(t) {
         return zr(
           0,
           [
@@ -52960,7 +52984,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -52975,7 +52999,7 @@
           }
         );
       }
-      function pA(t) {
+      function fA(t) {
         return zr(
           0,
           [
@@ -52987,7 +53011,7 @@
           null
         );
       }
-      function fA(t) {
+      function bA(t) {
         return zr(
           0,
           [
@@ -53055,7 +53079,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53094,7 +53118,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53133,12 +53157,12 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
             ),
-            (t()(), _r(16777216, null, null, 1, null, gA)),
+            (t()(), _r(16777216, null, null, 1, null, pA)),
             Uo(9, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -53164,7 +53188,7 @@
             (t()(),
             Cr(15, 0, null, null, 1, "div", [], null, null, null, null, null)),
             (t()(), Rr(-1, null, ["L"])),
-            (t()(), _r(16777216, null, null, 1, null, pA)),
+            (t()(), _r(16777216, null, null, 1, null, fA)),
             Uo(18, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -53184,7 +53208,7 @@
           }
         );
       }
-      function bA(t) {
+      function _A(t) {
         return zr(
           0,
           [
@@ -53223,7 +53247,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53238,7 +53262,7 @@
           }
         );
       }
-      function _A(t) {
+      function CA(t) {
         return zr(
           0,
           [
@@ -53250,7 +53274,7 @@
           null
         );
       }
-      function CA(t) {
+      function PA(t) {
         return zr(
           0,
           [
@@ -53318,7 +53342,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53357,7 +53381,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53396,12 +53420,12 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
             ),
-            (t()(), _r(16777216, null, null, 1, null, bA)),
+            (t()(), _r(16777216, null, null, 1, null, _A)),
             Uo(9, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -53427,7 +53451,7 @@
             (t()(),
             Cr(15, 0, null, null, 1, "div", [], null, null, null, null, null)),
             (t()(), Rr(-1, null, ["B"])),
-            (t()(), _r(16777216, null, null, 1, null, _A)),
+            (t()(), _r(16777216, null, null, 1, null, CA)),
             Uo(18, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -53447,7 +53471,7 @@
           }
         );
       }
-      function PA(t) {
+      function OA(t) {
         return zr(
           0,
           [
@@ -53486,7 +53510,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53500,7 +53524,7 @@
           }
         );
       }
-      function OA(t) {
+      function MA(t) {
         return zr(
           0,
           [
@@ -53512,7 +53536,7 @@
           null
         );
       }
-      function MA(t) {
+      function yA(t) {
         return zr(
           0,
           [
@@ -53576,8 +53600,8 @@
               null,
               null
             )),
-            Uo(3, 16384, null, 0, gI, [], null, { newValue: "newValue" }),
-            (t()(), _r(16777216, null, null, 1, null, PA)),
+            Uo(3, 16384, null, 0, eI, [], null, { newValue: "newValue" }),
+            (t()(), _r(16777216, null, null, 1, null, OA)),
             Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -53597,7 +53621,7 @@
             (t()(),
             Cr(7, 0, null, null, 1, "div", [], null, null, null, null, null)),
             (t()(), Rr(-1, null, ["Hex"])),
-            (t()(), _r(16777216, null, null, 1, null, OA)),
+            (t()(), _r(16777216, null, null, 1, null, MA)),
             Uo(10, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -53618,7 +53642,7 @@
           }
         );
       }
-      function yA(t) {
+      function vA(t) {
         return zr(
           0,
           [
@@ -53657,7 +53681,7 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
@@ -53672,7 +53696,7 @@
           }
         );
       }
-      function vA(t) {
+      function xA(t) {
         return zr(
           0,
           [
@@ -53740,12 +53764,12 @@
               16384,
               null,
               0,
-              gI,
+              eI,
               [],
               { rg: [0, "rg"] },
               { newValue: "newValue" }
             ),
-            (t()(), _r(16777216, null, null, 1, null, yA)),
+            (t()(), _r(16777216, null, null, 1, null, vA)),
             Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -53779,7 +53803,7 @@
           }
         );
       }
-      function xA(t) {
+      function kA(t) {
         return zr(
           0,
           [
@@ -53847,7 +53871,7 @@
           null
         );
       }
-      function kA(t) {
+      function wA(t) {
         return zr(
           0,
           [
@@ -53885,7 +53909,7 @@
           }
         );
       }
-      function wA(t) {
+      function SA(t) {
         return zr(
           0,
           [
@@ -53914,7 +53938,7 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, kA)),
+            (t()(), _r(16777216, null, null, 1, null, wA)),
             Uo(2, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -53925,13 +53949,13 @@
           }
         );
       }
-      function SA(t) {
+      function EA(t) {
         return zr(
           0,
           [
             (t()(),
             Cr(0, 0, null, null, 2, "div", [], null, null, null, null, null)),
-            (t()(), _r(16777216, null, null, 1, null, wA)),
+            (t()(), _r(16777216, null, null, 1, null, SA)),
             Uo(
               2,
               278528,
@@ -53949,7 +53973,7 @@
           null
         );
       }
-      function EA(t) {
+      function IA(t) {
         return zr(
           0,
           [
@@ -53978,7 +54002,7 @@
           }
         );
       }
-      function IA(t) {
+      function AA(t) {
         return zr(
           0,
           [
@@ -54015,9 +54039,9 @@
               null
             )),
             (t()(), Rr(3, null, ["", ""])),
-            (t()(), _r(16777216, null, null, 1, null, SA)),
-            Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, EA)),
+            Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, IA)),
             Uo(7, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -54041,7 +54065,7 @@
           }
         );
       }
-      function AA(t) {
+      function TA(t) {
         return zr(
           0,
           [
@@ -54077,7 +54101,7 @@
           }
         );
       }
-      function TA(t) {
+      function RA(t) {
         return zr(
           0,
           [
@@ -54113,7 +54137,7 @@
           }
         );
       }
-      function RA(t) {
+      function DA(t) {
         return zr(
           0,
           [
@@ -54132,9 +54156,9 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, AA)),
-            Uo(2, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, TA)),
+            Uo(2, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, RA)),
             Uo(4, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -54144,7 +54168,7 @@
           null
         );
       }
-      function DA(t) {
+      function NA(t) {
         return zr(
           0,
           [
@@ -54180,9 +54204,9 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, lA)),
-            Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, sA)),
+            Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, cA)),
             Uo(7, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -54244,7 +54268,7 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, cA)),
+            (t()(), _r(16777216, null, null, 1, null, dA)),
             Uo(13, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -54261,7 +54285,7 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, dA)),
+            (t()(), _r(16777216, null, null, 1, null, uA)),
             Uo(16, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -54301,7 +54325,7 @@
               16384,
               null,
               0,
-              pI,
+              nI,
               [Ln],
               { rgX: [0, "rgX"] },
               {
@@ -54363,7 +54387,7 @@
               16384,
               null,
               0,
-              pI,
+              nI,
               [Ln],
               { rgX: [0, "rgX"] },
               {
@@ -54425,7 +54449,7 @@
               16384,
               null,
               0,
-              pI,
+              nI,
               [Ln],
               { rgX: [0, "rgX"] },
               {
@@ -54449,21 +54473,21 @@
               null,
               null
             )),
-            (t()(), _r(16777216, null, null, 1, null, hA)),
+            (t()(), _r(16777216, null, null, 1, null, gA)),
             Uo(27, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
-            (t()(), _r(16777216, null, null, 1, null, fA)),
+            (t()(), _r(16777216, null, null, 1, null, bA)),
             Uo(29, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
-            (t()(), _r(16777216, null, null, 1, null, CA)),
+            (t()(), _r(16777216, null, null, 1, null, PA)),
             Uo(31, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
-            (t()(), _r(16777216, null, null, 1, null, MA)),
+            (t()(), _r(16777216, null, null, 1, null, yA)),
             Uo(33, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
-            (t()(), _r(16777216, null, null, 1, null, vA)),
-            Uo(35, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, xA)),
+            Uo(35, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, kA)),
             Uo(37, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
-            (t()(), _r(16777216, null, null, 1, null, IA)),
+            (t()(), _r(16777216, null, null, 1, null, AA)),
             Uo(39, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
-            (t()(), _r(16777216, null, null, 1, null, RA)),
+            (t()(), _r(16777216, null, null, 1, null, DA)),
             Uo(41, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -54521,7 +54545,7 @@
           }
         );
       }
-      function NA(t) {
+      function zA(t) {
         return zr(
           0,
           [
@@ -54546,10 +54570,10 @@
                   a
                 );
               },
-              DA,
-              rA
+              NA,
+              lA
             )),
-            Uo(1, 4440064, null, 0, CI, [Ln, oa, _I], null, null)
+            Uo(1, 4440064, null, 0, rI, [Ln, oa, iI], null, null)
           ],
           function(t, e) {
             t(e, 1, 0);
@@ -54557,8 +54581,8 @@
           null
         );
       }
-      var zA = Co("color-picker", CI, NA, {}, {}, []),
-        LA = Ia({
+      var LA = Co("color-picker", rI, zA, {}, {}, []),
+        FA = Ia({
           encapsulation: 0,
           styles: [
             [
@@ -54567,7 +54591,7 @@
           ],
           data: {}
         });
-      function FA(t) {
+      function BA(t) {
         return zr(
           0,
           [
@@ -54594,7 +54618,7 @@
           }
         );
       }
-      function BA(t) {
+      function VA(t) {
         return zr(
           2,
           [
@@ -54700,7 +54724,7 @@
               null
             ),
             Uo(11, 212992, null, 0, Ux, [[4, Nf]], null, null),
-            (t()(), _r(16777216, null, 0, 1, null, FA)),
+            (t()(), _r(16777216, null, 0, 1, null, BA)),
             Uo(
               13,
               409600,
@@ -54740,7 +54764,7 @@
           }
         );
       }
-      function VA(t) {
+      function HA(t) {
         return zr(
           0,
           [
@@ -54756,8 +54780,8 @@
               null,
               null,
               null,
-              BA,
-              LA
+              VA,
+              FA
             )),
             Uo(1, 114688, null, 0, Bg, [Pb, Ob, bg, oa, Fg], null, null)
           ],
@@ -54767,8 +54791,8 @@
           null
         );
       }
-      var HA = Co("app-progress-spinner-dialog", Bg, VA, {}, {}, []),
-        jA = Ia({
+      var jA = Co("app-progress-spinner-dialog", Bg, HA, {}, {}, []),
+        UA = Ia({
           encapsulation: 0,
           styles: [
             [
@@ -54777,7 +54801,7 @@
           ],
           data: {}
         });
-      function UA(t) {
+      function qA(t) {
         return zr(
           0,
           [
@@ -54834,7 +54858,7 @@
           }
         );
       }
-      function qA(t) {
+      function KA(t) {
         return zr(
           0,
           [
@@ -55308,13 +55332,13 @@
           }
         );
       }
-      function KA(t) {
+      function YA(t) {
         return zr(
           0,
           [
-            (t()(), _r(16777216, null, null, 1, null, UA)),
-            Uo(1, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, qA)),
+            Uo(1, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, KA)),
             Uo(3, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -55324,7 +55348,7 @@
           null
         );
       }
-      function YA(t) {
+      function WA(t) {
         return zr(
           0,
           [
@@ -55340,8 +55364,8 @@
               null,
               null,
               null,
-              KA,
-              jA
+              YA,
+              UA
             )),
             Uo(1, 114688, null, 0, gw, [Fg, Pb, Ob, xb], null, null)
           ],
@@ -55351,9 +55375,9 @@
           null
         );
       }
-      var WA = Co("app-add-edit-playlist-dialog", gw, YA, {}, {}, []),
-        GA = Ia({ encapsulation: 0, styles: [[""]], data: {} });
-      function $A(t) {
+      var GA = Co("app-add-edit-playlist-dialog", gw, WA, {}, {}, []),
+        $A = Ia({ encapsulation: 0, styles: [[""]], data: {} });
+      function ZA(t) {
         return zr(
           0,
           [
@@ -55546,7 +55570,7 @@
           }
         );
       }
-      function ZA(t) {
+      function QA(t) {
         return zr(
           0,
           [
@@ -55562,8 +55586,8 @@
               null,
               null,
               null,
-              $A,
-              GA
+              ZA,
+              $A
             )),
             Uo(1, 114688, null, 0, wb, [Pb, Ob, Fg], null, null)
           ],
@@ -55573,9 +55597,9 @@
           null
         );
       }
-      var QA = Co("app-confirm-dialog", wb, ZA, {}, {}, []);
-      const XA = new Ht("MAT_GRID_LIST"),
-        JA = (() =>
+      var XA = Co("app-confirm-dialog", wb, QA, {}, {}, []);
+      const JA = new Ht("MAT_GRID_LIST"),
+        tT = (() =>
           class {
             constructor(t, e) {
               (this._element = t),
@@ -55599,7 +55623,7 @@
               this._element.nativeElement.style[t] = e;
             }
           })();
-      class tT {
+      class eT {
         constructor() {
           (this.columnIndex = 0), (this.rowIndex = 0);
         }
@@ -55622,7 +55646,7 @@
           return (
             this._markTilePosition(e, t),
             (this.columnIndex = e + t.colspan),
-            new eT(this.rowIndex, e)
+            new nT(this.rowIndex, e)
           );
         }
         _findMatchingGap(t) {
@@ -55660,18 +55684,18 @@
           for (let n = 0; n < e.colspan; n++) this.tracker[t + n] = e.rowspan;
         }
       }
-      class eT {
+      class nT {
         constructor(t, e) {
           (this.row = t), (this.col = e);
         }
       }
-      const nT = /^-?\d+((\.\d+)?[A-Za-z%$]?)+$/;
-      class aT {
+      const aT = /^-?\d+((\.\d+)?[A-Za-z%$]?)+$/;
+      class oT {
         constructor() {
           (this._rows = 0), (this._rowspan = 0);
         }
         init(t, e, n, a) {
-          (this._gutterSize = sT(t)),
+          (this._gutterSize = cT(t)),
             (this._rows = e.rowCount),
             (this._rowspan = e.rowspan),
             (this._cols = n),
@@ -55681,7 +55705,7 @@
           return `(${t}% - (${this._gutterSize} * ${e}))`;
         }
         getTilePosition(t, e) {
-          return 0 === e ? "0" : lT(`(${t} + ${this._gutterSize}) * ${e}`);
+          return 0 === e ? "0" : sT(`(${t} + ${this._gutterSize}) * ${e}`);
         }
         getTileSize(t, e) {
           return `(${t} * ${e}) + (${e - 1} * ${this._gutterSize})`;
@@ -55697,7 +55721,7 @@
             "rtl" === this._direction ? "right" : "left",
             this.getTilePosition(o, e)
           ),
-            t._setStyle("width", lT(this.getTileSize(o, t.colspan)));
+            t._setStyle("width", sT(this.getTileSize(o, t.colspan)));
         }
         getGutterSpan() {
           return `${this._gutterSize} * (${this._rowspan} - 1)`;
@@ -55709,15 +55733,15 @@
           return null;
         }
       }
-      class oT extends aT {
+      class iT extends oT {
         constructor(t) {
           super(), (this.fixedRowHeight = t);
         }
         init(t, e, n, a) {
           if (
             (super.init(t, e, n, a),
-            (this.fixedRowHeight = sT(this.fixedRowHeight)),
-            !nT.test(this.fixedRowHeight))
+            (this.fixedRowHeight = cT(this.fixedRowHeight)),
+            !aT.test(this.fixedRowHeight))
           )
             throw Error(
               `Invalid value "${this.fixedRowHeight}" set as rowHeight.`
@@ -55727,13 +55751,13 @@
           t._setStyle("top", this.getTilePosition(this.fixedRowHeight, e)),
             t._setStyle(
               "height",
-              lT(this.getTileSize(this.fixedRowHeight, t.rowspan))
+              sT(this.getTileSize(this.fixedRowHeight, t.rowspan))
             );
         }
         getComputedHeight() {
           return [
             "height",
-            lT(
+            sT(
               `${this.getTileSpan(
                 this.fixedRowHeight
               )} + ${this.getGutterSpan()}`
@@ -55748,7 +55772,7 @@
               });
         }
       }
-      class iT extends aT {
+      class rT extends oT {
         constructor(t) {
           super(), this._parseRatio(t);
         }
@@ -55763,13 +55787,13 @@
             ),
             t._setStyle(
               "paddingTop",
-              lT(this.getTileSize(this.baseTileHeight, t.rowspan))
+              sT(this.getTileSize(this.baseTileHeight, t.rowspan))
             );
         }
         getComputedHeight() {
           return [
             "paddingBottom",
-            lT(
+            sT(
               `${this.getTileSpan(
                 this.baseTileHeight
               )} + ${this.getGutterSpan()}`
@@ -55791,14 +55815,14 @@
           this.rowHeightRatio = parseFloat(e[0]) / parseFloat(e[1]);
         }
       }
-      class rT extends aT {
+      class lT extends oT {
         setRowStyles(t, e) {
           let n = this.getBaseTileSize(
             100 / this._rowspan,
             (this._rows - 1) / this._rows
           );
           t._setStyle("top", this.getTilePosition(n, e)),
-            t._setStyle("height", lT(this.getTileSize(n, t.rowspan)));
+            t._setStyle("height", sT(this.getTileSize(n, t.rowspan)));
         }
         reset(t) {
           t._tiles &&
@@ -55807,13 +55831,13 @@
             });
         }
       }
-      function lT(t) {
+      function sT(t) {
         return `calc(${t})`;
       }
-      function sT(t) {
+      function cT(t) {
         return t.match(/([A-Za-z%]+)$/) ? t : `${t}px`;
       }
-      const cT = (() =>
+      const dT = (() =>
           class {
             constructor(t, e) {
               (this._element = t), (this._dir = e), (this._gutter = "1px");
@@ -55857,13 +55881,13 @@
               this._tileStyler && this._tileStyler.reset(this),
                 (this._tileStyler =
                   "fit" === t
-                    ? new rT()
+                    ? new lT()
                     : t && t.indexOf(":") > -1
-                    ? new iT(t)
-                    : new oT(t));
+                    ? new rT(t)
+                    : new iT(t));
             }
             _layoutTiles() {
-              this._tileCoordinator || (this._tileCoordinator = new tT());
+              this._tileCoordinator || (this._tileCoordinator = new eT());
               const t = this._tileCoordinator,
                 e = this._tiles.filter(
                   t => !t._gridList || t._gridList === this
@@ -55881,15 +55905,15 @@
               t && (this._element.nativeElement.style[t[0]] = t[1]);
             }
           })(),
-        dT = (() => class {})();
-      var uT = Ia({
+        uT = (() => class {})();
+      var mT = Ia({
         encapsulation: 2,
         styles: [
           ".mat-grid-list{display:block;position:relative}.mat-grid-tile{display:block;position:absolute;overflow:hidden}.mat-grid-tile .mat-figure{top:0;left:0;right:0;bottom:0;position:absolute;display:flex;align-items:center;justify-content:center;height:100%;padding:0;margin:0}.mat-grid-tile .mat-grid-tile-footer,.mat-grid-tile .mat-grid-tile-header{display:flex;align-items:center;height:48px;color:#fff;background:rgba(0,0,0,.38);overflow:hidden;padding:0 16px;position:absolute;left:0;right:0}.mat-grid-tile .mat-grid-tile-footer>*,.mat-grid-tile .mat-grid-tile-header>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-grid-tile .mat-grid-tile-footer.mat-2-line,.mat-grid-tile .mat-grid-tile-header.mat-2-line{height:68px}.mat-grid-tile .mat-grid-list-text{display:flex;flex-direction:column;width:100%;box-sizing:border-box;overflow:hidden}.mat-grid-tile .mat-grid-list-text>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-grid-tile .mat-grid-list-text:empty{display:none}.mat-grid-tile .mat-grid-tile-header{top:0}.mat-grid-tile .mat-grid-tile-footer{bottom:0}.mat-grid-tile .mat-grid-avatar{padding-right:16px}[dir=rtl] .mat-grid-tile .mat-grid-avatar{padding-right:0;padding-left:16px}.mat-grid-tile .mat-grid-avatar:empty{display:none}"
         ],
         data: {}
       });
-      function mT(t) {
+      function hT(t) {
         return zr(
           2,
           [
@@ -55901,14 +55925,14 @@
           null
         );
       }
-      var hT = Ia({
+      var gT = Ia({
         encapsulation: 2,
         styles: [
           ".mat-grid-list{display:block;position:relative}.mat-grid-tile{display:block;position:absolute;overflow:hidden}.mat-grid-tile .mat-figure{top:0;left:0;right:0;bottom:0;position:absolute;display:flex;align-items:center;justify-content:center;height:100%;padding:0;margin:0}.mat-grid-tile .mat-grid-tile-footer,.mat-grid-tile .mat-grid-tile-header{display:flex;align-items:center;height:48px;color:#fff;background:rgba(0,0,0,.38);overflow:hidden;padding:0 16px;position:absolute;left:0;right:0}.mat-grid-tile .mat-grid-tile-footer>*,.mat-grid-tile .mat-grid-tile-header>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-grid-tile .mat-grid-tile-footer.mat-2-line,.mat-grid-tile .mat-grid-tile-header.mat-2-line{height:68px}.mat-grid-tile .mat-grid-list-text{display:flex;flex-direction:column;width:100%;box-sizing:border-box;overflow:hidden}.mat-grid-tile .mat-grid-list-text>*{margin:0;padding:0;font-weight:400;font-size:inherit}.mat-grid-tile .mat-grid-list-text:empty{display:none}.mat-grid-tile .mat-grid-tile-header{top:0}.mat-grid-tile .mat-grid-tile-footer{bottom:0}.mat-grid-tile .mat-grid-avatar{padding-right:16px}[dir=rtl] .mat-grid-tile .mat-grid-avatar{padding-right:0;padding-left:16px}.mat-grid-tile .mat-grid-avatar:empty{display:none}"
         ],
         data: {}
       });
-      function gT(t) {
+      function pT(t) {
         return zr(
           2,
           [
@@ -55933,7 +55957,7 @@
           null
         );
       }
-      var pT = Ia({
+      var fT = Ia({
         encapsulation: 0,
         styles: [
           [
@@ -55942,7 +55966,7 @@
         ],
         data: {}
       });
-      function fT(t) {
+      function bT(t) {
         return zr(
           0,
           [
@@ -55958,10 +55982,10 @@
               null,
               null,
               null,
-              gT,
-              hT
+              pT,
+              gT
             )),
-            Uo(1, 49152, [[1, 4]], 0, JA, [Ln, [2, XA]], null, null),
+            Uo(1, 49152, [[1, 4]], 0, tT, [Ln, [2, JA]], null, null),
             (t()(),
             Cr(
               2,
@@ -56016,7 +56040,7 @@
           }
         );
       }
-      function bT(t) {
+      function _T(t) {
         return zr(
           0,
           [
@@ -56117,16 +56141,16 @@
               null,
               null,
               null,
-              mT,
-              uT
+              hT,
+              mT
             )),
-            Ko(6144, null, XA, null, [cT]),
+            Ko(6144, null, JA, null, [dT]),
             Uo(
               12,
               2211840,
               null,
               1,
-              cT,
+              dT,
               [Ln, [2, Op]],
               {
                 cols: [0, "cols"],
@@ -56136,7 +56160,7 @@
               null
             ),
             vr(603979776, 1, { _tiles: 1 }),
-            (t()(), _r(16777216, null, 0, 1, null, fT)),
+            (t()(), _r(16777216, null, 0, 1, null, bT)),
             Uo(
               15,
               278528,
@@ -56204,7 +56228,7 @@
           }
         );
       }
-      function _T(t) {
+      function CT(t) {
         return zr(
           0,
           [
@@ -56220,8 +56244,8 @@
               null,
               null,
               null,
-              bT,
-              pT
+              _T,
+              fT
             )),
             Uo(1, 114688, null, 0, hw, [Pb, vc], null, null)
           ],
@@ -56231,8 +56255,8 @@
           null
         );
       }
-      var CT = Co("app-image-picker-dialog", hw, _T, {}, {}, []);
-      const PT = (() =>
+      var PT = Co("app-image-picker-dialog", hw, CT, {}, {}, []);
+      const OT = (() =>
           class {
             constructor(t, e) {
               (this.document = t),
@@ -56312,7 +56336,7 @@
               );
             }
           })(),
-        OT = (() => {
+        MT = (() => {
           class t {
             constructor(t, e, n, a) {
               if (
@@ -56373,7 +56397,7 @@
           return (
             (t.ngInjectableDef = bt({
               factory: function() {
-                return new t(It(Pb), It(Ob), It(PT), It(Fg));
+                return new t(It(Pb), It(Ob), It(OT), It(Fg));
               },
               token: t,
               providedIn: "root"
@@ -56381,12 +56405,12 @@
             t
           );
         })();
-      var MT = Ia({
+      var yT = Ia({
         encapsulation: 0,
         styles: [[".histButton[_ngcontent-%COMP%]{width:100%;height:100%}"]],
         data: {}
       });
-      function yT(t) {
+      function vT(t) {
         return zr(
           0,
           [
@@ -56405,10 +56429,10 @@
               ],
               null,
               null,
-              sI,
-              lI
+              OI,
+              PI
             )),
-            Uo(1, 1228800, null, 3, nI, [Ln, oa, [2, tI], [2, eI]], null, null),
+            Uo(1, 1228800, null, 3, pI, [Ln, oa, [2, hI], [2, gI]], null, null),
             vr(603979776, 10, { _lines: 1 }),
             vr(603979776, 11, { _avatar: 0 }),
             vr(603979776, 12, { _icon: 0 }),
@@ -56459,7 +56483,7 @@
           }
         );
       }
-      function vT(t) {
+      function xT(t) {
         return zr(
           0,
           [
@@ -56713,11 +56737,11 @@
               null,
               null,
               null,
-              rI,
-              iI
+              CI,
+              _I
             )),
-            Uo(32, 704512, null, 0, eI, [Ln], null, null),
-            (t()(), _r(16777216, null, 0, 1, null, yT)),
+            Uo(32, 704512, null, 0, gI, [Ln], null, null),
+            (t()(), _r(16777216, null, 0, 1, null, vT)),
             Uo(
               34,
               278528,
@@ -56894,7 +56918,7 @@
           }
         );
       }
-      function xT(t) {
+      function kT(t) {
         return zr(
           0,
           [
@@ -56910,10 +56934,10 @@
               null,
               null,
               null,
-              vT,
-              MT
+              xT,
+              yT
             )),
-            Uo(1, 114688, null, 0, OT, [Pb, Ob, PT, Fg], null, null)
+            Uo(1, 114688, null, 0, MT, [Pb, Ob, OT, Fg], null, null)
           ],
           function(t, e) {
             t(e, 1, 0);
@@ -56921,18 +56945,15 @@
           null
         );
       }
-      var kT = Co("app-input-box", OT, xT, {}, {}, []);
-      class wT {
+      var wT = Co("app-input-box", MT, kT, {}, {}, []);
+      class ST {
         constructor(t) {
           (this.dialog = t),
             (this.browserLinks = [
               { title: "Beast Saber", url: "https://bsaber.com" },
               { title: "Beat Saver", url: "https://beatsaver.com" },
-              { title: "Google", url: "https://google.com" },
-              {
-                title: "Mods",
-                url: "https://github.com/RedBrumbler/BeatOnCustomSabers"
-              }
+              { title: "SideQuest", url: "https://sidequestvr.com/#/apps/4" },
+              { title: "Google", url: "https://google.com" }
             ]),
             (this.linkSelected = new li());
         }
@@ -56941,7 +56962,7 @@
         }
         clickUrl() {
           this.dialog
-            .open(OT, {
+            .open(MT, {
               width: "600px",
               height: "450px",
               disableClose: !0,
@@ -56956,7 +56977,7 @@
         }
         ngOnInit() {}
       }
-      var ST = Ia({
+      var ET = Ia({
         encapsulation: 0,
         styles: [
           [
@@ -56965,7 +56986,7 @@
         ],
         data: {}
       });
-      function ET(t) {
+      function IT(t) {
         return zr(
           0,
           [
@@ -57028,7 +57049,7 @@
           }
         );
       }
-      function IT(t) {
+      function AT(t) {
         return zr(
           0,
           [
@@ -57233,7 +57254,7 @@
               null
             )),
             (t()(), Rr(-1, null, ["URL.."])),
-            (t()(), _r(16777216, null, 0, 1, null, ET)),
+            (t()(), _r(16777216, null, 0, 1, null, IT)),
             Uo(
               24,
               278528,
@@ -57301,12 +57322,12 @@
           }
         );
       }
-      class AT extends iw {
+      class TT extends iw {
         constructor() {
           super(...arguments), (this.Type = rw.StopDownloads);
         }
       }
-      class TT {
+      class RT {
         constructor(t) {
           (this.msgSvc = t), (this.downloads = { Downloads: [] });
         }
@@ -57322,11 +57343,11 @@
             : "";
         }
         cancelAllDownloads() {
-          const t = new AT();
+          const t = new TT();
           this.msgSvc.sendClientMessage(t);
         }
       }
-      var RT = Ia({
+      var DT = Ia({
         encapsulation: 0,
         styles: [
           [
@@ -57335,7 +57356,7 @@
         ],
         data: {}
       });
-      function DT(t) {
+      function NT(t) {
         return zr(
           0,
           [
@@ -57360,7 +57381,7 @@
           null
         );
       }
-      function NT(t) {
+      function zT(t) {
         return zr(
           0,
           [
@@ -57422,7 +57443,7 @@
           }
         );
       }
-      function zT(t) {
+      function LT(t) {
         return zr(
           0,
           [
@@ -57530,9 +57551,9 @@
             Uo(12, 1294336, [["menu", 4]], 2, bx, [Ln, Di, gx], null, null),
             vr(603979776, 1, { items: 1 }),
             vr(603979776, 2, { lazyContent: 0 }),
-            (t()(), _r(16777216, null, 0, 1, null, DT)),
-            Uo(16, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, NT)),
+            Uo(16, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, 0, 1, null, zT)),
             Uo(18, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -57567,12 +57588,12 @@
           }
         );
       }
-      class LT extends iw {
+      class FT extends iw {
         constructor() {
           super(), (this.Type = rw.GetOps);
         }
       }
-      class FT {
+      class BT {
         constructor(t, e) {
           (this.msgSvc = t),
             (this.appIntegration = e),
@@ -57584,7 +57605,7 @@
           }),
             t.connectionStatusChanged.subscribe(t => {
               if (t == Pg.Connected && !n) {
-                var e = new LT();
+                var e = new FT();
                 (e.ClearFailedOps = !1), this.msgSvc.sendClientMessage(e);
               }
             });
@@ -57615,11 +57636,11 @@
         }
         ngOnInit() {}
         clickClearFailedOps() {
-          var t = new LT();
+          var t = new FT();
           (t.ClearFailedOps = !0), this.msgSvc.sendClientMessage(t);
         }
       }
-      var BT = Ia({
+      var VT = Ia({
         encapsulation: 0,
         styles: [
           [
@@ -57628,7 +57649,7 @@
         ],
         data: {}
       });
-      function VT(t) {
+      function HT(t) {
         return zr(
           0,
           [
@@ -57675,7 +57696,7 @@
           }
         );
       }
-      function HT(t) {
+      function jT(t) {
         return zr(
           0,
           [
@@ -57722,7 +57743,7 @@
           }
         );
       }
-      function jT(t) {
+      function UT(t) {
         return zr(
           0,
           [
@@ -57747,7 +57768,7 @@
           null
         );
       }
-      function UT(t) {
+      function qT(t) {
         return zr(
           0,
           [
@@ -57890,7 +57911,7 @@
           }
         );
       }
-      function qT(t) {
+      function KT(t) {
         return zr(
           0,
           [
@@ -58022,9 +58043,9 @@
             ),
             Ar(11, { spinny: 0 }),
             (t()(), Rr(-1, 0, ["sync"])),
-            (t()(), _r(16777216, null, null, 1, null, VT)),
-            Uo(14, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, null, 1, null, HT)),
+            Uo(14, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, null, 1, null, jT)),
             Uo(16, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -58062,9 +58083,9 @@
             Uo(22, 1294336, [["menu", 4]], 2, bx, [Ln, Di, gx], null, null),
             vr(603979776, 1, { items: 1 }),
             vr(603979776, 2, { lazyContent: 0 }),
-            (t()(), _r(16777216, null, 0, 1, null, jT)),
-            Uo(26, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, UT)),
+            Uo(26, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, 0, 1, null, qT)),
             Uo(
               28,
               278528,
@@ -58159,14 +58180,14 @@
           }
         );
       }
-      class KT {
+      class YT {
         constructor(t) {
           this._elementRef = t;
         }
       }
-      const YT = x_(KT),
-        WT = (() =>
-          class extends YT {
+      const WT = x_(YT),
+        GT = (() =>
+          class extends WT {
             constructor(t, e, n) {
               super(t), (this._platform = e), (this._document = n);
             }
@@ -58198,18 +58219,18 @@
                 })();
             }
           })(),
-        GT = (() => class {})();
-      var $T = Ia({
+        $T = (() => class {})();
+      var ZT = Ia({
         encapsulation: 2,
         styles: [
           "@media (-ms-high-contrast:active){.mat-toolbar{outline:solid 1px}}.mat-toolbar-row,.mat-toolbar-single-row{display:flex;box-sizing:border-box;padding:0 16px;width:100%;flex-direction:row;align-items:center;white-space:nowrap}.mat-toolbar-multiple-rows{display:flex;box-sizing:border-box;flex-direction:column;width:100%}.mat-toolbar-multiple-rows{min-height:64px}.mat-toolbar-row,.mat-toolbar-single-row{height:64px}@media (max-width:599px){.mat-toolbar-multiple-rows{min-height:56px}.mat-toolbar-row,.mat-toolbar-single-row{height:56px}}"
         ],
         data: {}
       });
-      function ZT(t) {
+      function QT(t) {
         return zr(2, [Er(null, 0), Er(null, 1)], null, null);
       }
-      var QT = Ia({
+      var XT = Ia({
         encapsulation: 0,
         styles: [
           [
@@ -58260,7 +58281,7 @@
           ]
         }
       });
-      function XT(t) {
+      function JT(t) {
         return zr(
           0,
           [
@@ -58307,7 +58328,7 @@
           }
         );
       }
-      function JT(t) {
+      function tR(t) {
         return zr(
           0,
           [
@@ -58435,7 +58456,7 @@
           }
         );
       }
-      function tR(t) {
+      function eR(t) {
         return zr(
           0,
           [
@@ -58493,7 +58514,7 @@
           null
         );
       }
-      function eR(t) {
+      function nR(t) {
         return zr(
           0,
           [
@@ -58547,7 +58568,7 @@
           null
         );
       }
-      function nR(t) {
+      function aR(t) {
         return zr(
           0,
           [
@@ -58608,7 +58629,7 @@
           }
         );
       }
-      function aR(t) {
+      function oR(t) {
         return zr(
           0,
           [
@@ -58666,7 +58687,7 @@
           null
         );
       }
-      function oR(t) {
+      function iR(t) {
         return zr(
           0,
           [
@@ -58702,8 +58723,8 @@
                   a
                 );
               },
-              IT,
-              ST
+              AT,
+              ET
             )),
             Uo(
               1,
@@ -58715,7 +58736,7 @@
               { message: [0, "message"] },
               null
             ),
-            Uo(2, 114688, null, 0, wT, [xb], null, {
+            Uo(2, 114688, null, 0, ST, [xb], null, {
               linkSelected: "linkSelected"
             }),
             (t()(), _r(0, null, null, 0))
@@ -58726,7 +58747,7 @@
           null
         );
       }
-      function iR(t) {
+      function rR(t) {
         return zr(
           0,
           [
@@ -58835,7 +58856,7 @@
           }
         );
       }
-      function rR(t) {
+      function lR(t) {
         return zr(
           0,
           [
@@ -58944,7 +58965,7 @@
           }
         );
       }
-      function lR(t) {
+      function sR(t) {
         return zr(
           0,
           [
@@ -58973,8 +58994,8 @@
                   a
                 );
               },
-              zT,
-              RT
+              LT,
+              DT
             )),
             Uo(
               1,
@@ -58986,7 +59007,7 @@
               { message: [0, "message"] },
               null
             ),
-            Uo(2, 114688, null, 0, TT, [bg], null, null),
+            Uo(2, 114688, null, 0, RT, [bg], null, null),
             (t()(), _r(0, null, null, 0))
           ],
           function(t, e) {
@@ -58995,7 +59016,7 @@
           null
         );
       }
-      function sR(t) {
+      function cR(t) {
         return zr(
           0,
           [
@@ -59027,8 +59048,8 @@
                   a
                 );
               },
-              qT,
-              BT
+              KT,
+              VT
             )),
             Uo(
               1,
@@ -59040,7 +59061,7 @@
               { message: [0, "message"] },
               null
             ),
-            Uo(2, 114688, null, 0, FT, [bg, Fg], null, null),
+            Uo(2, 114688, null, 0, BT, [bg, Fg], null, null),
             (t()(), _r(0, null, null, 0))
           ],
           function(t, e) {
@@ -59055,7 +59076,7 @@
           null
         );
       }
-      function cR(t) {
+      function dR(t) {
         return zr(
           0,
           [
@@ -59094,7 +59115,7 @@
           null
         );
       }
-      function dR(t) {
+      function uR(t) {
         return zr(
           0,
           [
@@ -59136,7 +59157,7 @@
           null
         );
       }
-      function uR(t) {
+      function mR(t) {
         return zr(
           0,
           [
@@ -59156,9 +59177,9 @@
               $_
             )),
             Uo(1, 49152, null, 0, Gb, [], null, null),
-            (t()(), _r(16777216, null, 0, 1, null, cR)),
-            Uo(3, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, dR)),
+            Uo(3, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, 0, 1, null, uR)),
             Uo(5, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -59176,7 +59197,7 @@
           null
         );
       }
-      function mR(t) {
+      function hR(t) {
         return zr(
           0,
           [
@@ -59220,10 +59241,10 @@
               ],
               null,
               null,
-              ZT,
-              $T
+              QT,
+              ZT
             )),
-            Uo(3, 4243456, null, 1, WT, [Ln, gf, Bs], null, null),
+            Uo(3, 4243456, null, 1, GT, [Ln, gf, Bs], null, null),
             vr(603979776, 1, { _toolbarRows: 1 }),
             (t()(),
             Cr(
@@ -59287,7 +59308,7 @@
               { message: [0, "message"] },
               null
             ),
-            (t()(), _r(16777216, null, null, 1, null, XT)),
+            (t()(), _r(16777216, null, null, 1, null, JT)),
             Uo(13, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -59315,25 +59336,25 @@
               null
             ),
             (t()(), Rr(-1, 0, ["wifi"])),
-            (t()(), _r(16777216, null, 0, 1, null, JT)),
-            Uo(18, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, tR)),
-            Uo(20, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(18, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, eR)),
-            Uo(22, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(20, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, nR)),
-            Uo(24, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(22, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, aR)),
-            Uo(26, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(24, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, oR)),
-            Uo(28, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(26, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, iR)),
-            Uo(30, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(28, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, rR)),
-            Uo(32, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(30, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, lR)),
-            Uo(34, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            Uo(32, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(), _r(16777216, null, 0, 1, null, sR)),
+            Uo(34, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
+            (t()(), _r(16777216, null, 0, 1, null, cR)),
             Uo(36, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null),
             (t()(),
             Cr(
@@ -59410,7 +59431,7 @@
               { fxLayout: [0, "fxLayout"] },
               null
             ),
-            (t()(), _r(16777216, null, null, 1, null, uR)),
+            (t()(), _r(16777216, null, null, 1, null, mR)),
             Uo(44, 16384, null, 0, ys, [ua, ca], { ngIf: [0, "ngIf"] }, null)
           ],
           function(t, e) {
@@ -59518,7 +59539,7 @@
           }
         );
       }
-      function hR(t) {
+      function gR(t) {
         return zr(
           0,
           [
@@ -59534,8 +59555,8 @@
               null,
               null,
               null,
-              mR,
-              QT
+              hR,
+              XT
             )),
             Uo(
               1,
@@ -59554,10 +59575,10 @@
           null
         );
       }
-      var gR = Co("app-root", Sb, hR, {}, {}, []);
-      class pR {}
-      const fR = (() => class {})(),
-        bR = (() => {
+      var pR = Co("app-root", Sb, gR, {}, {}, []);
+      class fR {}
+      const bR = (() => class {})(),
+        _R = (() => {
           class t {
             constructor(t, e) {
               Us(e) &&
@@ -59584,20 +59605,20 @@
           }
           return t;
         })(),
-        _R = (() => class {})(),
         CR = (() => class {})(),
-        PR = (() => class {})();
-      var OR;
-      const MR = (() =>
-        (OR = class {
+        PR = (() => class {})(),
+        OR = (() => class {})();
+      var MR;
+      const yR = (() =>
+        (MR = class {
           static forRoot(t) {
             return {
-              ngModule: OR,
+              ngModule: MR,
               providers: [{ provide: "options", useValue: t }]
             };
           }
         }))();
-      var yR = Hl(Ul, [Sb], function(t) {
+      var vR = Hl(Ul, [Sb], function(t) {
         return (function(t) {
           const e = {},
             n = [];
@@ -59634,16 +59655,16 @@
                 aS,
                 sS,
                 $E,
-                ZI,
-                eA,
-                iA,
-                zA,
-                HA,
-                WA,
-                QA,
-                CT,
-                kT,
-                gR
+                QI,
+                nA,
+                rA,
+                LA,
+                jA,
+                GA,
+                XA,
+                PT,
+                wT,
+                pR
               ]
             ],
             [3, An],
@@ -59736,9 +59757,9 @@
           co(4608, I_, I_, []),
           co(4608, $v, $v, [Bs, Di, Hf, Wv]),
           co(5120, Pv, Ov, [mb]),
-          co(4608, _I, _I, []),
+          co(4608, iI, iI, []),
           co(4608, MI, MI, []),
-          co(4608, PT, PT, [Bs, fi]),
+          co(4608, OT, OT, [Bs, fi]),
           co(1073742336, Fs, Fs, []),
           co(1073742336, zg, zg, []),
           co(1024, Le, Ou, []),
@@ -59827,7 +59848,7 @@
             [2, Rh]
           ]),
           co(1073742336, rg, rg, [[2, ag], [2, jh]]),
-          co(1073742336, pR, pR, []),
+          co(1073742336, fR, fR, []),
           co(1073742336, mM, mM, []),
           co(1073742336, Mp, Mp, []),
           co(1073742336, y_, y_, [[2, M_], [2, ru]]),
@@ -59836,7 +59857,7 @@
           co(1073742336, MC, MC, []),
           co(1073742336, Zb, Zb, []),
           co(1073742336, pC, pC, []),
-          co(1073742336, GT, GT, []),
+          co(1073742336, $T, $T, []),
           co(1073742336, ip, ip, []),
           co(1073742336, Ff, Ff, []),
           co(1073742336, pb, pb, []),
@@ -59850,21 +59871,21 @@
           co(1073742336, KM, KM, []),
           co(1073742336, Jy, Jy, []),
           co(1073742336, Vx, Vx, []),
-          co(1073742336, fR, fR, []),
-          co(1073742336, bR, bR, [[2, ZM], fi]),
+          co(1073742336, bR, bR, []),
+          co(1073742336, _R, _R, [[2, ZM], fi]),
           co(1073742336, L_, L_, []),
-          co(1073742336, dT, dT, []),
-          co(1073742336, _R, _R, []),
+          co(1073742336, uT, uT, []),
+          co(1073742336, CR, CR, []),
           co(1073742336, Uk, Uk, []),
           co(1073742336, Yk, Yk, []),
           co(1073742336, Mx, Mx, []),
           co(1073742336, yx, yx, []),
-          co(1073742336, CR, CR, []),
+          co(1073742336, PR, PR, []),
           co(1073742336, tw, tw, []),
           co(1073742336, ew, ew, []),
           co(1073742336, ZS, ZS, []),
           co(1073742336, Bf, Bf, []),
-          co(1073742336, PR, PR, []),
+          co(1073742336, OR, OR, []),
           co(1073742336, ix, ix, []),
           co(1073742336, oE, oE, []),
           co(1073742336, Kk, Kk, []),
@@ -59873,11 +59894,11 @@
           co(1073742336, xv, xv, []),
           co(1073742336, NS, NS, []),
           co(1073742336, W_, W_, []),
-          co(1073742336, oI, oI, []),
-          co(1073742336, aI, aI, []),
-          co(1073742336, MR, MR, []),
+          co(1073742336, bI, bI, []),
+          co(1073742336, fI, fI, []),
+          co(1073742336, yR, yR, []),
           co(1073742336, vI, vI, []),
-          co(1073742336, OI, OI, []),
+          co(1073742336, sI, sI, []),
           co(1073742336, Ul, Ul, []),
           co(256, xn, !0, []),
           co(256, uM, "BrowserAnimations", []),
@@ -59904,7 +59925,7 @@
         Fe = !1;
       })(),
         Pu()
-          .bootstrapModuleFactory(yR)
+          .bootstrapModuleFactory(vR)
           .catch(t => console.error(t));
     },
     zfKp: function(t, e, n) {

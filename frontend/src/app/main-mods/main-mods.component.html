@@ -5,8 +5,8 @@
         <mat-icon aria-hidden="false" class="setup-icon">cloud_upload</mat-icon>
       </div>
       <mat-card-title>Mod Management</mat-card-title>
-      <mat-card-subtitle>Manage all mods available for the quest here. Install, uninstall, and configure mods..</mat-card-subtitle>
-      <div class="builtinMods">            
+      <mat-card-subtitle>Manage all mods available for the quest here. Install, uninstall, and configure mods.</mat-card-subtitle>
+      <div *ngIf="showColorMods" class="builtinMods">            
           <button mat-raised-button [ngStyle]="{'background-color': leftColor}" cpPosition="left" [cpPositionOffset]="-30" [cpCmykEnabled]="false" 
               [(colorPicker)]="leftColor" 
               [cpAlphaChannel]="true" cpCloseClickOutside="true" cpOutputFormat="rgba"
