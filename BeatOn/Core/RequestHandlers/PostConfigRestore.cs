@@ -89,6 +89,7 @@ namespace BeatOn.Core.RequestHandlers
                 try
                 {
                     cfg = JsonConvert.DeserializeObject<QuestomAssets.Models.BeatSaberQuestomConfig>(_getQaeConfig().RootFileProvider.ReadToString(configFile));
+                    cfg.Mods.Clear();
                     foreach (var pl in cfg.Playlists)
                     {
                         foreach (var s in pl.SongList)
