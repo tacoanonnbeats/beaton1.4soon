@@ -21,6 +21,7 @@ namespace BeatOn
     {        
         public const string APK_ASSETS_PATH = "assets/bin/Data/";
         public const string LIBMODLOADER_TARGET_FILE = "lib/armeabi-v7a/libmodloader.so";
+        public const string LIBMODLOADER64_TARGET_FILE = "lib/arm64-v8a/libmodloader.so";
         public const string MOD_TAG_FILE = "beaton.modded";
         public const string BS_PLAYER_DATA_FILE = "/sdcard/Android/data/com.beatgames.beatsaber/files/PlayerData.dat";
 
@@ -392,8 +393,10 @@ namespace BeatOn
                     "Managed",
                     "boot.config" });
 
+                bool is64bit = IsApk64Bit(TempApk);
+
                 //// copy libassetredirect.so to the mods folder
-                InstallAssetRedirectMod();
+                InstallAssetRedirectMod(is64bit);
 
                 //from this point on, the APK has been modified and isn't definitively recoverable if something goes wrong
                 tempApkModified = true;
@@ -957,6 +960,35 @@ namespace BeatOn
             }
         }
 
+        private bool IsApk64Bit(string apkFilename)
+        {
+            UpdateStatus("Checking if APK is 64-bit...");
+            try
+            {
+                using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, true, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+                {
+                    if (apk.DirectoryExists(LIBMODLOADER64_TARGET_FILE.GetDirectoryFwdSlash()))
+                    {
+                        UpdateStatus("APK is 64 bit");
+                        return true;
+                    }
+                    if (apk.DirectoryExists(LIBMODLOADER_TARGET_FILE.GetDirectoryFwdSlash()))
+                    {
+                        UpdateStatus("APK is 32 bit");
+                        return false;
+                    }
+                    UpdateStatus("Can't find a libs folder for either 32 or 64 bit...");
+                    throw new ModException("Unable to find library folder to determine 32 or 64 bit.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.LogErr("Error determining if APK is 64 bit!", ex);
+                UpdateStatus("Unable to determine if APK is 32 or 64 bit!");
+                throw new ModException("Error determining if APK is 64 bit!", ex);
+            }
+        }
+
         private void AddModLoaderToApk(string apkFilename)
         {
             UpdateStatus("Adding the libmodloader.so file to the APK...");
@@ -966,8 +998,18 @@ namespace BeatOn
                 {
                     using (var resStream = _context.Resources.OpenRawResource(Resource.Raw.libmodloader))
                     {
-                        apk.QueueWriteStream(LIBMODLOADER_TARGET_FILE, resStream, true, true);
-                        apk.Save();
+                        using (var resStream64 = _context.Resources.OpenRawResource(Resource.Raw.libmodloader64))
+                        {
+                            if (apk.DirectoryExists(LIBMODLOADER_TARGET_FILE.GetDirectoryFwdSlash()))
+                            {
+                                apk.QueueWriteStream(LIBMODLOADER_TARGET_FILE, resStream, true, true);
+                            }
+                            if (apk.DirectoryExists(LIBMODLOADER64_TARGET_FILE.GetDirectoryFwdSlash()))
+                            {
+                                apk.QueueWriteStream(LIBMODLOADER64_TARGET_FILE, resStream64, true, true);
+                            }
+                            apk.Save();
+                        }
                     }
                 }
             }
@@ -979,7 +1021,7 @@ namespace BeatOn
             }
         }
 
-        private void InstallAssetRedirectMod()
+        private void InstallAssetRedirectMod(bool is64Bit)
         {
             UpdateStatus("Installing asset redirection mod ...");
             try
@@ -999,11 +1041,23 @@ namespace BeatOn
                     UpdateStatus("Failed to create mods directory in external storage!");
                     throw new ModException($"Unable to create directory {dirName}!", ex);
                 }
-                using (var resStream = _context.Resources.OpenRawResource(Resource.Raw.libbeatonmod))
+                if (is64Bit)
                 {
-                    using (var fs = File.Open(Path.Combine(Constants.MODLOADER_MODS_PATH, "libbeatonmod.so"), FileMode.Create, FileAccess.Write))
+                    using (var resStream = _context.Resources.OpenRawResource(Resource.Raw.libbeatonmod64))
                     {
-                        resStream.CopyTo(fs);
+                        using (var fs = File.Open(Path.Combine(Constants.MODLOADER_MODS_PATH, "libbeatonmod.so"), FileMode.Create, FileAccess.Write))
+                        {
+                            resStream.CopyTo(fs);
+                        }
+                    }
+                } else
+                {
+                    using (var resStream = _context.Resources.OpenRawResource(Resource.Raw.libbeatonmod))
+                    {
+                        using (var fs = File.Open(Path.Combine(Constants.MODLOADER_MODS_PATH, "libbeatonmod.so"), FileMode.Create, FileAccess.Write))
+                        {
+                            resStream.CopyTo(fs);
+                        }
                     }
                 }
             }

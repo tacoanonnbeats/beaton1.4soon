@@ -23,6 +23,7 @@ import { ClientChangeColor, ColorType } from '../models/ClientChangeColor';
 })
 export class MainModsComponent implements OnInit, AfterViewInit {
     config: QuestomConfig = <QuestomConfig>{ Mods: [] };
+    showColorMods: boolean = false;
     beatSaberVersion: string = '';
     modSwitchInProgress: boolean = false;
     modIDBeingSwitched: string = null;
@@ -36,10 +37,27 @@ export class MainModsComponent implements OnInit, AfterViewInit {
     ) {
         this.configSvc.configUpdated.subscribe((cfg: BeatOnConfig) => {
             this.config = cfg.Config;
+            this.checkColorMod(cfg);
             this.beatSaberVersion = cfg.BeatSaberVersion;
         });
     }
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
 
+    checkColorMod(cfg: BeatOnConfig) {
+        if (cfg.BeatSaberVersion) {
+            var split = cfg.BeatSaberVersion.split('.');
+            if (split.length >= 2) {
+                if (this.isNumeric(split[0]) && this.isNumeric(split[1])) {
+                    if (parseInt(split[0]) >= 1 && parseInt(split[1]) <= 2) {
+                        this.showColorMods = true;
+                        console.log('color mods enabled for older version than 1.3');
+                    }
+                }
+            }
+        }
+    }
     get leftColor() {
         if (this.config && this.config.LeftColor) {
             return (
@@ -106,6 +124,7 @@ export class MainModsComponent implements OnInit, AfterViewInit {
         let isInit = false;
         this.configSvc.getConfig().subscribe((cfg: BeatOnConfig) => {
             this.config = cfg.Config;
+            this.checkColorMod(cfg);
             this.beatSaberVersion = cfg.BeatSaberVersion;
         });
     }
