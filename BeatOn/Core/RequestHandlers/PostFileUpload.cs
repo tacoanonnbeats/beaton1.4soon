@@ -75,6 +75,23 @@ namespace BeatOn.Core.RequestHandlers
                     resp.BadRequest("Didn't get any useable files.");
                     return;
                 }
+
+                bool forceOverwrite = false;
+                if (!string.IsNullOrWhiteSpace(req.Url.Query))
+                {
+                    foreach (string kvp in req.Url.Query.TrimStart('?').Split("&"))
+                    {
+                        var split = kvp.Split('=');
+                        if (split.Count() < 1)
+                            continue;
+                        if (split[0].ToLower() == "overwrite")
+                        {
+                            forceOverwrite = true;
+                            break;
+                        }
+                    }
+                }
+
                 foreach (var file in files.Keys.ToList())
                 {
                     var s = files[file];
@@ -100,7 +117,7 @@ namespace BeatOn.Core.RequestHandlers
                                     {
                                         provider.Dispose();
                                         ms.Dispose();
-                                    });
+                                    }, overwriteIfExists: forceOverwrite);
                                 }
                                 catch
                                 {

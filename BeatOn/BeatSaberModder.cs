@@ -23,6 +23,7 @@ namespace BeatOn
         public const string LIBMODLOADER_TARGET_FILE = "lib/armeabi-v7a/libmodloader.so";
         public const string LIBMODLOADER64_TARGET_FILE = "lib/arm64-v8a/libmodloader.so";
         public const string MOD_TAG_FILE = "beaton.modded";
+        public const string MODLOADERV2_TAG_FILE = "beaton.modloader2.modded";
         public const string BS_PLAYER_DATA_FILE = "/sdcard/Android/data/com.beatgames.beatsaber/files/PlayerData.dat";
 
         public event EventHandler<string> StatusUpdated;
@@ -71,7 +72,7 @@ namespace BeatOn
                     Log.LogErr("IsTempApkModded was called, but the TempApk does not exist!");
                     throw new ModException("IsTempApkModded was called, but the TempApk does not exist!");
                 }
-                return CheckApkHasModTagFile(TempApk);
+                return CheckApkHasAllTagFiles(TempApk);
             }
         }
 
@@ -94,6 +95,31 @@ namespace BeatOn
             }
         }
 
+        private bool IsInstalledBeatSaberOriginal
+        {
+            get
+            {
+#if EMULATOR
+                return true;
+#endif
+                string bsApk = FindBeatSaberApk();
+                if (bsApk == null)
+                {
+                    Log.LogErr($"Tried to call {nameof(IsInstalledBeatSaberModded)} when beat saber isn't installed.");
+                    throw new ModException("Beat saber is not installed, cannot check if it is modded.");
+                }
+                try
+                {
+                    return !(CheckApkHasModloaderTagFile(bsApk) || CheckApkHasModTagFile(bsApk));
+                }
+                catch (Exception ex)
+                {
+                    Log.LogErr($"Exception in {nameof(IsInstalledBeatSaberModded)} when trying to check if it is modded.", ex);
+                    throw new ModException("Error checking if installed beat saber is modded.", ex);
+                }
+            }
+        }
+
         public bool IsInstalledBeatSaberModded
         {
             get
@@ -109,7 +135,7 @@ namespace BeatOn
                 }
                 try
                 {
-                    return CheckApkHasModTagFile(bsApk);
+                    return CheckApkHasAllTagFiles(bsApk);
                 }
                 catch (Exception ex)
                 {
@@ -136,7 +162,7 @@ namespace BeatOn
             {
                 if (TempApk == null)
                     return false;
-                return CheckApkHasModTagFile(TempApk);
+                return CheckApkHasAllTagFiles(TempApk);
             }
             catch (Exception ex)
             {
@@ -334,7 +360,7 @@ namespace BeatOn
                 throw new ModException("Beat Saber does not seem to be installed, could not find its APK.");
             }
             UpdateStatus("Verifying the installed APK isn't modded...");
-            if (IsInstalledBeatSaberModded)
+            if (!IsInstalledBeatSaberOriginal)
             {
                 UpdateStatus("Installed beatsaber IS modded!");
                 if (File.Exists(Constants.BEATSABER_APK_BACKUP_FILE))
@@ -382,17 +408,22 @@ namespace BeatOn
             bool modFailed = false;
             //keep track of any temp files that may have been used so we can clean them up
             List<string> tempFiles = new List<string>();
+            bool isPartialUpgrade = false;
             try
             {
-                //// delete the assets relocation if it already exists in case the mod has been installed before
-                if (Directory.Exists(Constants.ASSETS_RELOC_PATH))
-                    Directory.Delete(Constants.ASSETS_RELOC_PATH, true);
+                isPartialUpgrade = CheckApkHasModTagFile(TempApk) && !CheckApkHasModloaderTagFile(TempApk) && Directory.Exists(Constants.ASSETS_RELOC_PATH);
 
-                //// copy asset files from APK to /sdcard/wherever
-                ExtractAssetsFromApkToExternalStorage(TempApk, new List<string>() {
+                if (!isPartialUpgrade)
+                {
+                    //// delete the assets relocation if it already exists in case the mod has been installed before
+                    if (Directory.Exists(Constants.ASSETS_RELOC_PATH))
+                        Directory.Delete(Constants.ASSETS_RELOC_PATH, true);
+
+                    //// copy asset files from APK to /sdcard/wherever
+                    ExtractAssetsFromApkToExternalStorage(TempApk, new List<string>() {
                     "Managed",
                     "boot.config" });
-
+                }
                 bool is64bit = IsApk64Bit(TempApk);
 
                 //// copy libassetredirect.so to the mods folder
@@ -401,18 +432,25 @@ namespace BeatOn
                 //from this point on, the APK has been modified and isn't definitively recoverable if something goes wrong
                 tempApkModified = true;
 
-                //// modify classes.dex and inject the loadlibrary call for libmodloader.so
-                InjectModLoaderToApk(TempApk, tempFiles);
+                if (!isPartialUpgrade)
+                {
+                    //// modify classes.dex and inject the loadlibrary call for libmodloader.so
+                    InjectModLoaderToApk(TempApk, tempFiles);
+                }
 
                 //// add libmodloader.so to the apk
                 AddModLoaderToApk(TempApk);
 
-                //// fix the manifest
-                AddManifestModToApk(TempApk);
+                if (!isPartialUpgrade)
+                {
+                    //// fix the manifest
+                    AddManifestModToApk(TempApk);
+                    //// add a 1 byte file to the APK so we know it's been modded to make verifying it later easier
+                    AddTagFileToApk(TempApk);
+                }
 
-                //// add a 1 byte file to the APK so we know it's been modded to make verifying it later easier
-                AddTagFileToApk(TempApk);
-
+                AddModLoaderTagFileToApk(TempApk);
+                
                 //// re-sign the APK
                 UpdateStatus("Re-signing the modded APK (this takes a minute)...");
                 SignApk(TempApk);
@@ -595,6 +633,28 @@ namespace BeatOn
 
         }
 
+        private bool CheckApkHasAllTagFiles(string apkFilename)
+        {
+            bool hasModTag = false;
+            bool hasModloaderTag = false;
+            using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, true, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+            {
+                if (apk.FileExists(MOD_TAG_FILE))
+                {
+                    hasModTag = true;
+                }
+                if (apk.FileExists(MODLOADERV2_TAG_FILE))
+                {
+                    hasModloaderTag = true;
+                }
+                if (hasModTag && hasModloaderTag)
+                {
+                    return true;
+                }
+            }
+            return (hasModTag && hasModloaderTag);
+        }
+
         private bool CheckApkHasModTagFile(string apkFilename)
         {
             using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, true, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
@@ -603,6 +663,17 @@ namespace BeatOn
                     return true;
             }
             return false;
+        }
+
+        private bool CheckApkHasModloaderTagFile(string apkFilename)
+        {
+            using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, true, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+            {
+                if (apk.FileExists(MODLOADERV2_TAG_FILE))
+                    return true;
+            }
+            return false;
+            
         }
 
         private void UpdateStatus(string message)
@@ -1002,13 +1073,31 @@ namespace BeatOn
                         {
                             if (apk.DirectoryExists(LIBMODLOADER_TARGET_FILE.GetDirectoryFwdSlash()))
                             {
+                                if (apk.FileExists(LIBMODLOADER_TARGET_FILE))
+                                {
+                                    apk.Delete(LIBMODLOADER_TARGET_FILE);
+                                    apk.Save();
+                                }
                                 apk.QueueWriteStream(LIBMODLOADER_TARGET_FILE, resStream, true, true);
                             }
                             if (apk.DirectoryExists(LIBMODLOADER64_TARGET_FILE.GetDirectoryFwdSlash()))
                             {
+                                if (apk.FileExists(LIBMODLOADER64_TARGET_FILE))
+                                {
+                                    apk.Delete(LIBMODLOADER64_TARGET_FILE);
+                                    apk.Save();
+                                }
                                 apk.QueueWriteStream(LIBMODLOADER64_TARGET_FILE, resStream64, true, true);
                             }
-                            apk.Save();
+                            try
+                            {
+                                apk.Save();
+                            } catch (IOException)
+                            {
+                                GC.Collect();
+                                System.Threading.Thread.Sleep(1000);
+                                apk.Save();
+                            }
                         }
                     }
                 }
@@ -1079,6 +1168,20 @@ namespace BeatOn
                     return;
                 }
                 apk.Write(MOD_TAG_FILE, new byte[1], true, false);
+                apk.Save();
+            }
+        }
+
+        private void AddModLoaderTagFileToApk(string apkFilename)
+        {
+            using (var apk = new ZipFileProvider(apkFilename, FileCacheMode.None, false, QuestomAssets.Utils.FileUtils.GetTempDirectory()))
+            {
+                if (apk.FileExists(MODLOADERV2_TAG_FILE))
+                {
+                    Log.LogMsg("APK file already had the modloader v2 tag file.");
+                    return;
+                }
+                apk.Write(MODLOADERV2_TAG_FILE, new byte[1], true, false);
                 apk.Save();
             }
         }
