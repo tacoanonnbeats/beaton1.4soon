@@ -77,17 +77,21 @@ namespace BeatOn.Core
             return false;
         }
 
-        private void KillBeatSaber()
+        private void KillBackgroundProcess(string packageName)
         {
             try
             {
                 ActivityManager am = (ActivityManager)_context.GetSystemService(Context.ActivityService);
-                am.KillBackgroundProcesses("com.beatgames.beatsaber");                
+                am.KillBackgroundProcesses(packageName);
             }
             catch (Exception ex)
             {
                 Log.LogErr("Exception trying to kill background process for beatsaber.", ex);
             }
+        }
+        private void KillBeatSaber()
+        {
+            KillBackgroundProcess("com.beatgames.beatsaber");
         }
 
         public void Start()
@@ -486,7 +490,25 @@ namespace BeatOn.Core
 
         private void SendPackageStop(string packageName)
         {
-            //doesn't work
+            try
+            {
+                Intent intent = new Intent("com.oculus.vrshell.intent.action.LAUNCH");
+                intent.SetPackage("com.oculus.vrshell");
+                intent.PutExtra("intent_data", Android.Net.Uri.Parse("systemux://home"));
+                intent.PutExtra("blackscreen", false);
+                //var intent = new Intent("com.oculus.system_activity");
+                //intent.SetPackage(packageName);
+
+                //intent.PutExtra("intent_pkg", "com.oculus.vrshell");
+                //intent.PutExtra("intent_cmd", "{\"Command\":\"exitToHome\", \"PlatformUIVersion\":3, \"ToPackage\":\"" + packageName + "\"}");
+                //_context.SendBroadcast(intent);
+                //intent.PutExtra("intent_cmd", "{\"Command\":\"returnToLauncher\", \"PlatformUIVersion\":3, \"ToPackage\":\"" + packageName + "\"}");
+                _context.SendBroadcast(intent);
+                Task.Delay(3000).ContinueWith(t => { KillBackgroundProcess(packageName); });
+            } catch (Exception e)
+            {
+                Log.LogErr("Exception trying to send package exittohome messages", e);
+            }
         }
 
         private void _SongDownloadManager_StatusChanged(object sender, DownloadStatusChangeArgs e)

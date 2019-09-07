@@ -53,7 +53,7 @@ namespace BeatOn.Core.RequestHandlers
                     if (split[0].ToLower() == "package")
                     {
                         package= Java.Net.URLDecoder.Decode(split[1]);
-                        break;
+                     
                     } else if (split[0].ToLower() == "action")
                     {
                         action = Java.Net.URLDecoder.Decode(split[1]);

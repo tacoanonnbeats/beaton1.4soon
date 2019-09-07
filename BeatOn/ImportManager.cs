@@ -254,7 +254,7 @@ namespace BeatOn
         /// <param name="provider">The file provider containing the data at its root</param>
         /// <param name="completionCallback">A completion callback for when the operations have all completed.  Will not be called if there's an exception during initial processing, but will be called if a background operation fails</param>
         /// <param name="targetPlaylistID">Optionally the playlist to add the song to, if the download is a song</param>
-        public void ImportFromFileProvider(IFileProvider provider, Action completionCallback, string targetPlaylistID = null, bool suppressToast = false)
+        public void ImportFromFileProvider(IFileProvider provider, Action completionCallback, string targetPlaylistID = null, bool suppressToast = false, bool overwriteIfExists = false)
         {
             try
             {
@@ -275,7 +275,7 @@ namespace BeatOn
                         if (targetPlaylistID != null)
                             playlist = _getConfig().Config.Playlists.FirstOrDefault(x => x.PlaylistID == targetPlaylistID);
 
-                        ImportSongFile(provider, completionCallback, playlist, suppressToast);
+                        ImportSongFile(provider, completionCallback, playlist, suppressToast, overwriteIfExists);
                         break;
                     case DownloadType.Playlist:
                         ImportPlaylistFilesFromProvider(provider);
@@ -323,14 +323,14 @@ namespace BeatOn
             //todo: show a toast here?
         }
 
-        private AssetOp ImportSongFile(IFileProvider provider, Action completionCallback, BeatSaberPlaylist addToPlaylist = null, bool suppressToast = false)
+        private AssetOp ImportSongFile(IFileProvider provider, Action completionCallback, BeatSaberPlaylist addToPlaylist = null, bool suppressToast = false, bool overwriteIfExists = false)
         {
             try
             {
-                var songPath = ExtractSongGetPath(provider);
+                var songPath = ExtractSongGetPath(provider, overwriteIfExists);
                 var songID = songPath.GetFilenameFwdSlash();
                 var playlist = addToPlaylist??GetOrCreateDefaultPlaylist();
-                return QueueAddSongToPlaylistOp(songID, songPath, playlist, completionCallback, suppressToast);
+                return QueueAddSongToPlaylistOp(songID, songPath, playlist, completionCallback, suppressToast, overwriteIfExists);
             }
             catch (ImportException)
             {
@@ -363,7 +363,7 @@ namespace BeatOn
         /// <summary>
         /// Extracts a song from a provider and returns the path RELATIVE TO THE BEATONDATAROOT
         /// </summary>
-        private string ExtractSongGetPath(IFileProvider provider)
+        private string ExtractSongGetPath(IFileProvider provider, bool overwriteIfExists)
         {
             try
             {
@@ -376,7 +376,7 @@ namespace BeatOn
 
                 //checking this first to maintain compability with song IDs that are just <songid> and are not <songid>_<name> - <author>
                 var targetOutputDir = _qaeConfig.SongsPath.CombineFwdSlash(targetSongID);
-                if (_qaeConfig.RootFileProvider.FileExists(targetOutputDir.CombineFwdSlash("info.dat")))
+                if (!overwriteIfExists && _qaeConfig.RootFileProvider.FileExists(targetOutputDir.CombineFwdSlash("info.dat")))
                 {
                     Log.LogMsg($"ImportManager skipping extract because {targetOutputDir} already exists and has an info.dat.");
                     return targetOutputDir;
@@ -410,7 +410,7 @@ namespace BeatOn
 
                 targetOutputDir = _qaeConfig.SongsPath.CombineFwdSlash(targetSongID);
 
-                if (_qaeConfig.RootFileProvider.FileExists(targetOutputDir.CombineFwdSlash("info.dat")))
+                if (!overwriteIfExists && _qaeConfig.RootFileProvider.FileExists(targetOutputDir.CombineFwdSlash("info.dat")))
                 {
                     Log.LogMsg($"ImportManager skipping extract because {targetOutputDir} already exists and has an info.dat.");
                     return targetOutputDir;
@@ -546,7 +546,7 @@ namespace BeatOn
         /// <param name="songID">The song ID to use for the imported song</param>
         /// <param name="songPath">The path, RELATIVE TO THE BEATONDATA ROOT, of where the custom song exists</param>
         /// <param name="playlist">The playlist to add the song to</param>
-        private AssetOp QueueAddSongToPlaylistOp(string songID, string songPath, BeatSaberPlaylist playlist, Action completionCallback = null, bool suppressToast = false)
+        private AssetOp QueueAddSongToPlaylistOp(string songID, string songPath, BeatSaberPlaylist playlist, Action completionCallback = null, bool suppressToast = false, bool overwriteIfExists = false)
         {
             var qae = _getEngine();
             var bsSong = new BeatSaberSong()
@@ -554,7 +554,7 @@ namespace BeatOn
                 SongID = songID, //ref: was Path.GetFileName(toInst.DownloadPath),
                 CustomSongPath = songPath //ref: was toInst.DownloadPath
             };
-            var addOp = new AddNewSongToPlaylistOp(bsSong, playlist.PlaylistID);
+            var addOp = new AddNewSongToPlaylistOp(bsSong, playlist.PlaylistID, overwriteIfExists);
 
             addOp.OpFinished += (s, op) =>
             {
